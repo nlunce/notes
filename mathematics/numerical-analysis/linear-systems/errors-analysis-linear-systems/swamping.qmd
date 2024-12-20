@@ -1,0 +1,253 @@
+---
+title: 'Understanding Swamping in Numerical Computations'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show Code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+In the realm of numerical computations, precision and accuracy are paramount. However, various phenomena can undermine these qualities, leading to erroneous results. One such phenomenon is **swamping**, a term that describes the masking or overwhelming of smaller errors by larger ones, making it difficult to detect or mitigate the underlying issues. Understanding swamping is essential for developing robust numerical algorithms and ensuring the reliability of computational results.
+
+## **What is Swamping?**
+
+**Swamping** refers to the scenario where smaller errors or perturbations in a numerical computation are obscured or dominated by larger errors. This can occur in various contexts, such as solving linear systems, eigenvalue computations, or iterative algorithms. When swamping happens, it becomes challenging to identify and correct minor inaccuracies, potentially leading to significant deviations in the final outcome.
+
+Mathematically, consider a computation where multiple sources of errors are present. If one error component is significantly larger than others, it can overshadow the smaller ones, effectively "swamping" them. This makes it difficult to assess the cumulative effect of all errors accurately.
+
+## **Causes of Swamping**
+
+Swamping can arise from several factors in numerical computations:
+
+1. **Finite Precision Arithmetic:**
+
+   - **Round-Off Errors:** In floating-point computations, numbers are represented with limited precision. Repeated arithmetic operations can accumulate round-off errors, where smaller errors become overshadowed by larger ones.
+   - **Cancellation Errors:** Subtracting nearly equal numbers can result in significant loss of precision, amplifying existing errors.
+
+2. **Ill-Conditioned Systems:**
+
+   - Systems with a high [**condition number**](./condition-number-matrix.html) are sensitive to perturbations. Small errors in input data or intermediate computations can lead to large errors in the solution, causing swamping.
+
+3. **Algorithmic Instabilities:**
+
+   - Certain numerical algorithms may amplify specific error components due to their inherent design, leading to swamping of other errors.
+
+4. **Data Noise:**
+   - In data-driven computations, high levels of noise can mask underlying signals, making it difficult to detect subtle patterns or trends.
+
+## **Implications of Swamping**
+
+Swamping has several critical implications for numerical computations:
+
+- **Reduced Accuracy:** The dominance of larger errors can significantly reduce the overall accuracy of the computation.
+- **Error Propagation:** Swamping can lead to uncontrolled error propagation, where inaccuracies at one stage of computation affect subsequent stages.
+- **Algorithm Reliability:** Algorithms susceptible to swamping may produce unreliable results, undermining their applicability in sensitive applications.
+- **Difficulty in Debugging:** Identifying and isolating the sources of errors becomes challenging when swamping occurs, complicating the debugging process.
+
+## **Detecting and Mitigating Swamping**
+
+Effective detection and mitigation strategies are essential to manage swamping in numerical computations:
+
+### 1. **Error Analysis:**
+
+- **Relative and Absolute Errors:** Monitor both relative and absolute errors to identify when smaller errors are being overshadowed.
+- **Residual Analysis:** In solving linear systems, analyze the residual $\mathbf{r} = \mathbf{b} - A\mathbf{x}$ to assess the accuracy of the solution.
+
+### 2. **Condition Number Assessment:**
+
+- **Compute Condition Numbers:** Evaluate the condition number of matrices involved using appropriate norms (e.g., [**Infinity Norm**](../norms/infinity-vector-norm.html)) to gauge sensitivity.
+- **Well-Conditioned vs. Ill-Conditioned:** Prefer algorithms and formulations that minimize the condition number to reduce susceptibility to swamping.
+
+### 3. **Algorithm Selection and Improvement:**
+
+- **Stable Algorithms:** Choose numerical methods known for their stability and resistance to error amplification (e.g., using QR decomposition over Gaussian elimination in certain cases).
+- **Pivoting Techniques:** Implement pivoting strategies in matrix factorizations to enhance numerical stability.
+
+### 4. **Precision Management:**
+
+- **Higher Precision Arithmetic:** Utilize higher precision data types (e.g., double-precision instead of single-precision) to minimize round-off and cancellation errors.
+- **Adaptive Precision:** Dynamically adjust the precision based on the sensitivity of the computation stages.
+
+### 5. **Regularization Techniques:**
+
+- **Tikhonov Regularization:** Introduce regularization terms to stabilize solutions, especially in ill-posed problems.
+- **Noise Filtering:** Apply filtering techniques to data to reduce noise levels and prevent swamping of subtle signals.
+
+## **A Practical Example**
+
+To illustrate swamping, let's consider the problem of solving a linear system using Gaussian elimination without pivoting, which can be susceptible to error amplification in ill-conditioned systems.
+
+### **The Problem Setup**
+
+Consider the system:
+
+$$
+A\mathbf{x} = \mathbf{b}
+$$
+
+Where:
+
+$$
+A = \begin{bmatrix}
+1 & 1 \\
+1 & 1.0001 \\
+\end{bmatrix}, \quad
+\mathbf{b} = \begin{bmatrix}
+2 \\
+2.0001 \\
+\end{bmatrix}
+$$
+
+The true solution is:
+
+$$
+\mathbf{x} = \begin{bmatrix}
+1 \\
+1 \\
+\end{bmatrix}
+$$
+
+### **Step 1: Compute the Condition Number $\kappa_\infty(A)$**
+
+Using the **Infinity Norm**:
+
+$$
+\|A\|_\infty = \max \left\{ |1| + |1|, \ |1| + |1.0001| \right\} = \max \{2, 2.0001\} = 2.0001
+$$
+
+Compute $A^{-1}$:
+
+$$
+\det(A) = (1)(1.0001) - (1)(1) = 0.0001
+$$
+
+$$
+A^{-1} = \frac{1}{0.0001} \begin{bmatrix}
+1.0001 & -1 \\
+-1 & 1 \\
+\end{bmatrix} = \begin{bmatrix}
+10001 & -10000 \\
+-10000 & 10000 \\
+\end{bmatrix}
+$$
+
+$$
+\|A^{-1}\|_\infty = \max \left\{ |10001| + |-10000|, \ |-10000| + |10000| \right\} = \max \{20001, 20000\} = 20001
+$$
+
+Thus,
+
+$$
+\kappa_\infty(A) = \|A\|_\infty \cdot \|A^{-1}\|_\infty = 2.0001 \times 20001 \approx 40004
+$$
+
+A condition number of approximately **40004** indicates that the matrix $A$ is **ill-conditioned**, making the system highly sensitive to perturbations.
+
+### **Step 2: Solve the System Using Gaussian Elimination Without Pivoting**
+
+Performing Gaussian elimination:
+
+1. **First Pivot:** The element $a_{11} = 1$ is used to eliminate the first entry in the second row.
+
+2. **Elimination Step:**
+
+   $\text{Multiplier} = \frac{a_{21}}{a_{11}} = \frac{1}{1} = 1$
+
+   Update the second row:
+
+   $a_{22}' = a_{22} - \text{Multiplier} \times a_{12} = 1.0001 - 1 \times 1 = 0.0001$
+
+   $b_2' = b_2 - \text{Multiplier} \times b_1 = 2.0001 - 1 \times 2 = 0.0001$
+
+3. **Back Substitution:**
+
+   $x_2 = \frac{b_2'}{a_{22}'} = \frac{0.0001}{0.0001} = 1$
+
+   $x_1 = \frac{b_1 - a_{12}x_2}{a_{11}} = \frac{2 - 1 \times 1}{1} = 1$
+
+The computed solution is $\mathbf{x} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$, which matches the true solution. However, this accuracy is contingent on the precision of computations and the absence of rounding errors.
+
+### **Step 3: Introduce Perturbations to Simulate Swamping**
+
+Now, let's introduce a more **realistic perturbation** that simulates how a computer might **round off** numbers during computations.
+
+#### **Analogy: Computer Rounding Leading to Swamping**
+
+Computers represent numbers with finite precision, typically using floating-point arithmetic. Suppose during calculations, the computer rounds the number **2.0001** to **2** due to limited precision. This seemingly minor adjustment can have a **drastic impact** on the solution.
+
+- **Perturbed Equation 2:**  
+  $x + 1.0001y = 2$  
+  _(Notice the right-hand side changed from 2.0001 to 2 due to rounding)_
+
+This small change is akin to a computer rounding **2.0001** down to **2**, illustrating how precision limitations can lead to significant deviations.
+
+### **Step 4: Solving the Perturbed System**
+
+With the perturbed equation, the system becomes:
+
+$$
+A\mathbf{x} = \mathbf{b}
+$$
+
+Where:
+
+$$
+\mathbf{b} = \begin{bmatrix}
+2 \\
+2 \\
+\end{bmatrix}
+$$
+
+Reapplying Gaussian elimination:
+
+1. **Elimination Step:**
+
+   $\text{Multiplier} = \frac{a_{21}}{a_{11}} = \frac{1}{1} = 1$
+
+   Update the second row:
+
+   $a_{22}' = a_{22} - \text{Multiplier} \times a_{12} = 1.0001 - 1 \times 1 = 0.0001$
+
+   $b_2' = b_2 - \text{Multiplier} \times b_1 = 2 - 1 \times 2 = 0$
+
+2. **Back Substitution:**
+
+   $x_2 = \frac{b_2'}{a_{22}'} = \frac{0}{0.0001} = 0$
+
+   $x_1 = \frac{b_1 - a_{12}x_2}{a_{11}} = \frac{2 - 1 \times 0}{1} = 2$
+
+The computed solution is $\mathbf{x} = \begin{bmatrix} 2 \\ 0 \end{bmatrix}$, which **deviates significantly** from the true solution $\begin{bmatrix} 1 \\ 1 \end{bmatrix}$.
+
+### **Step 5: Analyzing the Impact**
+
+- **Original Solution:** $(x, y) = (1, 1)$
+- **After Rounding Error:** $(x, y) = (2, 0)$
+
+**Observation:**  
+A **minuscule rounding error** in the constant term of the second equation (from 2.0001 to 2) caused the solution to shift dramatically from $(1, 1)$ to $(2, 0)$.
+
+### **Step 6: Interpretation**
+
+The small perturbation in $\mathbf{b}$ led to a substantial error in the solution, illustrating how swamping can occur in ill-conditioned systems. The large condition number amplified the minor change in $\mathbf{b}$, resulting in a significant deviation in $\mathbf{x}$.

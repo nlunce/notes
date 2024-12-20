@@ -1,0 +1,159 @@
+---
+title: 'Quick Reference: Important Power Series Expansions'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+# **Quick Reference: Important Power Series Expansions**
+
+This reference provides the most common and important power series expansions for rapid access. These series are fundamental in mathematics and appear in calculus, physics, and engineering applications.
+
+## **1. Exponential Function $e^x$**
+
+$$
+e^x = \sum_{n=0}^\infty \frac{x^n}{n!}
+$$
+
+**First Four Terms:**
+
+$$
+e^x \approx 1 + x + \frac{x^2}{2} + \frac{x^3}{6}
+$$
+
+**Radius of Convergence:**
+
+Converges for all $x$.
+
+## **2. Sine Function $\sin(x)$**
+
+$$
+\sin(x) = \sum_{n=0}^\infty \frac{(-1)^n}{(2n+1)!} x^{2n+1}
+$$
+
+**First Four Terms:**
+
+$$
+\sin(x) \approx x - \frac{x^3}{6} + \frac{x^5}{120} - \frac{x^7}{5040}
+$$
+
+**Radius of Convergence:**
+
+Converges for all $x$.
+
+## **3. Cosine Function $\cos(x)$**
+
+$$
+\cos(x) = \sum_{n=0}^\infty \frac{(-1)^n}{(2n)!} x^{2n}
+$$
+
+**First Four Terms:**
+
+$$
+\cos(x) \approx 1 - \frac{x^2}{2} + \frac{x^4}{24} - \frac{x^6}{720}
+$$
+
+**Radius of Convergence:**
+
+Converges for all $x$.
+
+## **4. Geometric Series $\frac{1}{1-x}$**
+
+$$
+\frac{1}{1-x} = \sum_{n=0}^\infty x^n, \quad |x| < 1
+$$
+
+**First Four Terms:**
+
+$$
+\frac{1}{1-x} \approx 1 + x + x^2 + x^3
+$$
+
+**Radius of Convergence:**
+
+Converges for $|x| < 1$.
+
+## **5. Natural Logarithm $\ln(1+x)$**
+
+$$
+\ln(1+x) = \sum_{n=1}^\infty (-1)^{n+1} \frac{x^n}{n}, \quad |x| < 1
+$$
+
+**First Four Terms:**
+
+$$
+\ln(1+x) \approx x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4}
+$$
+
+**Radius of Convergence:**
+
+Converges for $|x| < 1$.
+
+## **6. Arctangent Function $\arctan(x)$**
+
+$$
+\arctan(x) = \sum_{n=0}^\infty (-1)^n \frac{x^{2n+1}}{2n+1}, \quad |x| \leq 1
+$$
+
+**First Four Terms:**
+
+$$
+\arctan(x) \approx x - \frac{x^3}{3} + \frac{x^5}{5} - \frac{x^7}{7}
+$$
+
+**Radius of Convergence:**
+
+Converges for $|x| \leq 1$.
+
+## **7. Binomial Series $(1+x)^k$**
+
+$$
+(1+x)^k = \sum_{n=0}^\infty \binom{k}{n} x^n, \quad |x| < 1
+$$
+
+Where:
+
+$$
+\binom{k}{n} = \frac{k(k-1)(k-2)\cdots(k-n+1)}{n!}
+$$
+
+**First Four Terms:**
+
+$$
+(1+x)^k \approx 1 + kx + \frac{k(k-1)}{2}x^2 + \frac{k(k-1)(k-2)}{6}x^3
+$$
+
+**Radius of Convergence:**
+
+Converges for $|x| < 1$ unless $k$ is a non-negative integer, in which case it converges for all $x$.
+
+## **Summary**
+
+This collection of power series expansions provides a quick reference for commonly used functions:
+
+- **Universal:** $e^x, \sin(x), \cos(x)$ converge for all $x$.
+- **Restricted Radius:** $\frac{1}{1-x}, \ln(1+x), \arctan(x), (1+x)^k$ converge only for $|x| < 1$ or specific conditions.
+
+These expansions are critical tools in analysis, numerical computation, and approximations.

@@ -1,0 +1,133 @@
+---
+title: 'Summary of Tests for Series'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        text-align: center;
+        vertical-align: top;
+        font-family: Arial, sans-serif;
+        position: relative;
+        padding: 5px;
+    }
+    th {
+        background-color: #f4f4f4;
+    }
+    td {
+        height: 100px;
+    }
+</style>
+
+<table>
+    <thead>
+        <tr>
+            <th>Test</th>
+            <th>Series</th>
+            <th>Converges</th>
+            <th>Diverges</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>$n$th-Term</td>
+            <td>$$\sum_{n=1}^{\infty} a_n$$</td>
+            <td>$$\lim_{n\to\infty} a_n \neq 0$$</td>
+            <td>This test cannot be used to show convergence.</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Geometric Series</td>
+            <td>$$\sum_{n=0}^{\infty} ar^n$$</td>
+            <td>$$r < 1$$</td>
+            <td>$$r \geq 1$$</td>
+            <td>Sum: $$S = \frac{a}{1 - r}$$</td>
+        </tr>
+        <tr>
+            <td>Telescoping Series</td>
+            <td>$$\sum_{n=1}^{\infty} (b_n - b_{n+1})$$</td>
+            <td>$$\lim_{n\to\infty} b_n = L$$</td>
+            <td>Sum: $$S = b_1 - L$$</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>p-Series</td>
+            <td>$$\sum_{n=1}^{\infty} \frac{1}{n^p}$$</td>
+            <td>$$p > 1$$</td>
+            <td>$$p \leq 1$$</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Alternating Series</td>
+            <td>$$\sum_{n=1}^{\infty} (-1)^{n-1}a_n$$</td>
+            <td>$$0 < a_{n+1} \leq a_n$$ and $$\lim_{n\to\infty} a_n = 0$$</td>
+            <td>Remainder: $$R_N \leq a_{N+1}$$</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Integral</td>
+            <td>$$\sum_{n=1}^{\infty} a_n, \quad a_n = f(n) \geq 0$$</td>
+            <td>$$\int f(x) \, dx$$ converges</td>
+            <td>$$\int f(x) \, dx$$ diverges</td>
+            <td>Remainder: $$0 < R_N < \int_{N}^{\infty} f(x) \, dx$$</td>
+        </tr>
+        <tr>
+            <td>Root</td>
+            <td>$$\sum_{n=1}^{\infty} a_n$$</td>
+            <td>$$\lim_{n\to\infty} \sqrt[n]{a_n} < 1$$</td>
+            <td>$$\lim_{n\to\infty} \sqrt[n]{a_n} > 1$$</td>
+            <td>Test is inconclusive if $$\lim_{n\to\infty} \sqrt[n]{a_n} = 1$$</td>
+        </tr>
+        <tr>
+            <td>Ratio</td>
+            <td>$$\sum_{n=1}^{\infty} a_n$$</td>
+            <td>$$\lim_{n\to\infty} \frac{a_{n+1}}{a_n} < 1$$</td>
+            <td>$$\lim_{n\to\infty} \frac{a_{n+1}}{a_n} \geq 1$$</td>
+            <td>Test is inconclusive if $$\lim_{n\to\infty} \frac{a_{n+1}}{a_n} = 1$$</td>
+        </tr>
+        <tr>
+            <td>Direct Comparison <br> $$(a_n, b_n > 0)$$</td>
+            <td>$$\sum_{n=1}^{\infty} a_n$$</td>
+            <td>$$0 < a_n \leq b_n$$ and $$\sum_{n=1}^{\infty} b_n$$ converges</td>
+            <td>$$0 < b_n \leq a_n$$ and $$\sum_{n=1}^{\infty} b_n$$ diverges</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Limit Comparison <br> $$(a_n, b_n > 0)$$</td>
+            <td>$$\sum_{n=1}^{\infty} a_n$$</td>
+            <td>$$\lim_{n\to\infty} \frac{a_n}{b_n} = L > 0$$ and $$\sum_{n=1}^{\infty} b_n$$ converges</td>
+            <td>$$\lim_{n\to\infty} \frac{a_n}{b_n} = L > 0$$ and $$\sum_{n=1}^{\infty} b_n$$ diverges</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>

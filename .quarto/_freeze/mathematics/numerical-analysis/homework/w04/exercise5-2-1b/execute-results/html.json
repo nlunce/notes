@@ -1,0 +1,12 @@
+{
+  "hash": "8959ab57f029d556d1d947cb56f2004e",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: 'Exercise 5.2.1b (C5-P1)'\nsubtitle: 'MATH411'\nauthor: 'Nathan Lunceford'\nformat:\n  html:\n    self-contained: true\n    page-layout: full\n    toc: true\n    toc-depth: 1\n    toc-location: right\n    number-sections: false\n    html-math-method: katex\n    embed-resources: true\n    code-fold: true\n    code-summary: 'Show the code'\n    code-overflow: wrap\n    code-copy: hover\n    code-tools:\n      source: false\n      toggle: true\n      caption: See code\nengine: jupyter\npreview:\n  port: 3000\n  browser: true\n  watch-inputs: true\n  navigate: true\n---\n\n",
+    "supporting": [
+      "exercise5-2-1b_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

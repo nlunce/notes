@@ -1,0 +1,167 @@
+---
+title: 'Exercise 2.4.6 (C2-P10)'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Problem:**
+
+**(a)** Write down the $4 \times 4$ matrix $P$ such that multiplying a matrix on the left by $P$ causes the second and fourth rows of the matrix to be exchanged.
+
+**(b)** What is the effect of multiplying on the right by $P$? Demonstrate with an example.
+
+## **Solution:**
+
+### **(a) Constructing the Permutation Matrix $P$**
+
+To create a permutation matrix $P$ that exchanges the second and fourth rows when multiplied on the left, start with the $4 \times 4$ identity matrix $I_4$ and swap its second and fourth rows.
+
+**Identity Matrix $I_4$:**
+
+$$
+I_4 = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+\end{pmatrix}
+$$
+
+**Permutation Matrix $P$ (after swapping rows 2 and 4):**
+
+$$
+P = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 \\
+0 & 0 & 1 & 0 \\
+0 & 1 & 0 & 0 \\
+\end{pmatrix}
+$$
+
+When $P$ multiplies any $4 \times n$ matrix $A$ on the left ($PA$), it exchanges the second and fourth rows of $A$.
+
+### **(b) Effect of Multiplying on the Right by $P$**
+
+Multiplying a matrix on the right by $P$ rearranges its **columns** (instead of rows) according to the pattern defined by $P$. In this case, it specifically swaps the matrix’s second and fourth **columns**.
+
+**Demonstration with an Example:**
+
+Let’s consider a $4 \times 4$ matrix $A$:
+
+$$
+A = \begin{pmatrix}
+a_{11} & a_{12} & a_{13} & a_{14} \\
+a_{21} & a_{22} & a_{23} & a_{24} \\
+a_{31} & a_{32} & a_{33} & a_{34} \\
+a_{41} & a_{42} & a_{43} & a_{44} \\
+\end{pmatrix}
+$$
+
+**Compute $AP$:**
+
+$$
+AP = A \times P = A \times \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 \\
+0 & 0 & 1 & 0 \\
+0 & 1 & 0 & 0 \\
+\end{pmatrix}
+$$
+
+**Resulting Matrix $AP$:**
+
+$$
+AP = \begin{pmatrix}
+a_{11} & a_{14} & a_{13} & a_{12} \\
+a_{21} & a_{24} & a_{23} & a_{22} \\
+a_{31} & a_{34} & a_{33} & a_{32} \\
+a_{41} & a_{44} & a_{43} & a_{42} \\
+\end{pmatrix}
+$$
+
+**Numerical Example:**
+
+$$
+A = \begin{pmatrix}
+1 & 2 & 3 & 4 \\
+5 & 6 & 7 & 8 \\
+9 & 10 & 11 & 12 \\
+13 & 14 & 15 & 16 \\
+\end{pmatrix}
+$$
+
+**Compute $AP$:**
+
+$$
+AP = A \times \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 \\
+0 & 0 & 1 & 0 \\
+0 & 1 & 0 & 0 \\
+\end{pmatrix} = \begin{pmatrix}
+1 & 4 & 3 & 2 \\
+5 & 8 & 7 & 6 \\
+9 & 12 & 11 & 10 \\
+13 & 16 & 15 & 14 \\
+\end{pmatrix}
+$$
+
+**Final Answer**
+
+**(a)** The $4 \times 4$ permutation matrix $P$ that exchanges the second and fourth rows when multiplied on the left is:
+
+$$
+P = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 \\
+0 & 0 & 1 & 0 \\
+0 & 1 & 0 & 0 \\
+\end{pmatrix}
+$$
+
+**(b)** Multiplying on the right by $P$ exchanges the second and fourth columns of a matrix. For example, for the matrix:
+
+$$
+A = \begin{pmatrix}
+1 & 2 & 3 & 4 \\
+5 & 6 & 7 & 8 \\
+9 & 10 & 11 & 12 \\
+13 & 14 & 15 & 16 \\
+\end{pmatrix}
+$$
+
+Multiplying on the right by $P$ yields:
+
+$$
+AP = \begin{pmatrix}
+1 & 4 & 3 & 2 \\
+5 & 8 & 7 & 6 \\
+9 & 12 & 11 & 10 \\
+13 & 16 & 15 & 14 \\
+\end{pmatrix}
+$$
+
+which is $A$ with its second and fourth columns exchanged.

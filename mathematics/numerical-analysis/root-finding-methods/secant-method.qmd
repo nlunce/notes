@@ -1,0 +1,114 @@
+---
+title: 'Secant Method'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 1
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+The **Secant Method** is a numerical method for finding roots of a nonlinear equation $f(x) = 0$. It is similar to [**Newton's Method**](./newtons-method.html), but it does not require the computation of the derivative $f'(x)$. Instead, the Secant Method approximates the derivative using a secant line through two points on the function.
+
+## **The Secant Method Formula**
+
+Given two initial approximations $x_{k-1}$ and $x_k$, the next approximation $x_{k+1}$ is computed using the secant line through these points. The formula is:
+
+$$
+x_{k+1} = x_k - \frac{f(x_k)(x_k - x_{k-1})}{f(x_k) - f(x_{k-1})}
+$$
+
+This equation is derived by approximating the derivative $f'(x_k)$ using the difference quotient:
+
+$$
+f'(x_k) \approx \frac{f(x_k) - f(x_{k-1})}{x_k - x_{k-1}}
+$$
+
+The main advantage of the Secant Method is that it avoids the need to compute the derivative $f'(x)$, making it useful for functions where the derivative is difficult to compute or does not exist.
+
+### **Algorithm**
+
+1. **Initial Guesses**: Start with two initial approximations $x_0$ and $x_1$.
+2. **Iteration Formula**: Compute successive approximations using the formula:
+
+$$
+x_{k+1} = x_k - \frac{f(x_k)(x_k - x_{k-1})}{f(x_k) - f(x_{k-1})}
+$$
+
+3. **Repeat**: Continue iterating until the difference between successive approximations is less than a specified tolerance $\epsilon$, or until $|f(x_k)| < \epsilon$.
+
+### **Convergence**
+
+The Secant Method typically converges faster than the [**Bisection Method**](./bisection-method.thml) but slower than [**Newton's Method**](./newtons-method.html). It has a convergence rate of approximately $1.618$, known as **superlinear convergence**. This is faster than the linear convergence of the Bisection Method, but slower than the quadratic convergence of Newton's Method.
+
+### **Example**
+
+Let’s solve the equation $f(x) = x^2 - 4 = 0$ using the Secant Method, which has roots at $x = \pm 2$.
+
+1. **Initial Guesses**: Let $x_0 = 3$ and $x_1 = 2.5$.
+
+2. **First Iteration**:
+
+   $$
+   x_2 = x_1 - \frac{f(x_1)(x_1 - x_0)}{f(x_1) - f(x_0)} = 2.5 - \frac{(2.5^2 - 4)(2.5 - 3)}{(2.5^2 - 4) - (3^2 - 4)} = 2.05
+   $$
+
+3. **Second Iteration**:
+
+   $$
+   x_3 = x_2 - \frac{f(x_2)(x_2 - x_1)}{f(x_2) - f(x_1)} = 2.05 - \frac{(2.05^2 - 4)(2.05 - 2.5)}{(2.05^2 - 4) - (2.5^2 - 4)} \approx 2.0006
+   $$
+
+4. **Further Iterations**: Continue until the difference between successive approximations is less than a specified tolerance (e.g., $\epsilon = 10^{-5}$).
+
+In this case, after just two iterations, we are already very close to the root $x = 2$.
+
+### **General Properties of the Secant Method**
+
+1. **No Derivatives Needed**: Unlike Newton's Method, the Secant Method does not require the computation of the derivative $f'(x)$, making it useful for functions that are not differentiable or where computing the derivative is expensive.
+
+2. **Superlinear Convergence**: The Secant Method converges faster than the Bisection Method but slower than Newton's Method. Its convergence rate is superlinear with a rate of approximately $1.618$.
+
+3. **Requires Two Initial Guesses**: The method requires two initial approximations, $x_0$ and $x_1$, unlike Newton's Method, which only needs one initial guess.
+
+### **Applications of the Secant Method**
+
+- **Root Finding**: The Secant Method is widely used to find roots of non-linear equations, especially in cases where the derivative is not available or is costly to compute.
+- **Optimization**: It can be used in optimization problems where the objective is to minimize or maximize a function without requiring the calculation of the derivative.
+
+### **Advantages of the Secant Method**
+
+1. **No Derivatives**: The method does not require the calculation of $f'(x)$, making it easier to apply in situations where the derivative is not known.
+
+2. **Faster than Bisection**: The Secant Method generally converges more quickly than the Bisection Method, especially when the initial guesses are close to the root.
+
+### **Limitations of the Secant Method**
+
+1. **Slower than Newton's Method**: While it converges faster than the Bisection Method, the Secant Method typically converges more slowly than Newton's Method, which has quadratic convergence.
+
+2. **Convergence is Not Guaranteed**: The Secant Method does not always converge, especially if the initial guesses are not close to the actual root. If $f(x_k) = f(x_{k-1})$, the method will fail due to division by zero.
+
+3. **Requires Good Initial Guesses**: Poor choices for the initial approximations $x_0$ and $x_1$ can result in slow convergence or failure to converge.
+
+### Conclusion
+
+The Secant Method provides a good balance between speed and ease of use, especially when derivatives are difficult or costly to compute. It is faster than the Bisection Method but not as fast as Newton’s Method when derivatives are available. Careful selection of initial guesses is important for ensuring successful convergence.

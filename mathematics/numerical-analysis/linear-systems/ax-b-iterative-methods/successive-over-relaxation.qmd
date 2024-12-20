@@ -1,0 +1,181 @@
+---
+title: 'The Successive Over-Relaxation (SOR) Method for Solving Linear Systems'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show Code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+The **Successive Over-Relaxation (SOR) Method** is an extension of the [**Gauss-Seidel Method**](./gauss-seidel-method.html) used to solve [**systems of linear equations**](../../w06/linear-systems.html). By introducing a relaxation parameter $\omega$, the SOR method accelerates convergence or allows fine-tuning of the iterative process.
+
+The SOR method is particularly useful when $\omega$ is chosen appropriately, typically $1 < \omega < 2$ for over-relaxation.
+
+## **The SOR Method**
+
+Consider the system:
+
+$$
+A\mathbf{x} = \mathbf{b}
+$$
+
+where $A$ is decomposed into:
+
+- $D$: The diagonal components of $A$,
+- $L$: The strictly lower triangular components of $A$,
+- $U$: The strictly upper triangular components of $A$.
+
+Thus:
+
+$$
+A = D + L + U
+$$
+
+The SOR iterative formula is:
+
+$$
+ \mathbf{x}_{k+1} = (\omega L + D)^{-1} \left[ (1 - \omega)D\mathbf{x}_{k} - \omega U\mathbf{x}_{k} \right] + \omega (D + \omega L)^{-1} \mathbf{b}
+$$
+
+for $k = 0, 1, 2, \dots$, where:
+
+- $\omega$: Relaxation parameter ($\omega = 1$ corresponds to the Gauss-Seidel Method).
+
+## **Algorithm**
+
+1. **Initial Guess:**
+   Start with an initial vector $\mathbf{x}_0$.
+
+2. **Iterative Formula:**
+   For each iteration $k$, compute:
+
+   $$
+   \mathbf{x}_{k+1} = (\omega L + D)^{-1} \left[ (1 - \omega)D\mathbf{x}_{k} - \omega U\mathbf{x}_{k} \right] + \omega (D + \omega L)^{-1} \mathbf{b}
+   $$
+
+3. **Relaxation Parameter:**
+   Choose $\omega$:
+
+   - $\omega > 1$: Over-relaxation (accelerates convergence).
+   - $\omega = 1$: Equivalent to the Gauss-Seidel Method.
+   - $\omega < 1$: Under-relaxation (may be used to stabilize divergence).
+
+4. **Convergence Check:**
+   Stop when the norm of the residual $\|\mathbf{b} - A\mathbf{x}^{(k)}\|$ is sufficiently small.
+
+## **Example**
+
+### **System of Equations**
+
+Consider the system:
+
+$$
+4u + v + w = 7, \quad u + 3v + w = 8, \quad u + v + 5w = 6
+$$
+
+### **Step 1: Decompose $A$**
+
+Decompose the coefficient matrix $A$:
+
+$$
+A = \begin{bmatrix}
+4 & 1 & 1 \\
+1 & 3 & 1 \\
+1 & 1 & 5
+\end{bmatrix}, \quad
+D = \begin{bmatrix}
+4 & 0 & 0 \\
+0 & 3 & 0 \\
+0 & 0 & 5
+\end{bmatrix}, \quad
+L = \begin{bmatrix}
+0 & 0 & 0 \\
+1 & 0 & 0 \\
+1 & 1 & 0
+\end{bmatrix}, \quad
+U = \begin{bmatrix}
+0 & 1 & 1 \\
+0 & 0 & 1 \\
+0 & 0 & 0
+\end{bmatrix}
+$$
+
+### **Step 2: Iterative Updates**
+
+Using $\omega = 1.25$ and an initial guess $\mathbf{x}_0 = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}$, compute the iterations:
+
+1. **Iteration 1 ($k = 1$):**
+
+   Substitute values into the SOR formula:
+
+   $$
+   u^{(1)} = \frac{1.25}{4} \left[ 7 - 0 - 0 \right] = 2.1875
+   $$
+
+   $$
+   v^{(1)} = \frac{1.25}{3} \left[ 8 - 2.1875 - 0 \right] = 1.9792
+   $$
+
+   $$
+   w^{(1)} = \frac{1.25}{5} \left[ 6 - 2.1875 - 1.9792 \right] = 0.9188
+   $$
+
+   $$
+   \mathbf{x}^{(1)} = \begin{bmatrix} 2.1875 \\ 1.9792 \\ 0.9188 \end{bmatrix}
+   $$
+
+2. **Iteration 2 ($k = 2$):**
+
+   Using updated values:
+
+   $$
+   u^{(2)} = \dots, \quad v^{(2)} = \dots, \quad w^{(2)} = \dots
+   $$
+
+   Continue substituting until convergence.
+
+## **Convergence Conditions**
+
+The SOR method converges under similar conditions to the Gauss-Seidel Method:
+
+1. If $A$ is **strictly diagonally dominant**, or
+2. If $A$ is **symmetric positive definite**.
+
+Additionally, convergence depends on the choice of $\omega$, with $1 < \omega < 2$ typically achieving the fastest results.
+
+## **Advantages**
+
+- **Adjustable Convergence Speed:** The relaxation parameter $\omega$ allows tuning for faster convergence.
+- **Efficiency:** For well-chosen $\omega$, fewer iterations are required compared to the Gauss-Seidel Method.
+
+## **Limitations**
+
+- Requires tuning $\omega$ for optimal performance.
+- May not converge if $\omega$ is poorly chosen.
+- Not inherently parallelizable like the Jacobi Method.
+
+## **Summary**
+
+The **Successive Over-Relaxation (SOR) Method** improves upon the Gauss-Seidel Method by introducing a relaxation parameter $\omega$, enabling faster convergence for well-conditioned systems. However, the method requires careful parameter selection and is sensitive to the properties of the system matrix $A$.

@@ -1,0 +1,12 @@
+{
+  "hash": "e598d6f84352b548f9ba005c9ddcb4d2",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: 'Interpolation Polynomial - Root Analysis'\nformat:\n  html:\n    self-contained: true\n    page-layout: full\n    toc: true\n    toc-depth: 3\n    toc-location: right\n    number-sections: false\n    html-math-method: katex\n    embed-resources: true\n    code-fold: true\n    code-summary: 'Show Code'\n    code-overflow: wrap\n    code-copy: hover\n    code-tools:\n      source: false\n      toggle: true\n      caption: See code\nengine: jupyter\npreview:\n  port: 3000\n  browser: true\n  watch-inputs: true\n  navigate: true\n---\n\n\n## **Problem Statement**\n\nLet $p_{n-1}(x)$ be the degree $n-1$ polynomial that interpolates the points $(x_i, f(x_i))$, where $i = 1, \\dots, n$. Now, suppose we add a new point $(x, f(x))$ and assume that $a$ is chosen such that the polynomial\n\n$$\np_n(t) = p_{n-1}(t) + a(t - x_1)(t - x_2)\\dots(t - x_n)\n$$\n\ninterpolates the point $(x, f(x))$ in addition to the original $n$ points $(x_i, f(x_i))$, $i = 1, \\dots, n$.\n\nThen $h(t) = f(t) - p_n(t)$ must have at least $n+1$ roots. **What are these roots?**\n\n## **Solution**\n\n### **1. Analyze the roots of $h(t)$**\n\nBy definition:\n\n$$\nh(t) = f(t) - p_n(t)\n$$\n\nSince $p_n(t)$ interpolates $f(x)$ at $n+1$ points (the original $n$ points and the newly added point $(x, f(x))$), $h(t)$ is zero at these $n+1$ points. Therefore, the roots of $h(t)$ include:\n\n1. The original interpolation points: $t = x_1, x_2, \\dots, x_n$\n2. The newly added point: $t = x$\n\nThus, the roots of $h(t)$ are $\\{ x_1, x_2, \\dots, x_n, x \\}$.\n\n### **2. Polynomial degree and root count**\n\nThe degree of $p_n(t)$ is $n$, since $p_n(t)$ adds a single term of degree $n$ to $p_{n-1}(t)$. Therefore, $h(t) = f(t) - p_n(t)$, being the difference of two degree $n$ polynomials, is also a degree $n$ polynomial.\n\nHowever, since $h(t)$ is zero at $n+1$ distinct points, $h(t)$ must be identically zero if $f(t)$ is a polynomial of degree at most $n$. Otherwise, $f(t)$ introduces higher-order terms that cancel the polynomial structure of $p_n(t)$.\n\n### **Conclusion**\n\nThe $n+1$ roots of $h(t) = f(t) - p_n(t)$ are precisely:\n\n$$\nx_1, x_2, \\dots, x_n, x\n$$\n\n",
+    "supporting": [
+      "root-analysis_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

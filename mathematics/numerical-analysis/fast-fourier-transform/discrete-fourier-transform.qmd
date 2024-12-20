@@ -1,0 +1,134 @@
+---
+title: 'Understanding the Discrete Fourier Transform (DFT)'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **What is the Discrete Fourier Transform (DFT)?**
+
+Imagine you’re listening to music. You hear a melody, but the melody is made up of individual notes (frequencies). The **Discrete Fourier Transform (DFT)** works similarly—it takes a "melody" of data in the time domain (a sequence of numbers) and breaks it into its "notes" (frequency components). This makes it easier to analyze patterns in signals like sound, images, or other data.
+
+The DFT transforms a sequence of $n$-dimensional samples $x$ into a sequence $y$ that reveals how much of each frequency is present in the original data.
+
+## **Mathematical Definition**
+
+Given an input vector $x = [x_0, x_1, \dots, x_{n-1}]^T$, the DFT produces a vector $y = [y_0, y_1, \dots, y_{n-1}]^T$, where:
+
+$$
+y_k = \frac{1}{\sqrt{n}} \sum_{j=0}^{n-1} x_j \omega^{jk}, \quad \omega = e^{-i \frac{2\pi}{n}}, \quad k = 0, 1, \dots, n-1
+$$
+
+## **What is $\omega$ and Why Does $\omega^1 = -i$?**
+
+### **Step 1: Define $\omega$**
+
+The root of unity $\omega$ is defined as:
+
+$$
+\omega = e^{-i \frac{2\pi}{n}}
+$$
+
+For $n = 4$, this becomes:
+
+$$
+\omega = e^{-i \frac{2\pi}{4}} = e^{-i \frac{\pi}{2}}
+$$
+
+### **Step 2: Expand $e^{-i \frac{\pi}{2}}$ Using Euler’s Formula**
+
+Euler's formula states:
+
+$$
+e^{i\theta} = \cos(\theta) + i \sin(\theta)
+$$
+
+Using this for $\omega = e^{-i \frac{\pi}{2}}$, we get:
+
+$$
+e^{-i \frac{\pi}{2}} = \cos\left(-\frac{\pi}{2}\right) + i \sin\left(-\frac{\pi}{2}\right)
+$$
+
+From the unit circle:
+
+- $\cos\left(-\frac{\pi}{2}\right) = 0$,
+- $\sin\left(-\frac{\pi}{2}\right) = -1$.
+
+Substitute these values:
+
+$$
+e^{-i \frac{\pi}{2}} = 0 - i = -i
+$$
+
+Thus:
+
+$$
+\omega^1 = -i
+$$
+
+### **Step 3: Verify Powers of $\omega$**
+
+The powers of $\omega$ for $n = 4$ are as follows:
+
+1. $\omega^0 = e^{-i \cdot 0} = 1$
+2. $\omega^1 = e^{-i \frac{\pi}{2}} = -i$
+3. $\omega^2 = e^{-i \pi} = -1$
+4. $\omega^3 = e^{-i \frac{3\pi}{2}} = i$
+5. $\omega^4 = e^{-i 2\pi} = 1$ (cyclic repetition)
+
+These powers correspond to four equally spaced points on the unit circle in the complex plane.
+
+## **Building the Fourier Matrix**
+
+The Fourier matrix $F_n$ is defined as:
+
+$$
+F_n(k, j) = \frac{1}{\sqrt{n}} \omega^{kj}, \quad k, j = 0, 1, \dots, n-1
+$$
+
+For $n = 4$:
+
+1. Compute $\frac{1}{\sqrt{4}} = \frac{1}{2}$.
+2. Use the powers of $\omega$ to fill the matrix:
+
+$$
+F_4 = \frac{1}{2}
+\begin{bmatrix}
+1 & 1 & 1 & 1 \\
+1 & -i & -1 & i \\
+1 & -1 & 1 & -1 \\
+1 & i & -1 & -i
+\end{bmatrix}
+$$
+
+Each row corresponds to a frequency $k$, and each column corresponds to a time sample $j$.
+
+## **Conclusion**
+
+The key to understanding the Fourier matrix and DFT lies in the properties of $\omega$, the primitive root of unity. The matrix formulation provides a systematic way to compute the DFT, while the powers of $\omega$ determine the contributions of different frequencies in the signal. By breaking the time-domain signal into its frequency components, the DFT reveals hidden patterns and structures in the data.
+
+```
+
+```

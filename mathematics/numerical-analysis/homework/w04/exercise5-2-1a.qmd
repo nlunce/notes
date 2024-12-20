@@ -1,0 +1,136 @@
+---
+title: 'Exercise 5.2.1a (C5-P1)'
+subtitle: 'MATH411'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 1
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Problem:**
+
+Apply the composite Trapezoid Rule with $m = 1, 2,$ and $4$ panels to approximate the integral. Compute the error by comparing with the exact value from calculus.
+
+$$
+\int_0^1 x^2 \, dx
+$$
+
+### **Key Concepts**
+
+### **Composite Trapezoidal Rule**
+
+The formula for the composite trapezoidal rule is:
+
+$$
+T_m = \frac{h}{2} \left( f(a) + 2 \sum_{i=1}^{m-1} f(x_i) + f(b) \right)
+$$
+
+where:
+
+- $h = \frac{b - a}{m}$
+- $x_i = a + i \cdot h$ for $i = 1, 2, \ldots, m-1$
+
+## **Solution:**
+
+### **1. Exact Value of the Integral**
+
+We first compute the exact value of the integral:
+
+$$
+\int_0^1 x^2 \, dx = \left[ \frac{x^3}{3} \right]_0^1 = \frac{1^3}{3} - \frac{0^3}{3} = \frac{1}{3} \approx 0.3333
+$$
+
+### **2. Approximations Using the Composite Trapezoidal Rule**
+
+#### **Case $m = 1$:**
+
+- $h = \frac{1 - 0}{1} = 1$
+- Points: $x_0 = 0$, $x_1 = 1$
+- Approximation:
+
+$$
+T_1 = \frac{1}{2} \left( f(0) + f(1) \right) = \frac{1}{2} \left( 0^2 + 1^2 \right) = \frac{1}{2} \cdot 1 = 0.5
+$$
+
+- Error:
+
+$$
+\text{Error} = \left| 0.3333 - 0.5 \right| = 0.1667
+$$
+
+#### **Case $m = 2$:**
+
+- $h = \frac{1 - 0}{2} = 0.5$
+- Points: $x_0 = 0$, $x_1 = 0.5$, $x_2 = 1$
+- Approximation:
+
+$$
+T_2 = \frac{0.5}{2} \left( f(0) + 2 \cdot f(0.5) + f(1) \right) = \frac{0.5}{2} \left( 0^2 + 2 \cdot 0.5^2 + 1^2 \right)
+$$
+
+$$
+T_2 = \frac{0.5}{2} \cdot (0 + 2 \cdot 0.25 + 1) = \frac{0.5}{2} \cdot 1.5 = 0.375
+$$
+
+- Error:
+
+$$
+\text{Error} = \left| 0.3333 - 0.375 \right| = 0.0417
+$$
+
+#### **Case $m = 4$:**
+
+- $h = \frac{1 - 0}{4} = 0.25$
+- Points: $x_0 = 0$, $x_1 = 0.25$, $x_2 = 0.5$, $x_3 = 0.75$, $x_4 = 1$
+- Approximation:
+
+$$
+T_4 = \frac{0.25}{2} \left( f(0) + 2 \cdot \left( f(0.25) + f(0.5) + f(0.75) \right) + f(1) \right)
+$$
+
+$$
+T_4 = \frac{0.25}{2} \left( 0^2 + 2 \cdot (0.25^2 + 0.5^2 + 0.75^2) + 1^2 \right)
+$$
+
+$$
+T_4 = \frac{0.25}{2} \cdot (0 + 2 \cdot (0.0625 + 0.25 + 0.5625) + 1) = \frac{0.25}{2} \cdot 2.75 = 0.34375
+$$
+
+- Error:
+
+$$
+\text{Error} = \left| 0.3333 - 0.34375 \right| = 0.0104
+$$
+
+### **3. Summary of Results**
+
+| $m$ | Approximation | Error  |
+| --- | ------------- | ------ |
+| 1   | 0.5000        | 0.1667 |
+| 2   | 0.3750        | 0.0417 |
+| 4   | 0.3438        | 0.0104 |
+
+### **4. Conclusion**
+
+As the number of panels $m$ increases, the approximation becomes more accurate, and the error decreases. This demonstrates that the composite trapezoidal rule converges to the exact value as the number of panels increases.

@@ -1,0 +1,157 @@
+---
+title: 'Spectral Radius'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show Code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+The spectral radius is a fundamental concept in linear algebra and matrix analysis, particularly in understanding the behavior of [**iterative methods**](../w07/ax-b-iterative-methods/index.html) like the [**Jacobi Method**](../w07/ax-b-iterative-methods/jacobi-method.html) for solving linear systems.
+
+## **Definition of Spectral Radius**
+
+The **spectral radius** of a square matrix $A$ is defined as the largest absolute value of its eigenvalues:
+
+$$
+\rho(A) = \max \{ |\lambda| : \lambda \text{ is an eigenvalue of } A \}
+$$
+
+- **Interpretation:** It measures the "largest influence" of the eigenvalues of $A$, which governs the convergence properties of matrix-related iterative processes.
+
+## **Properties of the Spectral Radius**
+
+1. **Non-Negativity:**
+
+   $$
+   \rho(A) \geq 0
+   $$
+
+   since the spectral radius is the maximum of the absolute values of eigenvalues.
+
+2. **Behavior Under Similarity Transformations:**
+   If $B = P^{-1}AP$, then:
+
+   $$
+   \rho(B) = \rho(A)
+   $$
+
+   because eigenvalues are invariant under similarity transformations.
+
+3. **Norm Relationship:**
+   The spectral radius is related to matrix norms but generally satisfies:
+   $$
+   \rho(A) \leq \|A\|
+   $$
+   for certain matrix norms. Equality holds in some cases, such as the spectral norm for symmetric matrices.
+
+## **Importance in Iterative Methods**
+
+The spectral radius plays a key role in determining the **convergence** of iterative methods for solving systems of linear equations.
+
+### **Convergence Criterion**
+
+For an iterative method defined by:
+
+$$
+x_{k+1} = Gx_k + c
+$$
+
+where $G$ is the iteration matrix, the method converges if and only if:
+
+$$
+\rho(G) < 1
+$$
+
+- **Explanation:** This ensures that successive iterations diminish in magnitude, eventually converging to the solution.
+
+## **Example: Computing the Spectral Radius**
+
+Consider the matrix:
+
+$$
+A = \begin{bmatrix}
+2 & 1 \\
+1 & 3
+\end{bmatrix}
+$$
+
+### **Step 1: Find Eigenvalues**
+
+Solve $\det(A - \lambda I) = 0$:
+
+$$
+\det\left(\begin{bmatrix}
+2-\lambda & 1 \\
+1 & 3-\lambda
+\end{bmatrix}\right) = 0
+$$
+
+Expanding the determinant:
+
+$$
+(2-\lambda)(3-\lambda) - 1 = \lambda^2 - 5\lambda + 5 = 0
+$$
+
+The eigenvalues are:
+
+$$
+\lambda = \frac{5 \pm \sqrt{5}}{2}
+$$
+
+### **Step 2: Compute Spectral Radius**
+
+The eigenvalues are approximately:
+
+$$
+\lambda_1 \approx 4.618, \quad \lambda_2 \approx 0.382
+$$
+
+Thus, the spectral radius is:
+
+$$
+\rho(A) = \max(|\lambda_1|, |\lambda_2|) = 4.618
+$$
+
+## **Geometric Interpretation**
+
+The spectral radius represents the largest "stretching factor" of a matrix when applied to a vector. For a square matrix $A$, eigenvectors corresponding to the eigenvalue with the largest magnitude indicate the direction in which $A$ has the most influence.
+
+## **Applications of Spectral Radius**
+
+1. **Iterative Solvers:**
+
+   - Determines the convergence of methods like [**Jacobi**](../w07/ax-b-iterative-methods/jacobi-method.html) and [**Gauss-Seidel**](../w07/ax-b-iterative-methods/gauss-seidel-method.html).
+
+2. **Stability Analysis:**
+
+   - Used in analyzing the stability of dynamical systems where $A$ represents a system's state transition.
+
+3. **Network Analysis:**
+   - In graph theory, the spectral radius of adjacency matrices provides insights into network properties.
+
+## **Conclusion**
+
+The spectral radius is a powerful tool for understanding the properties of matrices, particularly in the context of iterative methods and stability analysis. Mastering this concept is essential for applications ranging from solving linear systems to analyzing complex networks and dynamical systems.

@@ -1,0 +1,188 @@
+---
+title: 'Backward Error in Linear Systems'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+The **backward error** is a crucial concept in numerical linear algebra, measuring the smallest perturbation in the right-hand side $\mathbf{b}$ that would make the approximate solution $\mathbf{x_a}$ satisfy the linear system $A\mathbf{x} = \mathbf{b}$ exactly. In other words, it quantifies how much we need to adjust $\mathbf{b}$ so that $\mathbf{x_a}$ becomes an exact solution to a slightly modified system. This concept helps us understand the sensitivity of solutions and the reliability of numerical methods.
+
+The backward error is defined as:
+
+$$
+\text{BE} = \|\mathbf{r}\|_\infty = \|\mathbf{b} - A\mathbf{x_a}\|_\infty
+$$
+
+where:
+
+- $\mathbf{r}$: The **residual vector**, $\mathbf{r} = \mathbf{b} - A\mathbf{x_a}$,
+- $\|\cdot\|_\infty$: The [**infinity norm**](../norms/infinity-vector-norm.html), measuring the maximum absolute entry of the residual.
+
+## **What Backward Error Represents**
+
+1. **Residual Perspective**:
+
+   - The backward error reflects the size of the residual in the infinity norm. A smaller residual indicates that $\mathbf{x_a}$ nearly satisfies the system $A\mathbf{x} = \mathbf{b}$.
+
+2. **Adjustment to $\mathbf{b}$**:
+
+   - It provides an estimate of the minimal adjustment needed in $\mathbf{b}$ to make $\mathbf{x_a}$ an exact solution. Essentially, it tells us how much we need to perturb $\mathbf{b}$ so that $A\mathbf{x_a} = \mathbf{b}'$ holds exactly for some $\mathbf{b}'$ close to $\mathbf{b}$.
+
+3. **Exact Solution**:
+
+   - If $\mathbf{x_a}$ is the exact solution, then the residual $\mathbf{r} = \mathbf{0}$, and hence:
+
+     $$
+     \text{BE} = 0
+     $$
+
+## **Why Backward Error Matters**
+
+- **Assessing Solution Quality**:
+
+  - The backward error helps evaluate how good the approximate solution $\mathbf{x_a}$ is by measuring its exactness for a nearby system.
+
+- **Numerical Stability**:
+
+  - Algorithms with small backward errors are considered numerically stable because they produce solutions that are accurate for slightly perturbed inputs.
+
+- **Error Analysis**:
+
+  - Understanding the backward error allows us to relate it to the forward error (the difference between $\mathbf{x_a}$ and the true solution $\mathbf{x}$) and to analyze the overall accuracy of numerical methods.
+
+## **Example**
+
+Consider the system:
+
+$$
+A = \begin{bmatrix} 1 & 1 \\ 3 & -4 \end{bmatrix}, \quad
+\mathbf{b} = \begin{bmatrix} 3 \\ 2 \end{bmatrix}, \quad
+\mathbf{x_a} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}
+$$
+
+### **Step 1: Compute $A\mathbf{x_a}$**
+
+Multiply $A$ by $\mathbf{x_a}$:
+
+$$
+A\mathbf{x_a} = \begin{bmatrix} 1 \times 1 + 1 \times 1 \\ 3 \times 1 + (-4) \times 1 \end{bmatrix} = \begin{bmatrix} 2 \\ -1 \end{bmatrix}
+$$
+
+### **Step 2: Compute the [Residual](./residual-linear-systems.html) $\mathbf{r}$**
+
+Subtract $A\mathbf{x_a}$ from $\mathbf{b}$:
+
+$$
+\mathbf{r} = \mathbf{b} - A\mathbf{x_a} = \begin{bmatrix} 3 - 2 \\ 2 - (-1) \end{bmatrix} = \begin{bmatrix} 1 \\ 3 \end{bmatrix}
+$$
+
+### **Step 3: Compute the Backward Error**
+
+The backward error is the infinity norm of the residual:
+
+$$
+\text{BE} = \|\mathbf{r}\|_\infty = \max(|1|, |3|) = 3
+$$
+
+This means the largest adjustment needed in $\mathbf{b}$ is $3$, making $\mathbf{x_a}$ an exact solution for the perturbed system $A\mathbf{x_a} = \mathbf{b}'$, where $\mathbf{b}' = A\mathbf{x_a}$.
+
+### **Step 4: Interpretation**
+
+- **Residual Components**:
+
+  - The residual vector $\mathbf{r}$ has components:
+
+    $$
+    \mathbf{r} = \begin{bmatrix} r_1 \\ r_2 \end{bmatrix} = \begin{bmatrix} 1 \\ 3 \end{bmatrix}
+    $$
+
+  - The infinity norm is the maximum absolute value among these components:
+
+    $$
+    \|\mathbf{r}\|_\infty = \max(|r_1|, |r_2|) = \max(1, 3) = 3
+    $$
+
+  - This highlights that the backward error is dominated by the change in the $y$-component ($r_2 = 3$).
+
+## **Visualization of Backward Error**
+
+The graph below illustrates the backward error:
+
+- **Blue Vector** ($\mathbf{b}$): The target vector in the system.
+- **Green Vector** ($A\mathbf{x_a}$): The vector computed by substituting the approximate solution $\mathbf{x_a}$.
+- **Red Vector** ($\mathbf{r} = \mathbf{b} - A\mathbf{x_a}$): The residual vector, representing the discrepancy.
+- **Residual Components**: Projections of $\mathbf{r}$ onto the $x$ and $y$ axes, showing $r_1$ and $r_2$.
+
+```{python}
+#| label: backward-error
+#| code-summary: "Show Code"
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+A = np.array([[1, 1], [3, -4]])
+b = np.array([3, 2])
+x_a = np.array([1, 1])
+
+Ax_a = A @ x_a
+r = b - Ax_a
+
+plt.figure(figsize=(10, 8))
+origin = np.zeros(2)
+
+plt.quiver(*origin, *b, color='blue', angles='xy', scale_units='xy', scale=1, label=r'$\mathbf{b}$')
+plt.quiver(*origin, *Ax_a, color='green', angles='xy', scale_units='xy', scale=1, label=r'$A\mathbf{x}_a$')
+plt.quiver(*Ax_a, *r, color='red', angles='xy', scale_units='xy', scale=1, label=r'$\mathbf{r} = \mathbf{b} - A\mathbf{x}_a$')
+
+
+plt.annotate(r'$A\mathbf{x}_a$', (Ax_a[0], Ax_a[1]), textcoords="offset points", xytext=(-60,10), ha='center', color='green', fontsize=12)
+plt.annotate(r'$\mathbf{b}$', (b[0], b[1]), textcoords="offset points", xytext=(-20,15), ha='center', color='blue', fontsize=12)
+plt.annotate(r'$\mathbf{r}$', (Ax_a[0] + r[0]/2, Ax_a[1] + r[1]/2), textcoords="offset points", xytext=(10,0), ha='center', color='red', fontsize=12)
+
+plt.plot([Ax_a[0], b[0]], [Ax_a[1], b[1]], 'r--', linewidth=1)
+
+plt.quiver(*Ax_a, r[0], 0, color='orange', angles='xy', scale_units='xy', scale=1, label=r'$\mathbf{r_1}$')
+plt.quiver(Ax_a[0] + r[0], Ax_a[1], 0, r[1], color='purple', angles='xy', scale_units='xy', scale=1, label=r'$\mathbf{r_2}$')
+
+plt.annotate(r'$\mathbf{r_1}$', (Ax_a[0] + r[0]/2, Ax_a[1] - 0.2), textcoords="offset points", xytext=(0,-10), ha='center', color='orange', fontsize=12)
+plt.annotate(r'$\mathbf{r_2}$', (Ax_a[0] + r[0] + 0.1, Ax_a[1] + r[1]/2), textcoords="offset points", xytext=(10,0), ha='center', color='purple', fontsize=12)
+
+plt.text(Ax_a[0] + r[0] + 0.1, Ax_a[1] + r[1] -0.3, r'$\max(|\mathbf{r_1}|, |\mathbf{r_2}|) = |\mathbf{r_2}| = 3$', color='purple', fontsize=10)
+
+plt.xlim(-1, 5)
+plt.ylim(-2, 5)
+plt.axhline(0, color='black', linewidth=0.5)
+plt.axvline(0, color='black', linewidth=0.5)
+plt.grid(color='gray', linestyle='--', linewidth=0.5)
+plt.legend(loc='upper left', fontsize=12)
+plt.title('Visualization of Backward Error with Residual Components', fontsize=16)
+plt.xlabel('x-axis', fontsize=14)
+plt.ylabel('y-axis', fontsize=14)
+plt.gca().set_aspect('equal', adjustable='box')
+plt.show()
+
+```

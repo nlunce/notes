@@ -1,0 +1,12 @@
+{
+  "hash": "643131838a9792fb15601faaed7a4687",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: 'NORMS'\nformat:\n  html:\n    self-contained: true\n    page-layout: full\n    toc: true\n    toc-depth: 2\n    toc-location: right\n    number-sections: false\n    html-math-method: katex\n    embed-resources: true\n    code-fold: true\n    code-summary: 'Show the code'\n    code-overflow: wrap\n    code-copy: hover\n    code-tools:\n      source: false\n      toggle: true\n      caption: See code\nengine: jupyter\npreview:\n  port: 3000\n  browser: true\n  watch-inputs: true\n  navigate: true\n---\n\n\n- [Euclidean Vector Norm](./euclidean-vector-norm.html)\n- [Taxicab Vector Norm](./taxicab-vector-norm.html)\n- [Infinity Vector Norm](./infinity-vector-norm.html)\n- [Infinity Norm for Matrices](./infinity-norm-matrices.html)\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

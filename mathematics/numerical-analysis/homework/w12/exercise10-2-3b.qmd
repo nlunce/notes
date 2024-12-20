@@ -1,0 +1,222 @@
+---
+title: 'Exercise 10.2.3b (C10-P4)'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 1
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: false
+  watch-inputs: true
+---
+
+# **Problem:**
+
+::: {.callout-note icon=false }
+
+## **10.2.3b**
+
+Find the trigonometric interpolating function for the given data:
+
+| $t$           | $x$ |
+| ------------- | --- |
+| 0             | 1   |
+| $\frac{1}{8}$ | 2   |
+| $\frac{1}{4}$ | 1   |
+| $\frac{3}{8}$ | 0   |
+| $\frac{1}{2}$ | 1   |
+| $\frac{5}{8}$ | 2   |
+| $\frac{3}{4}$ | 1   |
+| $\frac{7}{8}$ | 0   |
+
+:::
+
+# **Solution:**
+
+## **Corollary 10.8**
+
+For an even integer $n$, let
+
+$$
+t_j = c + j \frac{(d - c)}{n}, \quad \text{for } j = 0, \dots, n - 1,
+$$
+
+and let
+
+$$
+x = (x_0, \dots, x_{n-1})
+$$
+
+denote a vector of $n$ real numbers. Define
+
+$$
+a + b i = F_n x,
+$$
+
+where $F_n$ is the Discrete Fourier Transform (DFT). Then the function
+
+$$
+P_n(t) = \frac{a_0}{\sqrt{n}} + \frac{2}{\sqrt{n}} \sum_{k=1}^{\frac{n}{2} - 1} \left( a_k \cos\left(\frac{2\pi k (t - c)}{d - c}\right) - b_k \sin\left(\frac{2\pi k (t - c)}{d - c}\right) \right)
++ \frac{a_{n/2}}{\sqrt{n}} \cos\left(\frac{n\pi (t - c)}{d - c}\right)
+$$
+
+interpolates the given data, i.e.
+
+$$
+P_n(t_j) = x_j, \quad \text{for } j = 0, \dots, n - 1.
+$$
+
+## **Parameters:**
+
+- $t = \left[ 0, \tfrac{1}{8}, \tfrac{1}{4}, \tfrac{3}{8}, \tfrac{1}{2}, \tfrac{5}{8}, \tfrac{3}{4}, \tfrac{7}{8} \right]$
+- $x = [1, 2, 1, 0, 1, 2, 1, 0]$
+- **Interval start:** $c = 0$
+- **Interval end:** $d = 1$
+- **Number of data points:** $n = 8$
+
+## **DFT Computation:**
+
+The DFT of $x$ is given by $y = F_8 x$, where $F_8$ is the $8 \times 8$ DFT matrix defined by:
+
+$$
+(F_8)_{j,k} = \frac{1}{\sqrt{8}} \omega^{j k}, \quad \omega = e^{-i\frac{2\pi}{n}}
+$$
+
+Compute powers of $\omega$:
+
+- $\omega^0 = 1$
+- $\omega^1 = e^{-i\pi/4} =  \frac{\sqrt{2}}{2} - i\frac{\sqrt{2}}{2}$
+- $\omega^2 = e^{-i\pi/2} = -i$
+- $\omega^3 = e^{-3i\pi/4} = -\frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2}$
+- $\omega^4 = e^{-i\pi} = -1$
+- $\omega^5 = e^{-5i\pi/4} = -\frac{\sqrt{2}}{2} + i\frac{\sqrt{2}}{2}$
+- $\omega^6 = e^{-3i\pi/2} = i$
+- $\omega^7 = e^{-7i\pi/4} = \frac{\sqrt{2}}{2} + i\frac{\sqrt{2}}{2}$
+
+### **Fourier Matrix $F_8$**
+
+Substitute into $F_8$:
+
+$$
+F_8 = \frac{1}{\sqrt{8}}\begin{bmatrix}
+\omega^{0\cdot0} & \omega^{0\cdot1} & \omega^{0\cdot2} & \omega^{0\cdot3} & \omega^{0\cdot4} & \omega^{0\cdot5} & \omega^{0\cdot6} & \omega^{0\cdot7}\\[6pt]
+\omega^{1\cdot0} & \omega^{1\cdot1} & \omega^{1\cdot2} & \omega^{1\cdot3} & \omega^{1\cdot4} & \omega^{1\cdot5} & \omega^{1\cdot6} & \omega^{1\cdot7}\\[6pt]
+\omega^{2\cdot0} & \omega^{2\cdot1} & \omega^{2\cdot2} & \omega^{2\cdot3} & \omega^{2\cdot4} & \omega^{2\cdot5} & \omega^{2\cdot6} & \omega^{2\cdot7}\\[6pt]
+\omega^{3\cdot0} & \omega^{3\cdot1} & \omega^{3\cdot2} & \omega^{3\cdot3} & \omega^{3\cdot4} & \omega^{3\cdot5} & \omega^{3\cdot6} & \omega^{3\cdot7}\\[6pt]
+\omega^{4\cdot0} & \omega^{4\cdot1} & \omega^{4\cdot2} & \omega^{4\cdot3} & \omega^{4\cdot4} & \omega^{4\cdot5} & \omega^{4\cdot6} & \omega^{4\cdot7}\\[6pt]
+\omega^{5\cdot0} & \omega^{5\cdot1} & \omega^{5\cdot2} & \omega^{5\cdot3} & \omega^{5\cdot4} & \omega^{5\cdot5} & \omega^{5\cdot6} & \omega^{5\cdot7}\\[6pt]
+\omega^{6\cdot0} & \omega^{6\cdot1} & \omega^{6\cdot2} & \omega^{6\cdot3} & \omega^{6\cdot4} & \omega^{6\cdot5} & \omega^{6\cdot6} & \omega^{6\cdot7}\\[6pt]
+\omega^{7\cdot0} & \omega^{7\cdot1} & \omega^{7\cdot2} & \omega^{7\cdot3} & \omega^{7\cdot4} & \omega^{7\cdot5} & \omega^{7\cdot6} & \omega^{7\cdot7}
+\end{bmatrix}
+$$
+
+$$
+= \frac{1}{2\sqrt{2}}\begin{bmatrix}
+1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+1 & \frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2} & -i & -\frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2} & -1 & -\frac{\sqrt{2}}{2}+i\frac{\sqrt{2}}{2} & i & \frac{\sqrt{2}}{2}+i\frac{\sqrt{2}}{2} \\
+1 & -i & -1 & i & 1 & -i & -1 & i \\
+1 & -\frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2} & i & \frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2} & -1 & \frac{\sqrt{2}}{2}+i\frac{\sqrt{2}}{2} & -i & -\frac{\sqrt{2}}{2}+i\frac{\sqrt{2}}{2} \\
+1 & -1 & 1 & -1 & 1 & -1 & 1 & -1 \\
+1 & -\frac{\sqrt{2}}{2}+i\frac{\sqrt{2}}{2} & -i & \frac{\sqrt{2}}{2}+i\frac{\sqrt{2}}{2} & -1 & -\frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2} & i & -\frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2} \\
+1 & i & -1 & -i & 1 & i & -1 & -i \\
+1 & \frac{\sqrt{2}}{2}+i\frac{\sqrt{2}}{2} & i & -\frac{\sqrt{2}}{2}+i\frac{\sqrt{2}}{2} & -1 & -\frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2} & -i & \frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2}
+\end{bmatrix}
+$$
+
+### **Apply $F_8$ to $x$:**
+
+$$
+F_8 \mathbf{x}
+= \frac{1}{2\sqrt{2}}\begin{bmatrix}
+1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+1 & \frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2} & -i & -\frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2} & -1 & -\frac{\sqrt{2}}{2}+i\frac{\sqrt{2}}{2} & i & \frac{\sqrt{2}}{2}+i\frac{\sqrt{2}}{2} \\
+1 & -i & -1 & i & 1 & -i & -1 & i \\
+1 & -\frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2} & i & \frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2} & -1 & \frac{\sqrt{2}}{2}+i\frac{\sqrt{2}}{2} & -i & -\frac{\sqrt{2}}{2}+i\frac{\sqrt{2}}{2} \\
+1 & -1 & 1 & -1 & 1 & -1 & 1 & -1 \\
+1 & -\frac{\sqrt{2}}{2}+i\frac{\sqrt{2}}{2} & -i & \frac{\sqrt{2}}{2}+i\frac{\sqrt{2}}{2} & -1 & -\frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2} & i & -\frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2} \\
+1 & i & -1 & -i & 1 & i & -1 & -i \\
+1 & \frac{\sqrt{2}}{2}+i\frac{\sqrt{2}}{2} & i & -\frac{\sqrt{2}}{2}+i\frac{\sqrt{2}}{2} & -1 & -\frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2} & -i & \frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2}
+\end{bmatrix}
+\begin{bmatrix}1 \\ 2 \\ 1 \\ 0 \\ 1 \\ 2 \\ 1 \\ 0\end{bmatrix}
+$$
+
+$$
+= \begin{bmatrix}2\sqrt{2} \\ 0 \\ -\sqrt{2}i \\ 0 \\ 0 \\ 0 \\ \sqrt{2}i \\ 0\end{bmatrix}
+$$
+
+### **Find $a_k$ and $b_k$ for Each $y_k$:**
+
+Write $y_k=a_k+b_k i$:
+
+- $y_0 = 2\sqrt{2} \implies a_0 = 2\sqrt{2}, b_0=0$
+- $y_1 = 0 \implies a_1=0, b_1=0$
+- $y_2 = -\sqrt{2} i \implies a_2=0, b_2=-\sqrt{2}$
+- $y_3=0 \implies a_3=0,b_3=0$
+- $y_4=0 \implies a_4=0,b_4=0$
+- $y_5=0 \implies a_5=0,b_5=0$
+- $y_6=\sqrt{2} i \implies a_6=0,b_6=\sqrt{2}$
+- $y_7=0 \implies a_7=0,b_7=0$
+
+## **Forming the Interpolant:**
+
+From **Corollary 10.8:**
+
+$$
+P_8(t) = \frac{a_0}{\sqrt{8}} + \frac{2}{\sqrt{8}}\sum_{k=1}^3 [a_k\cos(2\pi k t)-b_k\sin(2\pi k t)] + \frac{a_4}{\sqrt{8}}\cos(8\pi t)
+$$
+
+We found:
+
+- $a_0=2\sqrt{2}$
+- $b_2=-\sqrt{2}$
+- $b_6 = \sqrt{2}$
+- All others $a_k,b_k=0$
+
+Therefore:
+
+$$
+P_8(t) = \frac{2\sqrt{2}}{\sqrt{8}} + \frac{2}{\sqrt{8}}\left[\left[0\cos(2\pi t)-0\sin(2\pi t)\right] + \left[0\cos(4\pi t) - (-\sqrt{2})\sin(4\pi t)\right] + \left[0\cos(6\pi t)- 0\sin(6\pi t)\right]\right] + \frac{0}{\sqrt{8}}\cos(8\pi t)
+$$
+
+$$
+= \frac{2\sqrt{2}}{\sqrt{8}} + \frac{2}{\sqrt{8}}\left[0 + \sqrt{2}\sin(4\pi t)\right] = 1+\sin(4\pi t)
+$$
+
+## **Check the Result:**
+
+- At $t=0$: $P_8(0) = 1 + \sin(4\pi \cdot 0) = 1 + \sin(0) = 1 + 0 = 1$, matches $x_0 = 1$
+- At $t=\frac{1}{8}$: $P_8\left(\frac{1}{8}\right) = 1 + \sin\left(\frac{\pi}{2}\right) = 1 + 1 = 2$, matches $x_1 = 2$
+- At $t=\frac{1}{4}$: $P_8\left(\frac{1}{4}\right) = 1 + \sin(\pi) = 1 + 0 = 1$, matches $x_2 = 1$.
+- At $t=\frac{3}{8}$: $P_8\left(\frac{3}{8}\right) = 1 + \sin\left(\frac{3\pi}{2}\right) = 1 + (-1) = 0$, matches $x_3 = 0$
+- At $t=\frac{1}{2}$: $P_8\left(\frac{1}{2}\right) = 1 + \sin(2\pi) = 1 + 0 = 1$, matches $x_4 = 1$
+- At $t=\frac{5}{8}$: $P_8\left(\frac{5}{8}\right) = 1 + \sin\left(\frac{5\pi}{2}\right) = 1 + 1 = 2$, matches $x_5 = 2$
+- At $t=\frac{3}{4}$:$P_8\left(\frac{3}{4}\right) = 1 + \sin(3\pi) = 1 + 0 = 1$, matches $x_6 = 1$
+- At $t=\frac{7}{8}$: $P_8\left(\frac{7}{8}\right) = 1 + \sin\left(\frac{7\pi}{2}\right) = 1 + (-1) = 0$, matches $x_7 = 0$
+
+::: {.callout-tip icon=false}
+
+## **Final Answer:**
+
+The trigonometric interpolating polynomial is:
+
+$$
+P_8(t) = 1 + \sin(4\pi t)
+$$
+
+:::

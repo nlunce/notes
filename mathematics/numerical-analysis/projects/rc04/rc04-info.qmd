@@ -1,0 +1,174 @@
+---
+title: 'REALITY CHECK 04 Info'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show Code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## GPS, Conditioning, and Nonlinear Least Squares
+
+The global positioning system (GPS) consists of 24 satellites carrying atomic clocks, orbiting the earth at an altitude of 20,200 km. Four satellites in each of six planes, slanted at 55° with respect to the poles, make two revolutions per day. At any time, from any point on earth, five to eight satellites are in the direct line of sight. Each satellite has a simple mission: to transmit carefully synchronized signals from predetermined positions in space, to be picked up by GPS receivers on earth. The receivers use the information, with some mathematics (described shortly), to determine accurate (x, y, z) coordinates of the receiver.
+
+At a given instant, the receiver collects the synchronized signal from the _i_-th satellite and determines its transmission time $t_i$, the difference between the times the signal was transmitted and received. The nominal speed of the signal is the speed of light, $c ≈ 299792.458 \, \text{km/sec}$. Multiplying transmission time by $c$ gives the distance of the satellite from the receiver, putting the receiver on the surface of a sphere centered at the satellite position and with radius $ct_i$. If three satellites are available, then three spheres are known, whose intersection consists of two points, as shown in **Figure 4.16**. One intersection point is the location of the receiver. The other is normally far from the earth’s surface and can be safely disregarded. In theory, the problem is reduced to computing this intersection, the common solution of three sphere equations.
+
+However, there is a major problem with this analysis. First, although the transmissions from the satellites are timed nearly to the nanosecond by onboard atomic clocks, the clock in the typical low-cost receiver on earth has relatively poor accuracy. If we solve the three equations with slightly inaccurate timing, the calculated position could be wrong by several kilometers. Fortunately, there is a way to fix this problem. The price to pay is one extra satellite. Define $d$ to be the difference between the synchronized time on the (now four) satellite clocks and the earth-bound receiver clock. Denote the location of satellite $i$ by $(A_i, B_i, C_i)$. Then the true intersection point $(x, y, z)$ satisfies
+
+**(4.37)**
+
+$$
+r_1(x, y, z, d) = \sqrt{(x - A_1)^2 + (y - B_1)^2 + (z - C_1)^2} - c(t_1 - d) = 0
+$$
+
+$$
+r_2(x, y, z, d) = \sqrt{(x - A_2)^2 + (y - B_2)^2 + (z - C_2)^2} - c(t_2 - d) = 0
+$$
+
+$$
+r_3(x, y, z, d) = \sqrt{(x - A_3)^2 + (y - B_3)^2 + (z - C_3)^2} - c(t_3 - d) = 0
+$$
+
+$$
+r_4(x, y, z, d) = \sqrt{(x - A_4)^2 + (y - B_4)^2 + (z - C_4)^2} - c(t_4 - d) = 0
+$$
+
+to be solved for the unknowns $x, y, z, d$. Solving the system reveals not only the receiver location, but also the correct time from the satellite clocks, due to knowing $d$. Therefore, the inaccuracy in the GPS receiver clock can be fixed by using one extra satellite.
+
+Geometrically speaking, four spheres may not have a common intersection point, but they will if the radii are expanded or contracted by the right common amount.
+
+The system (4.37) representing the intersection of four spheres is the three-dimensional analogue of (4.35), representing the intersection point of three circles in the plane.
+
+The system (4.37) can be seen to have two solutions $(x, y, z, d)$. The equations can be equivalently written
+
+$$
+(x - A_1)^2 + (y - B_1)^2 + (z - C_1)^2 = [c(t_1 - d)]^2
+$$
+
+$$
+(x - A_2)^2 + (y - B_2)^2 + (z - C_2)^2 = [c(t_2 - d)]^2
+$$
+
+$$
+(x - A_3)^2 + (y - B_3)^2 + (z - C_3)^2 = [c(t_3 - d)]^2
+$$
+
+$$
+(x - A_4)^2 + (y - B_4)^2 + (z - C_4)^2 = [c(t_4 - d)]^2
+$$
+
+Note that by subtracting the last three equations from the first, three **linear equations** are obtained. Each linear equation can be used to eliminate a variable $x, y, z$, and by substituting into any of the original equations, a quadratic equation in the single variable $d$ results. Therefore, system (4.37) has at most two real solutions, and they can be found by the quadratic formula.
+
+Two further problems emerge when GPS is deployed. First is the **conditioning** of the system of equations (4.37). We will find that solving for $(x, y, z, d)$ is ill-conditioned when the satellites are bunched closely in the sky.
+
+The second difficulty is that the transmission speed of the signals is not precisely $c$. The signals pass through 100 km of ionosphere and 10 km of troposphere, whose electromagnetic properties may affect the transmission speed. Furthermore, the signals may encounter obstacles on earth before reaching the receiver, an effect called multipath interference. To the extent that these obstacles have an equal impact on each satellite path, introducing the time correction $d$ on the right side of (4.37) helps. In general, however, this assumption is not viable and will lead us to add information from more satellites and consider applying **Gauss–Newton** to solve a least squares problem.
+
+Consider a three-dimensional coordinate system whose origin is the center of the earth (radius ≈ 6370 km). GPS receivers convert these coordinates into latitude, longitude, and elevation data for readout and more sophisticated mapping applications using global information systems (GIS), a process we will not consider here.
+
+## Instructions
+
+1. Solve the system (4.37) by using a multivariate root finder in Python. There are  
+   multiple options in scipy optimize, including root, fsolve, and newton_krylov.  
+   Find the receiver position $(x, y, z)$ near earth and time correction $d$ for known,  
+   simultaneous satellite positions
+
+$$
+(15 600, 7540, 20 140), \quad (18 760, 2750, 18 610),
+(17 610, 14 630, 13 480), \quad (19 170, 610, 18 390)
+$$
+
+in km, and measured time intervals $0.07074, 0.07220, 0.07690, 0.07242$ in  
+seconds, respectively. Set the initial vector to be $(x_0, y_0, z_0, d_0) = (0, 0, 6370.0, 0)$.  
+As a check, the answers are approximately
+
+$$
+(x, y, z) = (-41.77271, -16.78919, 6370.0596)
+$$
+
+and
+
+$$
+d = -3.201566 \times 10^{-3} \text{ seconds}.
+$$
+
+2. Write a Python program to carry out the solution via the quadratic formula.  
+   Hint: Subtracting the last three equations of (4.37) from the first yields three  
+   linear equations in the four unknowns
+
+$$
+x u_x + y u_y + z u_z + d u_d + w = 0,
+$$
+
+expressed in vector form. A formula for $x$ in terms of $d$ can be obtained from
+
+$$
+0 = \text{det}[u_y | u_z | x u_x + y u_y + z u_z + d u_d + w]
+$$
+
+noting that the determinant is linear in its columns and that a matrix with a  
+repeated column has determinant zero. Similarly, we can arrive at formulas for $y$  
+and $z$, respectively, in terms of $d$, that can be substituted in the first quadratic  
+equation of (4.37), to make it an equation in one variable.
+
+3. Skip
+
+4. Now set up a test of the conditioning of the GPS problem
+
+Define satellite positions $(A_i, B_i, C_i)$ from spherical coordinates $(\rho, \phi_i, \theta_i)$ as:
+
+$$
+A_i = \rho \cos(\phi_i) \cos(\theta_i)
+$$
+
+$$
+B_i = \rho \cos(\phi_i) \sin(\theta_i)
+$$
+
+$$
+C_i = \rho \sin(\phi_i)
+$$
+
+where $\rho = 26 \, 570 \, \text{km}$ is fixed, while $0 \leq \phi_i \leq \pi / 2$ and $0 \leq \theta_i \leq 2 \pi$ for $i = 1, \ldots, 4$ are chosen arbitrarily. The $\phi$ coordinate is restricted so that the four satellites are in the upper hemisphere. Set $x = 0, y = 0, z = 6370, d = 0.0001$, and calculate the corresponding satellite ranges:
+
+$$
+R_i = \sqrt{A_i^2 + B_i^2 + (C_i - 6370)^2}
+$$
+
+and travel times:
+
+$$
+t_i = d + R_i / c
+$$
+
+We will define an error magnification factor specially tailored to the situation. The atomic clocks aboard the satellites are correct up to about 10 nanoseconds, or $10^{-8} \, \text{second}$. Therefore, it is important to study the effect of changes in the transmission time of this magnitude.
+
+Let the backward, or input error, be the input change in meters. At the speed of light, $\Delta t*i = 10^{-8} \, \text{second}$ corresponds to $10^{-8} s \approx 3 \, \text{meters}$. Let the forward, or output error, be the change in position $\|\Delta x, \Delta y, \Delta z\|*\infty$, caused by such a change in $t_i$, also in meters. Then we can define the dimensionless error magnification factor (EMF):
+
+$$
+\text{EMF} = \frac{\|\Delta x, \Delta y, \Delta z\|_\infty}{c \|\Delta t_1, \ldots, \Delta t_m\|_\infty}
+$$
+
+and the condition number of the problem to be the maximum error magnification factor for all small $\Delta t_i$ (say, $10^{-8}$ or less).
+
+Change each $t*i$ defined in the foregoing by $\Delta t_i = \pm 10^{-8}$, not all the same. Denote the new solution of the equations (4.37) by $(x, y, z, d)$ and compute the difference in position $\|\Delta x, \Delta y, \Delta z\|*\infty$ and the error magnification factor. Try different variations of the $\Delta t_i$'s.
+
+What is the maximum position error found, in meters? Estimate the condition number of the problem, on the basis of the error magnification factors you have computed.

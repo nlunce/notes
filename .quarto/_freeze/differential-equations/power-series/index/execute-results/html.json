@@ -1,0 +1,12 @@
+{
+  "hash": "8f859f7341df3fce83d93fdadee11ee8",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: 'POWER SERIES'\nformat:\n  html:\n    self-contained: true\n    page-layout: full\n    toc: true\n    toc-depth: 2\n    toc-location: right\n    number-sections: false\n    html-math-method: katex\n    embed-resources: true\n    code-fold: true\n    code-summary: 'Show the code'\n    code-overflow: wrap\n    code-copy: hover\n    code-tools:\n      source: false\n      toggle: true\n      caption: See code\nengine: jupyter\npreview:\n  port: 3000\n  browser: true\n  watch-inputs: true\n  navigate: true\n---\n\n\n- [Quick Reference: Important Power Series Expansions](./important-power-series-expansions.html)\n- [Power Series Expansion for Cosine Function](./power-series-cosine-function.html)\n- [Power Series Expansion for Sine Function](./power-series-sine-function.html)\n- [Power Series Expansion for $e^x$](./power-series-exponential-function.html)\n- [Power Series Expansion for $\\frac{1}{1-x}$](./power-series-1-over-1-minus-x.html)\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

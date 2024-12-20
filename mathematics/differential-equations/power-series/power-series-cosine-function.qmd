@@ -1,0 +1,112 @@
+---
+title: 'Power Series Expansion for Cosine Function'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+The **power series expansion** is a fundamental tool for representing functions as infinite sums. For the cosine function, this expansion provides an exact representation and a practical way to approximate $\cos(x)$ for any real value of $x$. The series is derived using the Taylor series centered at $x = 0$.
+
+## **Power Series for Cosine**
+
+The cosine function can be expressed as:
+
+$$
+\cos(x) = \sum_{n=0}^\infty \frac{(-1)^n}{(2n)!} x^{2n}
+$$
+
+This series converges to the true value of $\cos(x)$ for all $x$. The first four terms of the series are:
+
+$$
+\cos(x) \approx 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!}
+$$
+
+which simplifies to:
+
+$$
+\cos(x) \approx 1 - \frac{x^2}{2} + \frac{x^4}{24} - \frac{x^6}{720}
+$$
+
+## **Explanation**
+
+### **1. Taylor Series**
+
+The power series for $\cos(x)$ is a special case of the Taylor series expansion about $x = 0$:
+
+$$
+f(x) = f(0) + f'(0)x + \frac{f''(0)}{2!}x^2 + \frac{f^{(3)}(0)}{3!}x^3 + \cdots
+$$
+
+For $\cos(x)$, the derivatives follow a cyclic pattern:
+
+- $\cos(x)$
+- $-\sin(x)$
+- $-\cos(x)$
+- $\sin(x)$
+
+Evaluating these derivatives at $x = 0$:
+
+- $\cos(0) = 1$
+- $-\sin(0) = 0$
+- $-\cos(0) = -1$
+- $\sin(0) = 0$
+
+Only the even derivatives contribute to the series.
+
+### **2. General Term**
+
+The general term of the series is:
+
+$$
+\frac{(-1)^n}{(2n)!} x^{2n}
+$$
+
+where $n$ is a non-negative integer. This results in a series with only even powers of $x$, alternating in sign.
+
+## **Examples**
+
+1. **Small $x$:**  
+   For $x = 0.1$, using the first four terms:
+
+   $$
+   \cos(0.1) \approx 1 - \frac{(0.1)^2}{2} + \frac{(0.1)^4}{24} - \frac{(0.1)^6}{720}
+   $$
+
+   This gives a close approximation to the true value of $\cos(0.1)$.
+
+2. **Error Reduction:**  
+   Adding more terms improves the approximation by reducing the truncation error.
+
+## **Summary**
+
+The power series expansion for $\cos(x)$ is an essential concept in calculus:
+
+- **Exact Representation:** The series converges to $\cos(x)$ for all real $x$.
+- **Approximation:** Truncated series provide practical approximations.
+- **Applications:** Used in numerical analysis, signal processing, and physics.
+
+The first four terms, $1 - \frac{x^2}{2} + \frac{x^4}{24} - \frac{x^6}{720}$, often provide sufficient accuracy for small $x$. This compact yet precise representation highlights the elegance and utility of the power series.

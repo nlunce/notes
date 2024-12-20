@@ -1,0 +1,99 @@
+---
+title: 'Exercise 3.1.6 (C3-P6)'
+subtitle: 'MATH411'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 1
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Question**
+
+**How do we construct a polynomial of degree exactly 5 that interpolates four points?**
+
+Given four points $(1, 1)$, $(2, 3)$, $(3, 3)$, and $(4, 4)$, the standard interpolation methods (such as [**Newton’s**](../../notes/w02/newtons-divided-differences.html) or [**Lagrange’s**](../../notes/w02/lagrange-interpolation.html) methods) would give us a unique polynomial of degree 3. However, constructing a polynomial of degree exactly 5 requires a different approach.
+
+### **Key Concepts**
+
+1. **Theorem 3.2** (Main Theorem of Polynomial Interpolation) guarantees that a unique polynomial of degree $n-1$ exists for $n$ distinct points.
+2. To create a polynomial of degree 5 when you only have 4 points, you need to add an **extra term** that still passes through all the original points but elevates the polynomial’s degree.
+
+### **Using Newton's Divided Differences**
+
+We will use Newton’s divided differences to first construct the degree 3 polynomial, and then extend it to a degree 5 polynomial.
+
+### **1. Construct the Newton Divided Difference Table:**
+
+We will use the given points $(x_1, y_1) = (1, 1)$, $(x_2, y_2) = (2, 3)$, $(x_3, y_3) = (3, 3)$, and $(x_4, y_4) = (4, 4)$ to compute the divided differences and build the polynomial.
+
+| $x$ | $f(x)$ | First Difference $f[x_i, x_{i+1}]$ | Second Difference $f[x_i, x_{i+1}, x_{i+2}]$ | Third Difference $f[x_i, x_{i+1}, x_{i+2}, x_{i+3}]$           |
+| --- | ------ | ---------------------------------- | -------------------------------------------- | -------------------------------------------------------------- |
+| 1   | 1      |                                    |                                              |                                                                |
+| 2   | 3      | $\frac{3 - 1}{2 - 1} = 2$          |                                              |                                                                |
+| 3   | 3      | $\frac{3 - 3}{3 - 2} = 0$          | $\frac{0 - 2}{3 - 1} = -1$                   |                                                                |
+| 4   | 4      | $\frac{4 - 3}{4 - 3} = 1$          | $\frac{1 - 0}{4 - 2} = \frac{1}{2}$          | $\frac{\frac{1}{2} - (-1)}{4 - 1} = \frac{3}{6} = \frac{1}{2}$ |
+
+### **2. Construct the Degree 3 Polynomial $P_3(x)$:**
+
+The Newton's divided difference form of the interpolating polynomial is:
+
+$$
+P_3(x) = f[x_1] + f[x_1, x_2](x - x_1) + f[x_1, x_2, x_3](x - x_1)(x - x_2) + f[x_1, x_2, x_3, x_4](x - x_1)(x - x_2)(x - x_3)
+$$
+
+Substituting the values from the divided difference table:
+
+$$
+P_3(x) = 1 + 2(x - 1) - (x - 1)(x - 2) + \frac{1}{2}(x - 1)(x - 2)(x - 3)
+$$
+
+### **3. Extend to Degree 5 Polynomial $P_5(x)$:**
+
+To create a degree 5 polynomial, we add an extra term $c(x - 1)(x - 2)(x - 3)(x - 4)$, which evaluates to zero at the given points:
+
+$$
+P_5(x) = P_3(x) + c(x - 1)(x - 2)(x - 3)(x - 4)
+$$
+
+Substitute $P_3(x)$:
+
+$$
+P_5(x) = 1 + 2(x - 1) - (x - 1)(x - 2) + \frac{1}{2}(x - 1)(x - 2)(x - 3) + c(x - 1)(x - 2)(x - 3)(x - 4)
+$$
+
+### **4. Does the Value of $c$ Matter?**
+
+The value of $c$ does not affect the polynomial at the given points. The additional term evaluates to 0 at $x = 1, 2, 3, 4$, so no matter what $c$ is, the polynomial will pass through the points $(1, 1), (2, 3), (3, 3), (4, 4)$.
+
+However, changing $c$ will affect the polynomial's behavior outside the given points. For different values of $c$, the polynomial will look different outside the interpolation points.
+
+### **Final Degree 5 Polynomial**
+
+Thus, the degree 5 polynomial is:
+
+$$
+P_5(x) = 1 + 2(x - 1) - (x - 1)(x - 2) + \frac{1}{2}(x - 1)(x - 2)(x - 3) + c(x - 1)(x - 2)(x - 3)(x - 4)
+$$
+
+This polynomial passes through the points $(1, 1), (2, 3), (3, 3), (4, 4)$, and $c$ is an arbitrary constant that influences how the polynomial behaves outside of those points.

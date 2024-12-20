@@ -1,0 +1,12 @@
+{
+  "hash": "40d4f080a7cc4e23893028f37e5fbae4",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: 'FAST FOURIER TRANSFORM'\nformat:\n  html:\n    self-contained: true\n    page-layout: full\n    toc: true\n    toc-depth: 2\n    toc-location: right\n    number-sections: false\n    html-math-method: katex\n    embed-resources: true\n    code-fold: true\n    code-summary: 'Show the code'\n    code-overflow: wrap\n    code-copy: hover\n    code-tools:\n      source: false\n      toggle: true\n      caption: See code\nengine: jupyter\npreview:\n  port: 3000\n  browser: true\n  watch-inputs: true\n  navigate: true\n---\n\n\n\n- [The Fourier Transform](./fourier-transform.html)\n- [Roots of Unity](./root-of-unity.html)\n- [The Discrete Fourier Transform (DFT)](./discrete-fourier-transform.html)\n- [The Fast Fourier Transform (FFT)](./fast-fourier-transform.html)\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

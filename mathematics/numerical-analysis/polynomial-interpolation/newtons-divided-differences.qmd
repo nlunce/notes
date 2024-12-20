@@ -1,0 +1,183 @@
+---
+title: 'Newton’s Divided Differences'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 1
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+**Newton’s Divided Differences** is an efficient method for computing an interpolating polynomial for a given set of data points. This method builds the polynomial iteratively and offers better efficiency for incremental data points compared to [**Lagrange interpolation**](./lagrange-interpolation.html).
+
+## **The Newton Divided Difference Formula**
+
+Given $n$ data points $(x_1, y_1), (x_2, y_2), ..., (x_n, y_n)$, the **Newton divided difference** interpolating polynomial $P(x)$ can be expressed as:
+
+$$
+P(x) = f[x_1] + f[x_1, x_2](x - x_1) + f[x_1, x_2, x_3](x - x_1)(x - x_2) + \cdots + f[x_1, x_2, \ldots, x_n](x - x_1)(x - x_2)\cdots(x - x_{n-1})
+$$
+
+Where $f[x_i, x_j, ..., x_k]$ are the **divided differences** and are recursively defined as follows:
+
+$$
+f[x_i] = y_i
+$$
+
+$$
+f[x_i, x_j] = \frac{f[x_j] - f[x_i]}{x_j - x_i}
+$$
+
+$$
+f[x_i, x_j, x_k] = \frac{f[x_j, x_k] - f[x_i, x_j]}{x_k - x_i}
+$$
+
+And so on for higher orders of divided differences.
+
+### **Recursive Formula for Divided Differences**
+
+The divided differences are computed recursively. For the first-order difference between two points, the formula is:
+
+$$
+f[x_i, x_{i+1}] = \frac{f(x_{i+1}) - f(x_i)}{x_{i+1} - x_i}
+$$
+
+For the second-order difference between three points:
+
+$$
+f[x_i, x_{i+1}, x_{i+2}] = \frac{f[x_{i+1}, x_{i+2}] - f[x_i, x_{i+1}]}{x_{i+2} - x_i}
+$$
+
+This recursive approach continues for higher orders of differences.
+
+### **Step-by-Step Construction of the Newton Polynomial**
+
+1. **Start with the first point** $(x_1, y_1)$, where $f[x_1] = y_1$.
+2. **First-order divided difference** between $(x_1, y_1)$ and $(x_2, y_2)$ is:
+
+$$
+f[x_1, x_2] = \frac{y_2 - y_1}{x_2 - x_1}
+$$
+
+3. **Second-order divided difference** between $(x_1, y_1)$, $(x_2, y_2)$, and $(x_3, y_3)$:
+
+$$
+f[x_1, x_2, x_3] = \frac{f[x_2, x_3] - f[x_1, x_2]}{x_3 - x_1}
+$$
+
+4. Continue this process for higher-order divided differences.
+
+Here’s the corrected example in the same format as your original:
+
+### **Example**
+
+Let's consider the data points $(1, 1)$, $(2, 4)$, $(3, 9)$, and $(4, 16)$. The goal is to find the interpolating polynomial using Newton's divided differences.
+
+1. **First point**:
+
+$$
+f[1] = 1
+$$
+
+2. **First-order divided differences**:
+
+$$
+f[1, 2] = \frac{4 - 1}{2 - 1} = 3
+$$
+
+$$
+f[2, 3] = \frac{9 - 4}{3 - 2} = 5
+$$
+
+$$
+f[3, 4] = \frac{16 - 9}{4 - 3} = 7
+$$
+
+3. **Second-order divided differences**:
+
+$$
+f[1, 2, 3] = \frac{f[2, 3] - f[1, 2]}{3 - 1} = \frac{5 - 3}{2} = 1
+$$
+
+$$
+f[2, 3, 4] = \frac{f[3, 4] - f[2, 3]}{4 - 2} = \frac{7 - 5}{2} = 1
+$$
+
+4. **Third-order divided difference**:
+
+$$
+f[1, 2, 3, 4] = \frac{f[2, 3, 4] - f[1, 2, 3]}{4 - 1} = \frac{1 - 1}{3} = 0
+$$
+
+Now, the Newton polynomial can be written as:
+
+$$
+P(x) = 1 + 3(x - 1) + 1(x - 1)(x - 2) + 0(x - 1)(x - 2)(x - 3)
+$$
+
+Simplifying:
+
+$$
+P(x) = 1 + 3(x - 1) + (x - 1)(x - 2)
+$$
+
+Expanding the terms:
+
+$$
+P(x) = 1 + 3x - 3 + (x^2 - 3x + 2)
+$$
+
+Simplifying further:
+
+$$
+P(x) = x^2
+$$
+
+### **General Properties of Newton's Divided Differences**
+
+1. **Efficiency**: Newton’s divided differences offer better computational efficiency when adding new points to the data set compared to Lagrange interpolation because earlier divided differences can be reused.
+
+2. **Uniqueness**: The Newton polynomial is unique, meaning for a given set of $n$ distinct points, there is exactly one polynomial of degree $n-1$ that interpolates the points.
+
+3. **Iterative Construction**: The method allows for iterative construction, which is useful when dealing with real-time updates or adding new data points.
+
+### **Applications of Newton’s Divided Differences**
+
+- **Polynomial Interpolation**: Newton’s divided differences are commonly used to find an interpolating polynomial for a given set of data points.
+- **Numerical Differentiation**: The method is used to approximate derivatives of functions when analytical differentiation is not feasible.
+- **Curve Fitting**: It is used in applications requiring curve fitting, especially in scientific computing and data analysis.
+
+### **Advantages of Newton’s Divided Differences**
+
+1. **Efficient for Incremental Data**: If you need to add a new data point, you don’t have to recompute the entire polynomial. Only the new divided differences need to be computed.
+
+2. **Easy to Implement**: The recursive approach to finding divided differences makes this method easy to implement in code.
+
+### **Limitations of Newton’s Divided Differences**
+
+1. **Numerical Stability**: Like other polynomial interpolation methods, Newton’s divided differences can suffer from numerical instability, especially with large datasets or unevenly spaced data.
+
+2. **Oscillations**: High-degree interpolating polynomials may oscillate significantly between data points, especially if the data is not well-distributed (similar to [**Runge's phenomenon**](../w03/runge-phenomenon.html)).
+
+### **Conclusion**
+
+Newton’s Divided Differences is a powerful method for constructing interpolating polynomials, especially when efficiency and incremental data updates are needed. Its recursive nature allows for fast updates when new data points are added, making it useful in applications such as numerical analysis, interpolation, and curve fitting.

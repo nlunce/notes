@@ -1,0 +1,132 @@
+---
+title: "Newton's Method"
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 1
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+**Newton's Method**, also known as the **Newton-Raphson Method**, is a widely used numerical method for finding successively better approximations to the roots (or zeros) of a real-valued function. It is particularly efficient when the initial guess is close to the actual root and when the function is well-behaved (smooth and differentiable).
+
+## **The Newton's Method Formula**
+
+Newton's Method is based on using the tangent line at an approximation of the root to generate a better approximation. The formula for generating the next approximation $x_{k+1}$ from the current approximation $x_k$ is given by:
+
+$$
+x_{k+1} = x_k - \frac{f(x_k)}{f'(x_k)}
+$$
+
+where:
+
+- $f(x)$ is the function whose root we are trying to find.
+- $f'(x)$ is the derivative of $f(x)$.
+- $x_k$ is the current approximation, and $x_{k+1}$ is the next approximation.
+
+### **Geometrical Interpretation**
+
+Newton's Method can be interpreted geometrically: given an approximation $x_k$, the tangent line to the curve $y = f(x)$ at the point $ (x*k, f(x_k)) $ is used to estimate where the curve crosses the x-axis, which provides the next approximation $x*{k+1}$.
+
+### **Convergence Criteria**
+
+Newton's Method converges **quadratically** under certain conditions, which means that the number of correct digits roughly doubles with each iteration. However, this fast convergence occurs only if:
+
+1. The function $f(x)$ is continuous and differentiable in the vicinity of the root.
+2. The derivative $f'(x)$ is non-zero at the root.
+3. The initial guess is sufficiently close to the actual root.
+
+If the initial guess is too far from the root, Newton's Method may fail to converge or may converge very slowly.
+
+### **Step-by-Step Procedure**
+
+1. **Initial Guess**: Choose an initial approximation $x_0$.
+2. **Iteration Formula**: Compute successive approximations using the formula:
+
+$$
+x_{k+1} = x_k - \frac{f(x_k)}{f'(x_k)}
+$$
+
+3. **Repeat**: Continue iterating until $|x_{k+1} - x_k| < \epsilon$, where $\epsilon$ is a small tolerance value, or until $|f(x_k)| < \epsilon$.
+
+### **Example**
+
+Let’s solve the equation $f(x) = x^2 - 2 = 0$ using Newton's Method, which has a root at $x = \sqrt{2}$.
+
+1. **Function and Derivative**:
+
+   $$
+   f(x) = x^2 - 2
+   $$
+
+   $$
+   f'(x) = 2x
+   $$
+
+2. **Initial Guess**: Let $x_0 = 1.5$.
+
+3. **First Iteration**:
+
+   $$
+   x_1 = x_0 - \frac{f(x_0)}{f'(x_0)} = 1.5 - \frac{1.5^2 - 2}{2(1.5)} = 1.4167
+   $$
+
+4. **Second Iteration**:
+
+   $$
+   x_2 = x_1 - \frac{f(x_1)}{f'(x_1)} = 1.4167 - \frac{1.4167^2 - 2}{2(1.4167)} = 1.4142
+   $$
+
+5. **Further Iterations**: Repeat until the difference between successive approximations is less than a specified tolerance (e.g., $\epsilon = 10^{-5}$).
+
+In this case, after just a few iterations, we have a highly accurate approximation of $\sqrt{2}$.
+
+### **General Properties of Newton's Method**
+
+1. **Quadratic Convergence**: When close to the root, Newton's Method converges quadratically, meaning that the error decreases roughly as the square of the previous error.
+
+2. **Requires Derivatives**: Unlike the Bisection Method, Newton's Method requires that the derivative $f'(x)$ be known and be non-zero at the root.
+
+3. **Sensitive to Initial Guess**: The method is sensitive to the initial guess, and poor choices of $x_0$ can lead to divergence or slow convergence.
+
+### **Applications of Newton's Method**
+
+- **Root Finding**: Newton's Method is widely used to find roots of non-linear equations in mathematics, physics, engineering, and economics.
+- **Optimization**: Newton's Method is the basis of **Newton’s optimization method**, which is used to find local minima or maxima of differentiable functions by solving $f'(x) = 0$.
+- **Engineering and Modeling**: It is used to solve non-linear models and systems, especially in fields like structural engineering, fluid dynamics, and electrical circuit analysis.
+
+### **Advantages of Newton's Method**
+
+1. **Fast Convergence**: When it converges, Newton’s Method is extremely fast due to its quadratic convergence rate.
+2. **Simple Iterative Formula**: The iteration formula is straightforward and easy to implement.
+3. **Few Iterations**: For well-behaved functions and good initial guesses, only a few iterations are required to obtain a highly accurate result.
+
+### **Limitations of Newton's Method**
+
+1. **Requires Derivatives**: The method requires that $f(x)$ is differentiable, and that the derivative $f'(x)$ can be computed analytically or numerically.
+2. **Risk of Divergence**: If the initial guess is too far from the root or if $f'(x)$ is zero or near zero, the method may diverge or fail to converge.
+
+3. **Slow or No Convergence**: For functions with inflection points or flat regions near the root, the method may converge very slowly or not at all. In these cases, alternative methods like the **Secant Method** or **Bisection Method** may be better suited.
+
+### **Conclusion**
+
+Newton's Method is a powerful and efficient tool for finding roots of equations, especially when the initial guess is close to the solution. While it requires the calculation of derivatives, its fast convergence makes it a preferred method when applicable. However, care must be taken with the choice of initial guess to avoid issues with divergence or slow convergence.

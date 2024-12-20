@@ -1,0 +1,400 @@
+---
+title: 'Stability of the Origin in 2x2 Systems of Differential Equations'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+```{python}
+#| label: libraries
+#| include: false
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import odeint
+```
+
+## Overview
+
+In a system of differential equations defined by $\mathbf{x}' = A \mathbf{x}$, understanding the stability of the origin (the point $\mathbf{x} = 0$) is essential. The stability depends on the eigenvalues of the $2 \times 2$ matrix $A$. Different configurations of eigenvalues lead to distinct types of stability, affecting how trajectories in the phase plane behave near the origin.
+
+## Types of Stability
+
+### **Repelling Node (Unstable)**
+
+- **Eigenvalues:** $0 < \lambda_1 \leq \lambda_2$ (both positive real numbers).
+- **Description:** The origin is unstable. Trajectories move away from the origin in all directions. This configuration is known as a _repelling node_.
+
+```{python}
+#| label: repelling-node
+#| code-summary: "Show Code"
+
+
+# Define the system of ODEs for a repelling node
+def dx_dt(X, t):
+    x1, x2 = X
+    dx1 = 3 * x1 + 1 * x2
+    dx2 = 1 * x1 + 3 * x2
+    return [dx1, dx2]
+
+# Generate grid for direction field
+x1_vals = np.linspace(-5, 5, 35)
+x2_vals = np.linspace(-5, 5, 35)
+X1, X2 = np.meshgrid(x1_vals, x2_vals)
+
+# Calculate slopes for direction field
+U = 3 * X1 + 1 * X2
+V = 1 * X1 + 3 * X2
+
+# Normalize the direction field arrows
+speed = np.sqrt(U**2 + V**2)
+epsilon = 1e-10  # Small value to prevent division by zero
+U_norm = U / (speed + epsilon)
+V_norm = V / (speed + epsilon)
+
+# Plot the direction field
+plt.figure(figsize=(8, 8))
+plt.quiver(X1, X2, U_norm, V_norm, angles="xy", color="black", scale=40, alpha=0.4, width=0.0035)
+
+# Straight-line solutions (eigenvectors)
+x = np.linspace(-5, 5, 200)
+plt.plot(x, x, 'r', linewidth=3, label=r'Unstable direction, $\lambda=3$')
+plt.plot(x, -x, 'b', linewidth=3, label=r'Unstable direction, $\lambda=4$')
+
+
+# Set plot limits and labels
+plt.xlim(-5, 5)
+plt.ylim(-5, 5)
+plt.xlabel("$x_1$", fontsize=14)
+plt.ylabel("$x_2$", fontsize=14)
+plt.title("Repelling Node (Unstable)", fontsize=18)
+
+# Add grid and legend
+plt.grid(True, linestyle='--', alpha=0.5)
+plt.legend(loc="best", fontsize=12, framealpha=1.0, frameon=True)
+
+# Display the plot
+plt.tight_layout()
+plt.show()
+```
+
+### **Saddle (Unstable)**
+
+- **Eigenvalues:** $\lambda_1 < 0 < \lambda_2$ (one positive and one negative real number).
+- **Description:** The origin is unstable, with trajectories approaching along one direction and moving away along another. This configuration creates a "saddle" shape in the phase plane, and is called a _saddle point_.
+
+```{python}
+#| label: saddle
+#| code-summary: "Show Code"
+
+
+# Define the system of ODEs for a saddle point
+def dx_dt(X, t):
+    x1, x2 = X
+    dx1 = 1 * x1 + 2 * x2
+    dx2 = 2 * x1 - 1 * x2
+    return [dx1, dx2]
+
+# Plot the direction field
+plt.figure(figsize=(8, 8))
+plt.quiver(X1, X2, U_norm, V_norm, angles="xy", color="black", scale=40, alpha=0.4, width=0.0035)
+
+# Straight-line solutions
+plt.plot(x, x, 'r', linewidth=3, label=r'Unstable direction, $\lambda=1$')
+plt.plot(x, -x, 'b', linewidth=3, label=r'Stable direction, $\lambda=-1$')
+
+
+# Labels and title
+plt.xlim(-5, 5)
+plt.ylim(-5, 5)
+plt.xlabel("$x_1$", fontsize=14)
+plt.ylabel("$x_2$", fontsize=14)
+plt.title("Saddle Point (Unstable)", fontsize=18)
+
+plt.grid(True, linestyle='--', alpha=0.5)
+plt.legend(loc="best", fontsize=12, framealpha=1.0, frameon=True)
+plt.tight_layout()
+plt.show()
+```
+
+### **Attracting Node (Stable)**
+
+- **Eigenvalues:** $\lambda_1 \leq \lambda_2 < 0$ (both negative real numbers).
+- **Description:** The origin is stable, and all trajectories are attracted toward it. This setup is called an _attracting node_, as trajectories converge to the origin from all directions.
+
+```{python}
+#| label: attracting-node
+#| code-summary: "Show Code"
+
+# Define the system of ODEs
+def dx_dt(X, t):
+    x1, x2 = X
+    dx1 = -3 * x1 + 2 * x2
+    dx2 = 2 * x1 - 3 * x2
+    return [dx1, dx2]
+
+# Generate grid for direction field
+x1_vals = np.linspace(-5, 5, 35)
+x2_vals = np.linspace(-5, 5, 35)
+X1, X2 = np.meshgrid(x1_vals, x2_vals)
+
+# Calculate slopes for direction field
+U = -3 * X1 + 2 * X2
+V = 2 * X1 - 3 * X2
+
+# Normalize the direction field arrows
+speed = np.sqrt(U**2 + V**2)
+epsilon = 1e-10  # Small value to prevent division by zero
+U_norm = U / (speed + epsilon)
+V_norm = V / (speed + epsilon)
+
+# Plot the direction field
+plt.figure(figsize=(8, 8))
+plt.quiver(X1, X2, U_norm, V_norm, angles="xy", color="black", scale=40, alpha=0.4, width=0.0035)
+
+# Plot the straight-line solutions (eigenvectors)
+x = np.linspace(-5, 5, 200)
+plt.plot(x, x, 'r', linewidth=3, label=r'Stable direction, $\lambda=-1$')
+plt.plot(x, -x, 'b', linewidth=3, label=r'Stable direction, $\lambda=-5$')
+
+
+# Set plot limits and labels
+plt.xlim(-5, 5)
+plt.ylim(-5, 5)
+plt.xlabel("$x_1$", fontsize=14)
+plt.ylabel("$x_2$", fontsize=14)
+plt.title("Attracting Node (Stable)", fontsize=18)
+
+# Add grid and legend
+plt.grid(True, linestyle='--', alpha=0.5)
+plt.legend(loc="best", fontsize=12, framealpha=1.0, frameon=True)
+
+# Display the plot
+plt.tight_layout()
+plt.show()
+```
+
+### **Spiral Source (Unstable)**
+
+- **Eigenvalues:** $\lambda = a \pm bi$ with $a > 0$ (complex eigenvalues with a positive real part).
+- **Description:** The origin is unstable. Trajectories spiral outward away from the origin, creating a _spiral source_.
+
+```{python}
+#| label: spiral-source
+#| code-summary: "Show Code"
+
+# Define the system of ODEs for a spiral source (unstable)
+def dx_dt(X, t):
+    x1, x2 = X
+    dx1 = 1 * x1 - 2 * x2
+    dx2 = 2 * x1 + 1 * x2
+    return [dx1, dx2]
+
+# Generate grid for direction field
+x1_vals = np.linspace(-5, 5, 35)
+x2_vals = np.linspace(-5, 5, 35)
+X1, X2 = np.meshgrid(x1_vals, x2_vals)
+
+# Calculate slopes for direction field
+U = 1 * X1 - 2 * X2
+V = 2 * X1 + 1 * X2
+
+# Normalize the direction field arrows
+speed = np.sqrt(U**2 + V**2)
+epsilon = 1e-10  # Small value to prevent division by zero
+U_norm = U / (speed + epsilon)
+V_norm = V / (speed + epsilon)
+
+# Plot the direction field
+plt.figure(figsize=(8, 8))
+plt.quiver(X1, X2, U_norm, V_norm, angles="xy", color="black", scale=40, alpha=0.4, width=0.0035)
+
+# Additional trajectories to show the outward spiral behavior
+initial_conditions = [
+    [0, .1],
+    [0, -.1],
+    [.1, 0],
+    [-.1, 0],
+]
+
+t_values = np.linspace(0, 5, 500)
+for ic in initial_conditions:
+    sol = odeint(dx_dt, ic, t_values)
+    plt.plot(sol[:, 0], sol[:, 1], 'green', linestyle='-', linewidth=2)
+
+# Set plot limits and labels
+plt.xlim(-5, 5)
+plt.ylim(-5, 5)
+plt.xlabel("$x_1$", fontsize=14)
+plt.ylabel("$x_2$", fontsize=14)
+plt.title("Spiral Source (Unstable)", fontsize=18)
+
+# Add grid
+plt.grid(True, linestyle='--', alpha=0.5)
+
+# Display the plot
+plt.tight_layout()
+plt.show()
+```
+
+### **Center (Stable)**
+
+- **Eigenvalues:** $\lambda = a \pm bi$ with $a = 0$ (purely imaginary eigenvalues).
+- **Description:** The origin neither attracts nor repels trajectories. Instead, they form closed orbits around the origin, resulting in a behavior called a _center_. This indicates neutral stability.
+
+```{python}
+#| label: center
+#| code-summary: "Show Code"
+
+# Define the system of ODEs for a center (neutral stability)
+def dx_dt(X, t):
+    x1, x2 = X
+    dx1 = -1 * x2
+    dx2 = 1 * x1
+    return [dx1, dx2]
+
+# Generate grid for direction field
+x1_vals = np.linspace(-5, 5, 35)
+x2_vals = np.linspace(-5, 5, 35)
+X1, X2 = np.meshgrid(x1_vals, x2_vals)
+
+# Calculate slopes for direction field
+U = -1 * X2
+V = 1 * X1
+
+# Normalize the direction field arrows
+speed = np.sqrt(U**2 + V**2)
+epsilon = 1e-10  # Small value to prevent division by zero
+U_norm = U / (speed + epsilon)
+V_norm = V / (speed + epsilon)
+
+# Plot the direction field
+plt.figure(figsize=(8, 8))
+plt.quiver(X1, X2, U_norm, V_norm, angles="xy", color="black", scale=40, alpha=0.4, width=0.0035)
+
+# Additional trajectories to show the circular motion
+initial_conditions = [
+    [5, 0],
+    [0, 3],
+    [1, 0]
+
+]
+
+t_values = np.linspace(0, 20, 500)
+for ic in initial_conditions:
+    sol = odeint(dx_dt, ic, t_values)
+    plt.plot(sol[:, 0], sol[:, 1], 'green', linestyle='-', linewidth=2)
+
+# Set plot limits and labels
+plt.xlim(-5, 5)
+plt.ylim(-5, 5)
+plt.xlabel("$x_1$", fontsize=14)
+plt.ylabel("$x_2$", fontsize=14)
+plt.title("Center (Neutral Stability)", fontsize=18)
+
+# Add grid
+plt.grid(True, linestyle='--', alpha=0.5)
+
+# Display the plot
+plt.tight_layout()
+plt.show()
+```
+
+### **Spiral Sink (Stable)**
+
+- **Eigenvalues:** $\lambda = a \pm bi$ with $a < 0$ (complex eigenvalues with a negative real part).
+- **Description:** The origin is stable, and trajectories spiral inward toward it, forming a _spiral sink_.
+
+```{python}
+#| label: spiral-sink
+#| code-summary: "Show Code"
+
+# Define the system of ODEs for a spiral sink (stable)
+def dx_dt(X, t):
+    x1, x2 = X
+    dx1 = -1 * x1 - 2 * x2
+    dx2 = 2 * x1 - 1 * x2
+    return [dx1, dx2]
+
+# Generate grid for direction field
+x1_vals = np.linspace(-5, 5, 35)
+x2_vals = np.linspace(-5, 5, 35)
+X1, X2 = np.meshgrid(x1_vals, x2_vals)
+
+# Calculate slopes for direction field
+U = -1 * X1 - 2 * X2
+V = 2 * X1 - 1 * X2
+
+# Normalize the direction field arrows
+speed = np.sqrt(U**2 + V**2)
+epsilon = 1e-10  # Small value to prevent division by zero
+U_norm = U / (speed + epsilon)
+V_norm = V / (speed + epsilon)
+
+# Plot the direction field
+plt.figure(figsize=(8, 8))
+plt.quiver(X1, X2, U_norm, V_norm, angles="xy", color="black", scale=40, alpha=0.4, width=0.0035)
+
+# Additional trajectories to show the spiral inward behavior
+initial_conditions = [
+    [5, 0],
+    [0, 5],
+    [-5, 0],
+    [0, -5],
+]
+
+t_values = np.linspace(0, 10, 500)
+for ic in initial_conditions:
+    sol = odeint(dx_dt, ic, t_values)
+    plt.plot(sol[:, 0], sol[:, 1], 'green', linestyle='-', linewidth=2)
+
+# Set plot limits and labels
+plt.xlim(-5, 5)
+plt.ylim(-5, 5)
+plt.xlabel("$x_1$", fontsize=14)
+plt.ylabel("$x_2$", fontsize=14)
+plt.title("Spiral Sink (Stable)", fontsize=18)
+
+# Add grid and legend
+plt.grid(True, linestyle='--', alpha=0.5)
+
+
+# Display the plot
+plt.tight_layout()
+plt.show()
+```
+
+## Summary
+
+The stability of the origin in a $2 \times 2$ system of differential equations depends on the real and imaginary parts of the eigenvalues of matrix $A$:
+
+- **Real positive eigenvalues** lead to a repelling node (unstable).
+- **Mixed positive and negative real eigenvalues** create a saddle point (unstable).
+- **Real negative eigenvalues** result in an attracting node (stable).
+- **Complex eigenvalues with a positive real part** indicate a spiral source (unstable).
+- **Purely imaginary eigenvalues** create a center (neutral stability).
+- **Complex eigenvalues with a negative real part** lead to a spiral sink (stable).
+
+By determining the eigenvalues, we can classify the type of stability at the origin and predict the behavior of trajectories in the phase plane.

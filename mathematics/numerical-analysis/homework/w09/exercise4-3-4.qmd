@@ -1,0 +1,8 @@
+---
+title: 'Exercise 4.3.4 (C4-P4)'
+author: 'Nathan Lunceford'
+---
+
+# **Problem**
+
+# **Solution**

@@ -1,0 +1,160 @@
+---
+title: 'Nonhomogeneous Systems: Undetermined Coefficients'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+When solving nonhomogeneous systems of differential equations, one common method to find a particular solution is **undetermined coefficients**. This approach works well when the nonhomogeneous term is of a specific form, such as polynomials, exponentials, sines, or cosines.
+
+## **Method of Undetermined Coefficients**
+
+Consider a system of differential equations given by:
+
+$$
+\mathbf{x}' = A \mathbf{x} + \mathbf{b}(t)
+$$
+
+where $A$ is an $n \times n$ matrix with constant entries, and $\mathbf{b}(t)$ is a nonhomogeneous term with a form that allows us to apply the method of undetermined coefficients.
+
+The method involves **guessing a form for the particular solution** $\mathbf{x}_p(t)$ based on the form of $\mathbf{b}(t)$ and then determining the coefficients by substituting $\mathbf{x}_p(t)$ back into the differential equation.
+
+## **Steps for Applying Undetermined Coefficients**
+
+1. **Identify the Form of $\mathbf{b}(t)$**: Determine the type of functions in the nonhomogeneous term $\mathbf{b}(t)$. Typical forms include:
+
+   - **Polynomials**: $\mathbf{b}(t) = t^n \mathbf{c}$
+   - **Exponentials**: $\mathbf{b}(t) = e^{rt} \mathbf{c}$
+   - **Sines and Cosines**: $\mathbf{b}(t) = \sin(\theta t) \mathbf{c}$ or $\cos(\theta t) \mathbf{c}$
+
+2. **Use the Table to Choose a Guess for $\mathbf{x}_p(t)$**: Based on the form of $\mathbf{b}(t)$, select a guess for $\mathbf{x}_p(t)$ using the table below. If the guess overlaps with solutions to the homogeneous system, multiply by $t$ as needed to create a new linearly independent solution.
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        font-family: Arial, sans-serif;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        text-align: left;
+        vertical-align: top;
+        padding: 8px;
+        font-size: 0.9em;
+        word-wrap: break-word;
+        white-space: normal;
+    }
+  
+</style>
+
+<table>
+  <tr>
+    <th>Form of $\mathbf{b}(t)$</th>
+    <th>Guess for $\mathbf{x}_p(t)$</th>
+    <th>Additional Guess (if overlaps with homogeneous solution)</th>
+  </tr>
+  <tr>
+    <td>$\mathbf{b}(t) = \mathbf{c}$</td>
+    <td>$\mathbf{x}_p = \mathbf{a}$</td>
+    <td>$\mathbf{x}_p = t \mathbf{a}$</td>
+  </tr>
+  <tr>
+    <td>$\mathbf{b}(t) = t \mathbf{c}$</td>
+    <td>$\mathbf{x}_p = \mathbf{a}_1 t + \mathbf{a}_0$</td>
+    <td>$\mathbf{x}_p = t^2 \mathbf{a}_1 + t \mathbf{a}_0$</td>
+  </tr>
+  <tr>
+    <td>$\mathbf{b}(t) = t^n \mathbf{c}$</td>
+    <td>$\mathbf{x}_p = \mathbf{a}_n t^n + \dots + \mathbf{a}_0$</td>
+    <td>$\mathbf{x}_p = t^{n+1} \mathbf{a}_n + \dots + t \mathbf{a}_0$</td>
+  </tr>
+  <tr>
+    <td>$\mathbf{b}(t) = e^{rt} \mathbf{c}$</td>
+    <td>$\mathbf{x}_p = e^{rt} \mathbf{a}$</td>
+    <td>$\mathbf{x}_p = t e^{rt} \mathbf{a}$</td>
+  </tr>
+  <tr>
+    <td>$\mathbf{b}(t) = t^n e^{rt} \mathbf{c}$</td>
+    <td>$\mathbf{x}_p = e^{rt} (\mathbf{a}_n t^n + \dots + \mathbf{a}_0)$</td>
+    <td>$\mathbf{x}_p = t^{n+1} e^{rt} (\mathbf{a}_n t^n + \dots + \mathbf{a}_0)$</td>
+  </tr>
+  <tr>
+    <td>$\mathbf{b}(t) = \cos(\theta t) \mathbf{c}$</td>
+    <td>$\mathbf{x}_p = \mathbf{a}_1 \cos(\theta t) + \mathbf{a}_2 \sin(\theta t)$</td>
+    <td>$\mathbf{x}_p = t (\mathbf{a}_1 \cos(\theta t) + \mathbf{a}_2 \sin(\theta t))$</td>
+  </tr>
+  <tr>
+    <td>$\mathbf{b}(t) = \sin(\theta t) \mathbf{c}$</td>
+    <td>$\mathbf{x}_p = \mathbf{a}_1 \cos(\theta t) + \mathbf{a}_2 \sin(\theta t)$</td>
+    <td>$\mathbf{x}_p = t (\mathbf{a}_1 \cos(\theta t) + \mathbf{a}_2 \sin(\theta t))$</td>
+  </tr>
+  <tr>
+    <td>$\mathbf{b}(t) = t^n \cos(\theta t) \mathbf{c}$</td>
+    <td>
+      $\mathbf{x}_p = ( \mathbf{a}_n t^n + \dots + \mathbf{a}_0 ) \cos(\theta t)$ <br>
+      $+ ( \mathbf{a}_{n+1} t^n + \dots + \mathbf{a}_1 ) \sin(\theta t)$
+    </td>
+    <td>
+      $\mathbf{x}_p = t^{n+1} \big[ ( \mathbf{a}_n t^n + \dots + \mathbf{a}_0 ) \cos(\theta t)$ <br>
+      $+ ( \mathbf{a}_{n+1} t^n + \dots + \mathbf{a}_1 ) \sin(\theta t) \big]$
+    </td>
+  </tr>
+  <tr>
+    <td>$\mathbf{b}(t) = t^n \sin(\theta t) \mathbf{c}$</td>
+    <td>
+      $\mathbf{x}_p = ( \mathbf{a}_n t^n + \dots + \mathbf{a}_0 ) \cos(\theta t)$ <br>
+      $+ ( \mathbf{a}_{n+1} t^n + \dots + \mathbf{a}_1 ) \sin(\theta t)$
+    </td>
+    <td>
+      $\mathbf{x}_p = t^{n+1} \big[ ( \mathbf{a}_n t^n + \dots + \mathbf{a}_0 ) \cos(\theta t)$ <br>
+      $+ ( \mathbf{a}_{n+1} t^n + \dots + \mathbf{a}_1 ) \sin(\theta t) \big]$
+    </td>
+  </tr>
+</table>
+
+1. **Substitute and Solve for Coefficients**: Substitute $\mathbf{x}_p(t)$ into the differential equation and solve for the unknown coefficients to ensure that the equation is satisfied.
+
+## **Example**
+
+For a system:
+
+$$
+\mathbf{x}' = A \mathbf{x} + e^{rt} \mathbf{c}
+$$
+
+we might guess:
+
+$$
+\mathbf{x}_p(t) = e^{rt} \mathbf{a}
+$$
+
+If this guess overlaps with the homogeneous solution, we would use $\mathbf{x}_p(t) = t e^{rt} \mathbf{a}$ instead. Substituting $\mathbf{x}_p(t)$ into the system, we determine $\mathbf{a}$ by equating terms.
+
+## **Summary**
+
+The method of undetermined coefficients provides a straightforward way to find a particular solution to nonhomogeneous systems when $\mathbf{b}(t)$ has certain forms. By using the table to make an educated guess for $\mathbf{x}_p(t)$ and solving for unknown coefficients, we can construct a particular solution to complete the system’s solution.

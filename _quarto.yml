@@ -1,0 +1,29 @@
+project:
+  type: website
+  preview:
+    port: 3000
+    browser: true
+    watch-inputs: true
+    navigate: true
+  output-dir: docs
+
+website:
+  title: 'NOTES'
+  page-navigation: true
+  navbar:
+    tools:
+      - icon: github
+        href: https://github.com/nlunce/notes
+    left:
+      - href: ./mathematics/index.html
+        text: MATHEMATICS
+      - href: ./computer-science
+        text: COMPUTER SCIENCE
+
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    css: styles.css
+    toc: true

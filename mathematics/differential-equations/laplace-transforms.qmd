@@ -1,0 +1,132 @@
+---
+title: 'Laplace Transforms'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+The **Laplace Transform** is a powerful mathematical tool used to simplify problems involving differential equations, especially in engineering and physics. It converts a function of time $f(t)$ (defined for $t \geq 0$) into a function of a complex variable $s$. This transformation makes it easier to analyze systems in the frequency domain and solve problems involving linear differential equations.
+
+In simple terms:
+
+- The Laplace Transform takes a function from the time domain and transforms it into a new function in the $s$-domain.
+- It simplifies operations like differentiation and integration into algebraic manipulations.
+
+## **Definition**
+
+The Laplace Transform of a function $f(t)$ is defined as:
+
+$$
+\mathcal{L}\{f(t)\}(s) = F(s) = \int_0^\infty e^{-st} f(t) \, dt
+$$
+
+where:
+
+- $t$: Time variable ($t \geq 0$).
+- $s$: Complex frequency variable.
+- $e^{-st}$: Exponential decay term.
+
+### **Key Requirements:**
+
+1. $f(t)$ must be **piecewise continuous** on $[0, \infty)$.
+2. $f(t)$ must be of **exponential order** (i.e., $|f(t)| \leq M e^{\alpha t}$ for some $M, \alpha > 0$).
+
+## **Example 1: Transform of $f(t) = 1$**
+
+The Laplace Transform of the constant function $f(t) = 1$ is:
+
+$$
+\mathcal{L}\{1\}(s) = \int_0^\infty e^{-st} \cdot 1 \, dt
+$$
+
+### **Solution:**
+
+$$
+\mathcal{L}\{1\}(s) = \int_0^\infty e^{-st} \, dt = \left[ \frac{-1}{s} e^{-st} \right]_0^\infty
+$$
+
+At $t = \infty$, $e^{-st} \to 0$ (for $s > 0$), and at $t = 0$, $e^{-st} = 1$. Therefore:
+
+$$
+\mathcal{L}\{1\}(s) = \frac{1}{s}, \quad s > 0
+$$
+
+## **Example 2: Transform of $f(t) = e^{at}$**
+
+The Laplace Transform of $f(t) = e^{at}$ is:
+
+$$
+\mathcal{L}\{e^{at}\}(s) = \int_0^\infty e^{-st} e^{at} \, dt = \int_0^\infty e^{-(s-a)t} \, dt
+$$
+
+### **Solution:**
+
+Using the same steps as before:
+
+$$
+\mathcal{L}\{e^{at}\}(s) = \left[ \frac{-1}{s-a} e^{-(s-a)t} \right]_0^\infty.
+$$
+
+At $t = \infty, e^{-(s-a)t} \to 0$ if $s > a$, and at $t = 0$, $e^{-(s-a)t} = 1$. Therefore:
+
+$$
+\mathcal{L}\{e^{at}\}(s) = \frac{1}{s - a}, \quad s > a
+$$
+
+## **Applications of the Laplace Transform**
+
+1. **Solving Differential Equations**:
+   The Laplace Transform converts differential equations into algebraic equations, which are easier to solve. Once solved, the inverse Laplace Transform is used to return to the time domain.
+
+2. **Control Systems**:
+   It is widely used in engineering to analyze the stability and performance of systems in the frequency domain.
+
+3. **Signal Processing**:
+   The Laplace Transform is used to study signals and their frequency components.
+
+4. **Circuit Analysis**:
+   It simplifies the analysis of electrical circuits with resistors, capacitors, and inductors by converting time-domain functions to the $s$-domain.
+
+## **Summary**
+
+The Laplace Transform is a fundamental tool for solving problems in engineering and physics, particularly those involving differential equations. Its key features are:
+
+1. Transforming functions from the time domain to the $s$-domain.
+2. Simplifying operations like differentiation and integration.
+3. Making it possible to analyze systems in the frequency domain.
+
+### **Common Transforms Recap:**
+
+| Function $f(t)$   | Laplace Transform $F(s)$    | Conditions |
+| ----------------- | --------------------------- | ---------- |
+| $1$               | $\frac{1}{s}$               | $s > 0$    |
+| $t^n$             | $\frac{n!}{s^{n+1}}$        | $s > 0$    |
+| $e^{at}$          | $\frac{1}{s - a}$           | $s > a$    |
+| $\sin(bt)$        | $\frac{b}{s^2 + b^2}$       | $s > 0$    |
+| $\cos(bt)$        | $\frac{s}{s^2 + b^2}$       | $s > 0$    |
+| $e^{at} \sin(bt)$ | $\frac{b}{(s-a)^2 + b^2}$   | $s > a$    |
+| $e^{at} \cos(bt)$ | $\frac{s-a}{(s-a)^2 + b^2}$ | $s > a$    |

@@ -1,0 +1,76 @@
+---
+title: 'Interpolation Error Formula'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 1
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+The interpolation error formula is an expression used to estimate the error between a true function $f(x)$ and its interpolating polynomial $P(x)$ at a specific point. This formula helps us understand how closely the interpolating polynomial approximates the function, especially based on the distribution of interpolation points and the smoothness of $f(x)$.
+
+The interpolation error formula is given by:
+
+$$
+f(x) - P(x) = \frac{(x - x_1)(x - x_2) \cdots (x - x_n)}{n!} f^{(n)}(c)
+$$
+
+where:
+
+- $n$ is the number of interpolated points.
+- $P(x)$ is the interpolating polynomial of degree $n - 1$ that fits the points $(x_1, y_1), \ldots, (x_n, y_n)$,
+- $f^{(n)}(c)$ is the $n$-th derivative of $f(x)$ evaluated at some unknown point $c$ in the interval $[x_1, x_n]$.
+
+## **What This Formula Shows**
+
+This formula provides the error at a **specific point $x$** between the true function $f(x)$ and the interpolating polynomial $P(x)$. It does not directly give the maximum error across the entire interval, but rather the error at a particular $x$ based on the distribution of interpolation points and the properties of $f(x)$ at that point.
+
+### **Key Points**
+
+1. **Point-Specific Error**: This formula gives the interpolation error at a particular point $x$. It shows the difference $f(x) - P(x)$ at that point rather than over the entire interval.
+
+2. **Dependence on Higher Derivatives**: The error depends on the $n$-th derivative of $f(x)$ evaluated at some unknown point $c$ within $[x_1, x_n]$. This term reflects how "curved" $f(x)$ is over the interval. A larger $|f^{(n)}(c)|$ generally results in a larger error, as higher derivatives capture more variation in $f(x)$.
+
+3. **Approximate Error Size**: Although $c$ is unknown, we can approximate the error by assuming $f^{(n)}(c)$ reaches its maximum absolute value over $[x_1, x_n]$. This allows us to estimate an **upper bound** on the error at any point in the interval, though it’s still approximate.
+
+4. **Effect of Distance from Nodes**: The term $(x - x_1)(x - x_2) \cdots (x - x_n)$ grows as $x$ moves away from the interpolation nodes. This indicates that interpolation error typically increases the farther $x$ is from the interpolation points, which is why interpolation tends to be most accurate near the nodes.
+
+## **Finding the Maximum Error Over the Interval**
+
+To find the maximum error over the entire interval $[x_1, x_n]$, we can use the interpolation error formula to create an **upper bound** for the error on the interval:
+
+1. **Maximize $|f^{(n)}(x)|$ over the interval**: Find the maximum of the $n$-th derivative of $f(x)$, $f^{(n)}(x)$, over the interval $[x_1, x_n]$. This value represents the largest possible influence of the function's curvature on the error.
+
+2. **Maximize $|(x - x_1)(x - x_2) \cdots (x - x_n)|$**: Determine the maximum value of the product $|(x - x_1)(x - x_2) \cdots (x - x_n)|$ over the interval $[x_1, x_n]$. This product is largest near the midpoint of the interval (between the nodes) and tends to be smaller near the endpoints.
+
+3. **Combine the Results**: Multiply these two maximum values and divide by $n!$ to get an **upper bound** on the maximum error over the interval:
+
+   $$
+   \max_{x \in [x_1, x_n]} |f(x) - P(x)| \approx \frac{\max_{x \in [x_1, x_n]} |(x - x_1)(x - x_2) \cdots (x - x_n)|}{n!} \cdot \max_{x \in [x_1, x_n]} |f^{(n)}(x)|
+   $$
+
+This approach provides an approximate maximum error over the interval. By using these maximum values, we can ensure that the error does not exceed this bound anywhere in $[x_1, x_n]$.
+
+In summary, the interpolation error formula gives insight into the **local error** at a specific point and can be used to estimate the **maximum error** on the interval by considering the maximum values of the components in the formula.

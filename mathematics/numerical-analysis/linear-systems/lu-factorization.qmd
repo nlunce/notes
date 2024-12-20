@@ -1,0 +1,174 @@
+---
+title: 'LU Factorization'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show Code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+LU Factorization (or LU Decomposition) is a powerful technique in linear algebra for breaking down a matrix $A$ into the product of a lower triangular matrix $L$ and an upper triangular matrix $U$. This factorization is commonly used for solving linear systems, computing determinants, and inverting matrices.
+
+## **Definition and Decomposition**
+
+For a square matrix $A$, LU Factorization is given by:
+
+$$
+A = LU
+$$
+
+where:
+
+- $L$ is a lower triangular matrix with ones on the diagonal.
+- $U$ is an upper triangular matrix.
+
+If $A$ cannot be decomposed directly, **partial pivoting** may be applied, resulting in:
+
+$$
+PA = LU
+$$
+
+where $P$ is a permutation matrix that records row exchanges.
+
+## **Why You Subtract Rows**
+
+When performing row operations to compute $LU$, the operation for row elimination is explicitly written as:
+
+$$
+R_j \to R_j - L_{ij} R_i
+$$
+
+where:
+
+- $R_i$ is the pivot row.
+- $R_j$ is the row being updated.
+- $L_{ij} = \frac{a_{ji}}{a_{ii}}$ is the multiplier used to eliminate the element $a_{ji}$.
+
+### **Importance of Subtraction:**
+
+- **Correct Multiplier Signs:** Subtracting ensures that the multiplier $L_{ij}$ is stored with its correct sign in the $L$-matrix.
+- **Consistency in Computation:** Adding the negative version (i.e., $R_j \to R_j + (-L_{ij} R_i)$) can lead to confusion and sign errors in $L_{ij}$, even though it seems conceptually similar.
+- **Preventing Errors:** Adding instead of subtracting might inadvertently reverse the signs of the entries in $L$, causing errors in the final decomposition.
+
+### **Example of a Sign Error:**
+
+Suppose we start with the matrix:
+
+$$
+A = \begin{bmatrix}
+4 & 8 & -4 \\
+-1 & 1 & -2 \\
+2 & 3 & 1
+\end{bmatrix}
+$$
+
+1. **Correct Subtraction:**
+
+   Compute $L_{21} = \frac{-1}{4}$, and perform $R_2 \to R_2 - L_{21} R_1$:
+
+   $$
+   L_{21} = \frac{-1}{4}, \quad R_2 \to R_2 - L_{21} R_1
+   $$
+
+   Result:
+
+   $$
+   \begin{bmatrix}
+   4 & 8 & -4 \\
+   0 & 3 & -3 \\
+   2 & 3 & 1
+   \end{bmatrix}
+   $$
+
+   The multiplier $L_{21} = \frac{-1}{4}$ is correctly stored.
+
+2. **Adding the Negative Version:**
+
+   If we compute $R_2 \to R_2 + (-L_{21} R_1)$, we might misinterpret $-L_{21} = \frac{1}{4}$ as $+\frac{1}{4}$:
+
+   $$
+   L_{21} = \frac{1}{4}, \quad R_2 \to R_2 + (-L_{21} R_1)
+   $$
+
+   Result:
+
+   $$
+   \begin{bmatrix}
+   4 & 8 & -4 \\
+   0 & -3 & +3 \\
+   2 & 3 & 1
+   \end{bmatrix}
+   $$
+
+   Here, $L_{21}$ would have the wrong sign in the $L$-matrix, leading to incorrect results.
+
+## **Conditions for LU Factorization**
+
+LU Factorization is valid when:
+
+1. **Matrix is Square**: $A$ must be a square matrix.
+2. **Non-Singular Leading Submatrices**: Each leading principal submatrix (upper-left submatrix) of $A$ must be non-singular.
+
+When these conditions are not met, row pivoting enables decomposition.
+
+## **Factorization Process**
+
+To factorize $A$ into $L$ and $U$:
+
+1. **Eliminate Elements**: Perform row operations to create zeros below the main diagonal of $U$.
+2. **Store Multipliers**: Record the multipliers in $L$.
+
+### **Example**
+
+Given a $3 \times 3$ matrix:
+
+$$
+A = \begin{pmatrix} 2 & 3 & 1 \\ 4 & 7 & -1 \\ -2 & 3 & 5 \end{pmatrix}
+$$
+
+1. Transform $A$ into $U$ using row operations.
+2. Record elimination factors in $L$.
+3. The result satisfies $A = LU$.
+
+## **Solving Systems with LU Factorization**
+
+LU Factorization allows us to solve $Ax = b$ by breaking it down into two simpler systems:
+
+1. **Solve $Ly = b$**: Use forward substitution, as $L$ is lower triangular.
+2. **Solve $Ux = y$**: Use back substitution with $U$ as an upper triangular matrix.
+
+## **Pivoting and Permutation**
+
+In cases where $A$ has zeros or small values on the diagonal, **partial pivoting** improves numerical stability by reordering rows to place a larger element on the diagonal:
+
+$$
+PA = LU
+$$
+
+where $P$ is a permutation matrix that tracks row exchanges.
+
+## **Conclusion**
+
+LU Factorization is an essential tool in linear algebra, providing a simplified method to solve linear systems efficiently. By breaking matrices into triangular forms, it reduces computational complexity and lays the groundwork for more advanced numerical techniques. Always remember to **subtract row operations consistently** to avoid sign errors and ensure correct results.

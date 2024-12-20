@@ -1,0 +1,99 @@
+---
+title: 'Exercise 10.2.3a Plot (C10-P5)'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 1
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: false
+  watch-inputs: true
+---
+
+# **Problem:**
+
+::: {.callout-note icon=false }
+
+## **10.2.3a Plot**
+
+Use the trigonometric interpolating function found previously to verify that it interpolates the given data:
+
+| $t$           | $x$ |
+| ------------- | --- |
+| 0             | 0   |
+| $\frac{1}{8}$ | 1   |
+| $\frac{1}{4}$ | 0   |
+| $\frac{3}{8}$ | -1  |
+| $\frac{1}{2}$ | 0   |
+| $\frac{5}{8}$ | 1   |
+| $\frac{3}{4}$ | 0   |
+| $\frac{7}{8}$ | -1  |
+
+:::
+
+# **Solution:**
+
+The interpolating function is:
+
+$$
+P_8(t) = \sin(4\pi t)
+$$
+
+## **Plot**
+
+```{python}
+#| label: Plot
+#| code-summary: Show code
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Given data
+t_data = np.array([0, 1/8, 1/4, 3/8, 1/2, 5/8, 3/4, 7/8])
+x_data = np.array([0, 1, 0, -1, 0, 1, 0, -1])
+
+# Interpolating function
+def P_8(t):
+    return np.sin(4*np.pi*t)
+
+t_plot = np.linspace(0, 1, 400)
+x_plot = P_8(t_plot)
+
+# Plot the interpolating function
+plt.figure(figsize=(8,5))
+plt.plot(t_plot, x_plot, label='Interpolating Function', color='blue')
+
+# Plot the original data points
+plt.scatter(t_data, x_data, color='red', zorder=5, label='Data Points')
+
+plt.title('Trigonometric Interpolation')
+plt.xlabel('t')
+plt.ylabel('x')
+plt.grid(True)
+plt.legend()
+
+plt.show()
+```
+
+::: {.callout-tip icon=false}
+
+## **Verification:**
+
+As seen in the plot, the function $P_8(t)$ passes through all the given data points.
+
+:::

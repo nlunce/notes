@@ -1,0 +1,148 @@
+---
+title: 'Roots of Unity: From Real Numbers to the Complex Plane'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show Code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+---
+
+## **Overview**
+
+Roots of unity are solutions to the equation:
+
+$$
+z^n = 1
+$$
+
+where $z$ is a number (real or complex) and $n$ is a positive integer. These solutions represent the numbers that, when multiplied by themselves $n$ times, equal 1.
+
+## **Roots of Unity in Real Numbers**
+
+### **What Are They?**
+
+In the real numbers, the equation $z^n = 1$ has at most two solutions:
+
+1. $z = 1$ (the trivial solution).
+2. $z = -1$, but only when $n$ is even.
+
+### **Primitive Roots in Real Numbers**
+
+Primitive roots of unity are roots that **generate all roots of unity through their powers**. In the real numbers:
+
+- $z = 1$: Trivial root, but it cannot generate anything else. Not primitive.
+- $z = -1$: Primitive for even $n$, as it alternates between $1$ and $-1$.
+
+Thus, in the real numbers:
+
+- For $n = 2$, the primitive root is $-1$.
+- For $n > 2$, there are no new primitive roots in the reals.
+
+This limitation motivates expanding the idea to the **complex plane**.
+
+## **Extending Roots of Unity to the Complex Plane**
+
+### **Complex Roots of Unity**
+
+To find all solutions to $z^n = 1$ in the complex plane, we use **Euler’s formula**:
+
+$$
+z = e^{i \theta} = \cos(\theta) + i \sin(\theta)
+$$
+
+where $\theta$ is the angle (in radians) of $z$ on the unit circle in the complex plane. The general solution to $z^n = 1$ is:
+
+$$
+z_k = e^{i \frac{2\pi k}{n}}, \quad k = 0, 1, \dots, n-1
+$$
+
+These solutions are the **$n$-th roots of unity**. They are equally spaced points on the unit circle, with angles:
+
+$$
+\theta_k = \frac{2\pi k}{n}
+$$
+
+### **Example: 4th Roots of Unity ($n = 4$)**
+
+For $z^4 = 1$, the roots are:
+
+1. $z_0 = e^{i \frac{2\pi \cdot 0}{4}} = e^{i 0} = 1$
+2. $z_1 = e^{i \frac{2\pi \cdot 1}{4}} = e^{i \frac{\pi}{2}} = i$
+3. $z_2 = e^{i \frac{2\pi \cdot 2}{4}} = e^{i \pi} = -1$
+4. $z_3 = e^{i \frac{2\pi \cdot 3}{4}} = e^{i \frac{3\pi}{2}} = -i$
+
+These roots are $\{1, i, -1, -i\}$, representing four equally spaced points on the unit circle.
+
+## **Primitive Roots of Unity**
+
+### **What Makes a Root Primitive?**
+
+A root of unity $z$ is **primitive** if it generates all $n$-th roots of unity through its successive powers.
+
+Formally:
+
+- $z$ is primitive if $z^k \neq 1$ for $1 \leq k < n$, and $z^n = 1$
+
+### **Example: Primitive Roots for $n = 4$**
+
+The 4th roots of unity are $\{1, i, -1, -i\}$. Let’s test each root:
+
+1. $z = 1$: $1^k = 1$ for all $k$. Not primitive.
+2. $z = i$:
+   - $i^1 = i$
+   - $i^2 = -1$
+   - $i^3 = -i$
+   - $i^4 = 1$ (cycles through all roots) **Primitive**
+3. $z = -1$:
+   - $(-1)^1 = -1$,
+   - $(-1)^2 = 1$ (only alternates between $-1$ and $1$). Not primitive.
+4. $z = -i$:
+   - $(-i)^1 = -i$
+   - $(-i)^2 = -1$
+   - $(-i)^3 = i$
+   - $(-i)^4 = 1$ **Primitive**
+
+Thus, the primitive roots for $n = 4$ are $i$ and $-i$.
+
+## **Visualizing Roots of Unity**
+
+Roots of unity lie on the unit circle in the complex plane, evenly spaced at angles $\frac{2\pi}{n}$. For $n = 4$:
+
+- $z_0 = 1$ at $0^\circ$
+- $z_1 = i$ at $90^\circ$
+- $z_2 = -1$ at $180^\circ$
+- $z_3 = -i$ at $270^\circ$
+
+Primitive roots, like $i$, act as the "generator," visiting each point exactly once when raised to successive powers.
+
+## **Applications of Roots of Unity**
+
+1. **In Algebra**:  
+   Roots of unity are solutions to the polynomial $z^n - 1 = 0$, foundational in field theory and Galois theory.
+
+2. **In Fourier Analysis**:  
+   The Discrete Fourier Transform (DFT) uses primitive roots to decompose signals into frequency components.
+
+3. **In Number Theory**:  
+   Roots of unity appear in modular arithmetic, cyclotomic fields, and cryptography.
+
+## **Summary**
+
+- **Real Numbers**: Only $1$ and $-1$ are roots of unity, and $-1$ is primitive for $n = 2$.
+- **Complex Plane**: Extending to complex numbers introduces all $n$-th roots of unity, equally spaced on the unit circle.
+- **Primitive Roots**: These roots generate all other roots through successive powers, playing a central role in algebra, signal processing, and number theory.

@@ -1,0 +1,102 @@
+---
+title: 'Generalized Eigenvectors in Differential Equations'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+When solving systems of differential equations, we use **eigenvectors** to
+understand how the system evolves over time. Sometimes, however, we encounter a
+repeated eigenvalue but don't have enough unique eigenvectors to fully describe
+the solution. This is where **generalized eigenvectors** come into play.
+
+## **Why Generalized Eigenvectors Are Needed**
+
+1. **Eigenvectors and Eigenvalues Recap**:
+
+   - For a matrix $A$, an **eigenvalue** $\lambda$ represents a rate of growth
+     or decay in the system.
+   - An **eigenvector** $\mathbf{v}$ associated with $\lambda$ is a direction in
+     which the system evolves according to $e^{\lambda t} \mathbf{v}$.
+
+2. **The Problem with Repeated Eigenvalues**:
+
+   - When an eigenvalue is repeated (e.g., $\lambda = 4$ with multiplicity 2),
+     we typically need two linearly independent eigenvectors to capture all
+     directions in the solution space.
+   - If there’s only one eigenvector for a repeated eigenvalue, we can't span
+     the entire space. This is where we turn to **generalized eigenvectors**.
+
+3. **What a Generalized Eigenvector Does**:
+
+   - A generalized eigenvector $\mathbf{v}_g$ helps fill in the missing
+     direction when there's only one regular eigenvector.
+   - Together, the eigenvector $\mathbf{v}$ and generalized eigenvector
+     $\mathbf{v}_g$ create a complete solution by introducing an extra component
+     to the motion, such as $t e^{\lambda t} \mathbf{v}_g$.
+   - This additional term allows the solution to "expand" over time, rather than
+     being confined to a single line along $\mathbf{v}$.
+
+## **How Generalized Eigenvectors Affect the Solution**
+
+With a regular eigenvector $\mathbf{v}$ and generalized eigenvector
+$\mathbf{v}_g$:
+
+- The solution takes the form:
+
+  $$
+  \mathbf{x}(t) = c_1 e^{\lambda t} \mathbf{v} + c_2 t e^{\lambda t} \mathbf{v}_g
+  $$
+
+- Here:
+
+  - $e^{\lambda t} \mathbf{v}$: Moves along the direction of $\mathbf{v}$.
+  - $t e^{\lambda t} \mathbf{v}_g$: Adds a "twist" or "shearing" motion that
+    broadens the path, allowing the solution to explore the full space over
+    time.
+
+## **Visual Intuition**
+
+1. **Eigenvector Only**:
+
+   - Imagine the solution tracing a single line in the direction of
+     $\mathbf{v}$, say along the x-axis. Without more directions, the solution
+     can't expand in other directions.
+
+2. **With Generalized Eigenvector**:
+
+   - The term $t e^{\lambda t} \mathbf{v}_g$ introduces growth along a new
+     direction, allowing the solution to move out of a single line. This gives a
+     richer motion, often creating a "shearing" or "sweeping" effect in the
+     plane.
+
+## **Summary**
+
+Generalized eigenvectors allow us to fully capture the behavior of systems with
+repeated eigenvalues. They provide additional directions for the solution to
+evolve, ensuring it spans all necessary dimensions and doesn’t collapse onto a
+single line.

@@ -1,0 +1,397 @@
+---
+title: 'Linear Systems: $A\mathbf{x} = \mathbf{b}$'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show Code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+In the realm of linear algebra, the equation $A\mathbf{x} = \mathbf{b}$ serves as a foundational representation of a system of linear equations. Understanding the components of this equation is crucial for solving linear systems, analyzing their properties, and applying them to real-world problems. This note delves into the **inputs** of the equation $A\mathbf{x} = \mathbf{b}$, elucidating their roles, characteristics, and significance in the context of linear systems.
+
+## **Components of $A\mathbf{x} = \mathbf{b}$**
+
+To comprehensively grasp the inputs of the equation $A\mathbf{x} = \mathbf{b}$, it's essential to break down each component:
+
+1. **Matrix $A$ (Coefficient Matrix):**
+
+   - **Definition:** A rectangular array of numbers arranged in rows and columns.
+   - **Role:** Encapsulates the coefficients of the variables in the system of equations.
+   - **Dimensions:** If $A$ is an $m \times n$ matrix, there are $m$ equations and $n$ variables.
+   - **Example:**
+     $$
+     A = \begin{bmatrix}
+     1 & 2 \\
+     3 & 4 \\
+     \end{bmatrix}
+     $$
+
+2. **Vector $\mathbf{b}$ (Right-Hand Side Vector):**
+
+   - **Definition:** A column vector representing the constants from the right side of each equation.
+   - **Role:** Contains the target values that the linear combination of columns of $A$ (scaled by $\mathbf{x}$) should equal.
+   - **Dimensions:** An $m \times 1$ vector, corresponding to the number of equations.
+   - **Example:**
+     $$
+     \mathbf{b} = \begin{bmatrix}
+     5 \\
+     11 \\
+     \end{bmatrix}
+     $$
+
+3. **Vector $\mathbf{x}$ (Solution Vector):**
+   - **Definition:** A column vector containing the variables of the system.
+   - **Role:** Represents the values of the variables that satisfy all equations in the system.
+   - **Dimensions:** An $n \times 1$ vector, where $n$ is the number of variables.
+   - **Example:**
+     $$
+     \mathbf{x} = \begin{bmatrix}
+     x_1 \\
+     x_2 \\
+     \end{bmatrix}
+     $$
+
+## **Identifying the Inputs**
+
+In the equation $A\mathbf{x} = \mathbf{b}$:
+
+- **Inputs:** $A$ and $\mathbf{b}$
+- **Output (Solution):** $\mathbf{x}$
+
+### **1. Matrix $A$ as an Input**
+
+- **Purpose:** Defines the relationships between the variables in the system. Each row of $A$ corresponds to an equation, and each column corresponds to a variable.
+- **Example Interpretation:**
+
+  Consider the matrix:
+
+  $$
+  A = \begin{bmatrix}
+  1 & 2 \\
+  3 & 4 \\
+  \end{bmatrix}
+  $$
+
+  This represents the system of equations:
+
+  $$
+  \begin{cases}
+  1x_1 + 2x_2 = b_1 \\
+  3x_1 + 4x_2 = b_2 \\
+  \end{cases}
+  $$
+
+### **2. Vector $\mathbf{b}$ as an Input**
+
+- **Purpose:** Provides the constants against which the linear combinations of variables (as defined by $A$) are measured. Essentially, $\mathbf{b}$ represents the desired outcomes or targets for each equation.
+
+- **Example Interpretation:**
+
+  Given:
+
+  $$
+  \mathbf{b} = \begin{bmatrix}
+  5 \\
+  11 \\
+  \end{bmatrix}
+  $$
+
+  The system becomes:
+
+  $$
+  \begin{cases}
+  1x_1 + 2x_2 = 5 \\
+  3x_1 + 4x_2 = 11 \\
+  \end{cases}
+  $$
+
+## **The Role of Inputs in Solving $A\mathbf{x} = \mathbf{b}$**
+
+The inputs $A$ and $\mathbf{b}$ determine the nature of the system and influence the methods used to find the solution $\mathbf{x}$. Here's how:
+
+### **1. System Properties Influenced by $A$ and $\mathbf{b}$**
+
+- **Uniqueness of Solution:**
+
+  - If $A$ is **invertible** (i.e., $\det(A) \neq 0$ for square matrices), the system has a **unique solution**.
+  - If $A$ is **singular** (i.e., $\det(A) = 0$), the system may have **infinitely many solutions** or **no solution**.
+
+- **Consistency:**
+  - The system is **consistent** if at least one solution exists.
+  - It is **inconsistent** if no solution satisfies all equations simultaneously.
+
+### **2. Influence on Solution Methods**
+
+- **Direct Methods:**
+
+  - Applicable when $A$ is well-conditioned and invertible.
+  - Examples include Gaussian elimination and matrix inversion.
+
+- [**Iterative Methods:**](../w07/ax-b-iterative-methods/index.html)
+
+  - Useful for large or sparse systems where direct methods are computationally expensive.
+  - Examples include [**Jacobi**](../w07/ax-b-iterative-methods/jacobi-method.html), [**Gauss-Seidel**](../w07/ax-b-iterative-methods/gauss-seidel-method.html), and Conjugate Gradient methods.
+
+- [**Least Squares:**](../w08/least-squares.html)
+  - Employed when the system is overdetermined (more equations than variables) and **no exact solution** exists.
+  - Seeks to minimize the [**residual**](../w07/errors-analysis-linear-systems/residual-linear-systems.html) $\|\mathbf{b} - A\mathbf{x}\|$.
+
+## **A Practical Example**
+
+To solidify the understanding of inputs in $A\mathbf{x} = \mathbf{b}$, let's walk through a concrete example.
+
+### **The Problem Setup**
+
+Consider the following system of linear equations:
+
+$$
+\begin{cases}
+1x_1 + 2x_2 = 5 \\
+3x_1 + 4x_2 = 11 \\
+\end{cases}
+$$
+
+This can be written in matrix form as:
+
+$$
+A\mathbf{x} = \mathbf{b}
+$$
+
+Where:
+
+$$
+A = \begin{bmatrix}
+1 & 2 \\
+3 & 4 \\
+\end{bmatrix}, \quad
+\mathbf{x} = \begin{bmatrix}
+x_1 \\
+x_2 \\
+\end{bmatrix}, \quad
+\mathbf{b} = \begin{bmatrix}
+5 \\
+11 \\
+\end{bmatrix}
+$$
+
+### **Step 1: Define the Inputs**
+
+- **Coefficient Matrix $A$:**
+
+  $$
+  A = \begin{bmatrix}
+  1 & 2 \\
+  3 & 4 \\
+  \end{bmatrix}
+  $$
+
+- **Right-Hand Side Vector $\mathbf{b}$:**
+
+  $$
+  \mathbf{b} = \begin{bmatrix}
+  5 \\
+  11 \\
+  \end{bmatrix}
+  $$
+
+### **Step 2: Analyze the Inputs**
+
+- **Invertibility of $A$:**
+
+  Compute the determinant of $A$:
+
+  $$
+  \det(A) = (1)(4) - (2)(3) = 4 - 6 = -2 \neq 0
+  $$
+
+  Since $\det(A) \neq 0$, $A$ is **invertible**, and the system has a **unique solution**.
+
+### **Step 3: Solve for $\mathbf{x}$**
+
+Using the inverse of $A$:
+
+$$
+\mathbf{x} = A^{-1}\mathbf{b}
+$$
+
+First, compute $A^{-1}$:
+
+$$
+A^{-1} = \frac{1}{\det(A)} \begin{bmatrix}
+4 & -2 \\
+-3 & 1 \\
+\end{bmatrix} = \frac{1}{-2} \begin{bmatrix}
+4 & -2 \\
+-3 & 1 \\
+\end{bmatrix} = \begin{bmatrix}
+-2 & 1 \\
+1.5 & -0.5 \\
+\end{bmatrix}
+$$
+
+Now, multiply $A^{-1}$ by $\mathbf{b}$:
+
+$$
+\mathbf{x} = \begin{bmatrix}
+-2 & 1 \\
+1.5 & -0.5 \\
+\end{bmatrix} \begin{bmatrix}
+5 \\
+11 \\
+\end{bmatrix} = \begin{bmatrix}
+(-2)(5) + (1)(11) \\
+(1.5)(5) + (-0.5)(11) \\
+\end{bmatrix} = \begin{bmatrix}
+-10 + 11 \\
+7.5 - 5.5 \\
+\end{bmatrix} = \begin{bmatrix}
+1 \\
+2 \\
+\end{bmatrix}
+$$
+
+**Solution:**
+
+$$
+\mathbf{x} = \begin{bmatrix}
+1 \\
+2 \\
+\end{bmatrix} \implies x_1 = 1, \quad x_2 = 2
+$$
+
+### **Step 4: Interpretation of Inputs and Solution**
+
+- **Inputs $A$ and $\mathbf{b}$:**
+
+  - Define the system's structure and target outcomes.
+  - Determine the method used for solving (e.g., direct inversion due to invertibility).
+
+- **Solution $\mathbf{x}$:**
+  - Represents the values that satisfy both equations simultaneously.
+  - In this case, $x_1 = 1$ and $x_2 = 2$ are the unique values that make both equations true.
+
+## **Geometric Interpretation**
+
+Visualizing $A\mathbf{x} = \mathbf{b}$ can enhance comprehension, especially in two dimensions.
+
+### E**xample Visualization**
+
+Consider the system:
+
+$$
+\begin{cases}
+1x_1 + 2x_2 = 5 \\
+3x_1 + 4x_2 = 11 \\
+\end{cases}
+$$
+
+Graphically, each equation represents a line in the $x_1$-$x_2$ plane.
+
+- **First Equation:** $1x_1 + 2x_2 = 5$
+
+  - Slope: $-\frac{1}{2}$
+  - Intercepts: $(5, 0)$ and $(0, 2.5)$
+
+- **Second Equation:** $3x_1 + 4x_2 = 11$
+  - Slope: $-\frac{3}{4}$
+  - Intercepts: $(\frac{11}{3}, 0)$ and $(0, \frac{11}{4})$
+
+The unique solution $(1, 2)$ is the intersection point of these two lines.
+
+### **Visual Representation**
+
+```{python}
+#| label: geometric-interpretation
+#| code-summary: "Show Code"
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+x1 = np.linspace(-1, 4, 400)
+
+x2_eq1 = (5 - x1) / 2
+
+x2_eq2 = (11 - 3*x1) / 4
+
+# Create the plot
+plt.figure(figsize=(8, 6))
+plt.plot(x1, x2_eq1, label=r'$1x_1 + 2x_2 = 5$', color='blue')
+plt.plot(x1, x2_eq2, label=r'$3x_1 + 4x_2 = 11$', color='green')
+
+plt.plot(1, 2, 'ro', label=r'Solution $(1, 2)$')
+
+plt.xlim(-1, 4)
+plt.ylim(-1, 4)
+
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.xlabel(r'$x_1$', fontsize=12)
+plt.ylabel(r'$x_2$', fontsize=12)
+plt.title('Geometric Interpretation of $A\mathbf{x} = \mathbf{b}$', fontsize=14)
+plt.legend()
+plt.axhline(0, color='black', linewidth=1)
+plt.axvline(0, color='black', linewidth=1)
+plt.show()
+```
+
+### **Explanation of the Visualization**
+
+- **Blue Line:** Represents the equation $1x_1 + 2x_2 = 5$.
+- **Green Line:** Represents the equation $3x_1 + 4x_2 = 11$.
+- **Red Dot:** Marks the unique solution $(1, 2)$, where the two lines intersect.
+
+This visualization underscores how the inputs $A$ and $\mathbf{b}$ define the system's structure and determine the solution's existence and uniqueness.
+
+## **Importance of Understanding Inputs**
+
+Grasping the role and nature of inputs in $A\mathbf{x} = \mathbf{b}$ is pivotal for several reasons:
+
+1. **Solution Strategy:**
+
+   - Knowing whether $A$ is invertible informs the choice of solution methods (e.g., using the inverse matrix, LU decomposition, etc.).
+
+2. **Numerical Stability:**
+
+   - The properties of $A$ (such as its condition number) influence the sensitivity of the solution to perturbations in $A$ or $\mathbf{b}$.
+
+3. **Applicability to Real-World Problems:**
+
+   - In fields like engineering, economics, and computer science, accurately modeling problems as linear systems depends on correctly identifying $A$ and $\mathbf{b}$.
+
+4. **Performance Optimization:**
+   - Understanding the size and sparsity of $A$ can guide the selection of efficient algorithms for large-scale systems.
+
+## **Conclusion**
+
+In the linear system $A\mathbf{x} = \mathbf{b}$:
+
+- **Inputs:**
+
+  - **Matrix $A$:** Defines the coefficients and relationships between variables.
+  - **Vector $\mathbf{b}$:** Specifies the target outcomes or constants for each equation.
+
+- **Output:**
+  - **Vector $\mathbf{x}$:** The solution that satisfies all equations in the system.
+
+Recognizing and comprehending the roles of $A$ and $\mathbf{b}$ are fundamental for effectively solving linear systems, analyzing their properties, and applying them to diverse practical scenarios. Mastery of these concepts equips mathematicians, engineers, and scientists with the tools necessary to tackle complex problems with confidence and precision.

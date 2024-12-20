@@ -1,0 +1,194 @@
+---
+title: 'Exercise 4.3.1d'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 1
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+# **Problem**
+
+::: {.callout-note icon=false }
+
+## **4.3.1d**
+
+Apply classical Gram–Schmidt orthogonalization to find the full QR factorization of the matrix:
+
+$$
+\mathbf{A} = \begin{bmatrix} 4 & 8 & 1 \\ 0 & 2 & -2 \\ 3 & 6 & 7 \end{bmatrix}
+$$
+
+:::
+
+# **Solution**
+
+## Define the Columns of Matrix $\mathbf{A}$
+
+Represent the columns of $\mathbf{A}$ as vectors:
+
+$$
+\mathbf{a}_1 = \begin{bmatrix} 4 \\ 0 \\ 3 \end{bmatrix}, \quad \mathbf{a}_2 = \begin{bmatrix} 8 \\ 2 \\ 6 \end{bmatrix}, \quad \mathbf{a}_3 = \begin{bmatrix} 1 \\ -2 \\ 7 \end{bmatrix}
+$$
+
+## Finding $\mathbf{q}_1$
+
+To find the first orthonormal vector $\mathbf{q}_1$, normalize $\mathbf{a}_1$.
+
+1. **Calculate the norm of $\mathbf{a}_1$**:
+
+   $$
+   \|\mathbf{a}_1\| = \sqrt{4^2 + 0^2 + 3^2} = \sqrt{16 + 9} = \sqrt{25} = 5
+   $$
+
+2. **Normalize $\mathbf{a}_1$**:
+
+   $$
+   \mathbf{q}_1 = \frac{\mathbf{a}_1}{\|\mathbf{a}_1\|} = \frac{1}{5} \begin{bmatrix} 4 \\ 0 \\ 3 \end{bmatrix} = \begin{bmatrix} \frac{4}{5} \\ 0 \\ \frac{3}{5} \end{bmatrix}
+   $$
+
+## Finding $\mathbf{q}_2$
+
+To find $\mathbf{q}_2$, project $\mathbf{a}_2$ onto $\mathbf{q}_1$ and then subtract this projection from $\mathbf{a}_2$.
+
+1. **Calculate the projection of $\mathbf{a}_2$ onto $\mathbf{q}_1$**:
+
+   $$
+   \text{proj}_{\mathbf{q}_1} \mathbf{a}_2 = \left( \mathbf{a}_2 \cdot \mathbf{q}_1 \right) \mathbf{q}_1
+   $$
+
+   Since $\mathbf{q}_1$ is a unit vector, $\mathbf{q}_1 \cdot \mathbf{q}_1 = 1$.
+
+2. **Compute $\mathbf{a}_2 \cdot \mathbf{q}_1$**:
+
+   $$
+   \mathbf{a}_2 \cdot \mathbf{q}_1 = \begin{bmatrix} 8 \\ 2 \\ 6 \end{bmatrix} \cdot \begin{bmatrix} \frac{4}{5} \\ 0 \\ \frac{3}{5} \end{bmatrix} = \frac{32}{5} + 0 + \frac{18}{5} = \frac{50}{5} = 10
+   $$
+
+3. **Calculate $\text{proj}_{\mathbf{q}_1} \mathbf{a}_2$**:
+
+   $$
+   \text{proj}_{\mathbf{q}_1} \mathbf{a}_2 = 10 \begin{bmatrix} \frac{4}{5} \\ 0 \\ \frac{3}{5} \end{bmatrix} = \begin{bmatrix} 8 \\ 0 \\ 6 \end{bmatrix}
+   $$
+
+4. **Calculate $\mathbf{u}_2$**:
+
+   Subtracting the projection from $\mathbf{a}_2$ gives $\mathbf{u}_2$:
+
+   $$
+   \mathbf{u}_2 = \mathbf{a}_2 - \text{proj}_{\mathbf{q}_1} \mathbf{a}_2 = \begin{bmatrix} 8 \\ 2 \\ 6 \end{bmatrix} - \begin{bmatrix} 8 \\ 0 \\ 6 \end{bmatrix} = \begin{bmatrix} 0 \\ 2 \\ 0 \end{bmatrix}
+   $$
+
+5. **Normalize $\mathbf{u}_2$ to obtain $\mathbf{q}_2$**:
+
+   The norm of $\mathbf{u}_2$ is:
+
+   $$
+   \|\mathbf{u}_2\| = \sqrt{0^2 + 2^2 + 0^2} = 2
+   $$
+
+   Thus,
+
+   $$
+   \mathbf{q}_2 = \frac{\mathbf{u}_2}{\|\mathbf{u}_2\|} = \frac{1}{2} \begin{bmatrix} 0 \\ 2 \\ 0 \end{bmatrix} = \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}
+   $$
+
+## Finding $\mathbf{q}_3$
+
+To find $\mathbf{q}_3$, project $\mathbf{a}_3$ onto both $\mathbf{q}_1$ and $\mathbf{q}_2$, and then subtract these projections from $\mathbf{a}_3$.
+
+1. **Calculate the projection of $\mathbf{a}_3$ onto $\mathbf{q}_1$**:
+
+   $$
+   \mathbf{a}_3 \cdot \mathbf{q}_1 = \begin{bmatrix} 1 \\ -2 \\ 7 \end{bmatrix} \cdot \begin{bmatrix} \frac{4}{5} \\ 0 \\ \frac{3}{5} \end{bmatrix} = \frac{4}{5} + 0 + \frac{21}{5} = \frac{25}{5} = 5
+   $$
+
+   Then,
+
+   $$
+   \text{proj}_{\mathbf{q}_1} \mathbf{a}_3 = 5 \begin{bmatrix} \frac{4}{5} \\ 0 \\ \frac{3}{5} \end{bmatrix} = \begin{bmatrix} 4 \\ 0 \\ 3 \end{bmatrix}
+   $$
+
+2. **Calculate the projection of $\mathbf{a}_3$ onto $\mathbf{q}_2$**:
+
+   $$
+   \mathbf{a}_3 \cdot \mathbf{q}_2 = \begin{bmatrix} 1 \\ -2 \\ 7 \end{bmatrix} \cdot \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix} = -2
+   $$
+
+   Then,
+
+   $$
+   \text{proj}_{\mathbf{q}_2} \mathbf{a}_3 = -2 \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix} = \begin{bmatrix} 0 \\ -2 \\ 0 \end{bmatrix}
+   $$
+
+3. **Calculate $\mathbf{u}_3$**:
+
+   Subtracting both projections from $\mathbf{a}_3$ yields $\mathbf{u}_3$:
+
+   $$
+   \mathbf{u}_3 = \mathbf{a}_3 - \text{proj}_{\mathbf{q}_1} \mathbf{a}_3 - \text{proj}_{\mathbf{q}_2} \mathbf{a}_3 = \begin{bmatrix} 1 \\ -2 \\ 7 \end{bmatrix} - \begin{bmatrix} 4 \\ 0 \\ 3 \end{bmatrix} - \begin{bmatrix} 0 \\ -2 \\ 0 \end{bmatrix} = \begin{bmatrix} -3 \\ 0 \\ 4 \end{bmatrix}
+   $$
+
+4. **Normalize $\mathbf{u}_3$ to obtain $\mathbf{q}_3$**:
+
+   The norm of $\mathbf{u}_3$ is:
+
+   $$
+   \|\mathbf{u}_3\| = \sqrt{(-3)^2 + 0^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25} = 5
+   $$
+
+   Thus,
+
+   $$
+   \mathbf{q}_3 = \frac{\mathbf{u}_3}{\|\mathbf{u}_3\|} = \frac{1}{5} \begin{bmatrix} -3 \\ 0 \\ 4 \end{bmatrix} = \begin{bmatrix} -\frac{3}{5} \\ 0 \\ \frac{4}{5} \end{bmatrix}
+   $$
+
+## Constructing $\mathbf{Q}$ and $\mathbf{R}$ Matrices
+
+### Orthogonal Matrix $\mathbf{Q}$
+
+Combine $\mathbf{q}_1$, $\mathbf{q}\_2$, and $\mathbf{q}_3$ as columns to form $\mathbf{Q}$:
+
+$$
+\mathbf{Q} = \begin{bmatrix} \frac{4}{5} & 0 & -\frac{3}{5} \\ 0 & 1 & 0 \\ \frac{3}{5} & 0 & \frac{4}{5} \end{bmatrix}
+$$
+
+### Upper Triangular Matrix $\mathbf{R}$
+
+The entries of $\mathbf{R}$ are calculated as the dot products of the original columns of $\mathbf{A}$ with the orthonormal vectors $\mathbf{q}_1$, $\mathbf{q}_2$, and $\mathbf{q}_3$:
+
+$$
+\mathbf{R} = \begin{bmatrix} \mathbf{a}_1 \cdot \mathbf{q}_1 & \mathbf{a}_2 \cdot \mathbf{q}_1 & \mathbf{a}_3 \cdot \mathbf{q}_1 \\ 0 & \mathbf{a}_2 \cdot \mathbf{q}_2 & \mathbf{a}_3 \cdot \mathbf{q}_2 \\ 0 & 0 & \mathbf{a}_3 \cdot \mathbf{q}_3 \end{bmatrix} = \begin{bmatrix} 5 & 10 & 5 \\ 0 & 2 & -2 \\ 0 & 0 & 5 \end{bmatrix}
+$$
+
+::: {.callout-tip icon=false}
+
+## **Final Answer:**
+
+The QR factorization of $\mathbf{A}$ is:
+
+$$
+\mathbf{A} = \mathbf{Q} \mathbf{R} = \begin{bmatrix} \frac{4}{5} & 0 & -\frac{3}{5} \\ 0 & 1 & 0 \\ \frac{3}{5} & 0 & \frac{4}{5} \end{bmatrix} \begin{bmatrix} 5 & 10 & 5 \\ 0 & 2 & -2 \\ 0 & 0 & 5 \end{bmatrix}
+$$
+
+:::

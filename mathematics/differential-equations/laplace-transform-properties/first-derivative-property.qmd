@@ -1,0 +1,176 @@
+---
+title: 'Laplace Transform - First Derivative Property'
+subtitle: 'Theorem 5.3.4'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+The **First Derivative Property of the Laplace Transform** relates the Laplace transform of a derivative $f'(t)$ to the transform of $f(t)$ and its initial value. The property states:
+
+$$
+\mathcal{L}[f'(t)] = s\mathcal{L}[f(t)] - f(0)
+$$
+
+This theorem is widely used in solving differential equations with given initial conditions.
+
+## **Proof**
+
+### **Write the Laplace Transform of the Derivative**
+
+By definition, the Laplace transform of $f'(t)$ is:
+
+$$
+\mathcal{L}[f'(t)] = \int_0^\infty f'(t) e^{-st} \, dt
+$$
+
+### **Apply Integration by Parts**
+
+The integration by parts formula is given by:
+
+$$
+\int u \, dv = uv - \int v \, du
+$$
+
+Let:
+
+- $u = e^{-st}$ and $dv = f'(t) dt$,
+- Then $du = -s e^{-st} dt$ and $v = f(t)$.
+
+Using this formula:
+
+$$
+\int_0^\infty f'(t) e^{-st} \, dt = \left[ f(t) e^{-st} \right]_0^\infty - \int_0^\infty f(t)(-s e^{-st}) \, dt
+$$
+
+### **Evaluate the Boundary Terms**
+
+1. At $t = \infty$, $f(t) e^{-st} \to 0$, assuming $f(t)$ grows no faster than an exponential function.
+2. At $t = 0$, $f(t) e^{-s(0)} = f(0)$.
+
+Thus, the boundary term becomes:
+
+$$
+\left[ f(t) e^{-st} \right]_0^\infty = -f(0)
+$$
+
+### **Simplify the Remaining Integral**
+
+The remaining integral is:
+
+$$
+\int_0^\infty s f(t) e^{-st} \, dt = s \int_0^\infty f(t) e^{-st} \, dt
+$$
+
+By definition, this is:
+
+$$
+s \mathcal{L}[f(t)]
+$$
+
+### **Combine Results**
+
+Substituting the results back into the equation:
+
+$$
+\mathcal{L}[f'(t)] = -f(0) + s \mathcal{L}[f(t)]
+$$
+
+Rearranging:
+
+$$
+\mathcal{L}[f'(t)] = s\mathcal{L}[f(t)] - f(0)
+$$
+
+### **Conclusion**
+
+The proof demonstrates that:
+
+$$
+\mathcal{L}[f'(t)] = s\mathcal{L}[f(t)] - f(0)
+$$
+
+## **Corollary: Laplace Transform of $g'(t) = f''(t)$**
+
+To extend the property to $g'(t) = f''(t)$:
+
+1. Define $g(t) = f'(t)$. Then the Laplace transform of $g'(t) = f''(t)$ is:
+
+   $$
+   \mathcal{L}[f''(t)] = \mathcal{L}[g'(t)]
+   $$
+
+2. Using the First Derivative Property for $g(t)$:
+
+   $$
+   \mathcal{L}[g'(t)] = s\mathcal{L}[g(t)] - g(0)
+   $$
+
+   Substituting $g(t) = f'(t)$ and $g(0) = f'(0)$:
+
+   $$
+   \mathcal{L}[f''(t)] = s\mathcal{L}[f'(t)] - f'(0)
+   $$
+
+3. Substitute the First Derivative Property for $f'(t)$:
+
+   $$
+   \mathcal{L}[f'(t)] = s\mathcal{L}[f(t)] - f(0)
+   $$
+
+   Substituting into the equation:
+
+   $$
+   \mathcal{L}[f''(t)] = s \big(s\mathcal{L}[f(t)] - f(0)\big) - f'(0)
+   $$
+
+4. Simplify the expression:
+
+   $$
+   \mathcal{L}[f''(t)] = s^2\mathcal{L}[f(t)] - sf(0) - f'(0)
+   $$
+
+### **Example Application**
+
+For $f(t) = t^2$, with $f'(t) = 2t$, $f''(t) = 2$, and $f(0) = 0$, $f'(0) = 0$:
+
+1. Compute $\mathcal{L}[f(t)] = \frac{2}{s^3}$.
+2. Using the corollary:
+
+   $$
+   \mathcal{L}[f''(t)] = s^2 \cdot \frac{2}{s^3} - s \cdot 0 - 0
+   $$
+
+   Simplify:
+
+   $$
+   \mathcal{L}[f''(t)] = \frac{2s^2}{s^3} = \frac{2}{s}
+   $$
+
+## **Summary**
+
+The **First Derivative Property** establishes a relationship between the Laplace transform of $f'(t)$ and the transform of $f(t)$. The corollary extends this result to include the second derivative, $f''(t) = g'(t)$, where $g(t) = f'(t)$. These properties are essential for solving second-order differential equations with specified initial conditions.

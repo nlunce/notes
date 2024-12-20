@@ -1,0 +1,36 @@
+---
+title: 'LINEAR SYSTEM ERROR ANALYSIS'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+- [Residual](./residual-linear-systems.html)
+- [Backward Error](./backward-error.html)
+- [Relative Backward Error](./relative-backward-error.html)
+- [Forward Error](./forward-error.html)
+- [Relative Forward Error](./relative-forward-error.html)
+- [Error Magnification Factor (EMF)](./error-magnification-factor.html)
+- [Condition Number](./condition-number-matrix.html)
+- [Swamping](./swamping.html)

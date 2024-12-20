@@ -1,0 +1,147 @@
+---
+title: 'HOMEWORK'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+[Suggested Homework](./math411-suggested-homework.html)
+
+# **WEEK 01**
+
+- [(C0-P1)](#)
+- [(C1-P1) Exercise 1.1.4ab](#)
+- [(C1-P2) Exercise 1.2.2](#)
+- [(C1-P3)](#)
+- [(C1-P4) Exercise 1.2.14](#)
+- [(C1-P5) Exercise 1.4.1](#)
+- [(C1-P6) Exercise 1.4.3](#)
+
+# **WEEK 02**
+
+- [(C1-P7) Exercise 1.4.6](#)
+- [(C1-P8) Exercise 1.4.8](#)
+- [(C1-P9) Computer Problem 1.4.7](#)
+- [(C1-P10) Exercise 1.5.1](#)
+- [(C1-P11)](#)
+- [(C3-P1) Exercise 3.1.1a](./w02/exercise3-1-1a.html)
+- [(C3-P1) Exercise 3.1.1c](./w02/exercise3-1-1c.html)
+- [(C3-P2) Exercise 3.1.2a](./w02/exercise3-1-2a.html)
+- [(C3-P2) Exercise 3.1.2c](./w02/exercise3-1-2c.html)
+- [(C3-P3) Exercise 3.1.6](./w02/exercise3-1-6.html)
+
+# **WEEK 03**
+
+- [(C0-P2)](./w03/c0-p2.html)
+- [(C3-P4) Exercise 3.2.2](./w03/exercise3-2-2.html)
+- [(C3-P5) Exercise 3.2.5](#)
+- [(C3-P6) Exercise 3.2.6](#)
+- [(C3-P7) Computer Problem 3.1.3](#)
+- [(C3-P8) Exercise 3.3.1ac](#)
+- [(C3-P9) Exercise 3.3.2ac](#)
+- [(C3-P10) Exercise 3.3.3](./w03/exercise3-3-3.html)
+
+# **WEEK 04**
+
+- [(C5-P1) Exercise 5.2.1a](./w04/exercise5-2-1a.html)
+- [(C5-P1) Exercise 5.2.1b](./w04/exercise5-2-b.html)
+- [(C5-P2) Exercise 5.2.2ab](#)
+- [(C5-P3) Exercise 5.2.3ab](#)
+- [(C5-P4) Exercise 5.2.10](#)
+- [(C5-P5) Exercise 5.2.12](#)
+- [(C5-P6) Computer Problem 5.2.1ac](#)
+- [(C5-P7) Computer Problem 5.2.2de](#)
+- [(C5-P8) Computer Problem 5.2.9bf](#)
+
+# **WEEK 05**
+
+- [(C5-P9) Exercise 5.5.1ab](#)
+- [(C5-P10) Exercise 5.5.4cd](#)
+- [(C5-P11) Computer Problem 5.4.1acd](#)
+- [(C5-P12) Computer Problem 5.4.2](#)
+- [(C5-P13) Computer Problem 5.4.3acd](#)
+- [(C5-P14) Exercise 5.5.5cd](#)
+- [(C5-P15) Exercise 5.5.7](#)
+
+# **WEEK 06**
+
+- [(C2-P1) Exercise 2.1.2a](./w06/exercise2-1-2a.html)
+- [(C2-P1) Exercise 2.1.2c](#)
+- [(C2-P2) Computer Problem 2.1.2ac](#)
+- [(C2-P3) Exercise 2.2.1ab](#)
+- [(C2-P4) Exercise 2.2.2ab](#)
+
+# **WEEK 07**
+
+- [(C2-P5) Exercise 2.2.4](#)
+- [(C2-P6) Computer Problem 2.2.1ab](#)
+- [(C2-P7) Exercise 2.4.1ab](#)
+- [(C2-P8) Exercise 2.4.2ab](#)
+- [(C2-P9) Exercise 2.4.4a](./w07/exercise2-4-4a.html)
+- [(C2-P10) Exercise 2.4.6](./w07/exercise2-4-6.html)
+
+# **WEEK 08**
+
+- [(C2-P11) Exercise 2.5.2ab](#)
+- [(C2-P12) Computer Problem 2.5.2 (solve using both Jacobi and Gauss-Seidel, compare results)](#)
+- [(C4-P1) Exercise 4.1.2a](./w08/exercise4-1-2a.html)
+- [(C4-P1) Exercise 4.1.2b](#)
+- [(C4-P2) Computer Problem 4.1.5 (also use a quadratic fit and compare)](#)
+- [(C4-P3) Exercise 4.3.2](#)
+
+# **WEEK 09**
+
+- [Exercise 4.3.1d](./w09/exercise4-3-1d.html)
+- [(C4-P4) Exercise 4.3.4](#)
+- [(C4-P5) Exercise 4.3.7 (you can use your QR factorizations from Exercise 4.3.2)](#)
+- [(C4-P6) Computer Problem 4.3.4 Additional instructions: Write a classical Gram-Schmidt code only. Use the matrices in Exercise 4.3.2 to check your code. If you use the code I provided, you must comment it (explain what every line does).](#)
+
+# **WEEK 10**
+
+- [(C4-P7) Exercise 4.4.2](#)
+- [(C4-P8) Exercise 4.4.3](#)
+- [(C4-P9) Computer Problem 4.4.2 (find a preconditioned GMRES Python code and use it)](#)
+
+# **WEEK 11**
+
+None
+
+# **WEEK 12**
+
+- [(C10-P1) Exercise 10.1.1ad (also, find the inverse DFT of your result, compare to the original vector)](#)
+- [(C10-P2) Exercise 10.1.8](#)
+- [(C10-P3) Exercise 10.2.1a](./w12/exercise10-2-1a.html)
+- [(C10-P3) Exercise 10.2.1b](./w12/exercise10-2-1b.html)
+- [(C10-P4) Exercise 10.2.3a](./w12/exercise10-2-3a.html)
+- [(C10-P4) Exercise 10.2.3b](./w12/exercise10-2-3b.html)
+- [(C10-P5) Exercise 10.2.3a - Plot](./w12/exercise10-2-3a-plot.html)
+- [(C10-P5) Exercise 10.2.3b - Plot](./w12/exercise10-2-3b-plot.html)
+- [(C10-P6) Computer Problem 10.2.4](#)
+- [(C10-P7) Exercise 10.3.2ab](#)
+
+# **WEEK 13**
+
+- [(C10-P8) Computer Problem 10.3.2cd](#)
+- [(C10-P9) Exercise 10.3.5 (Complete the $\sum_{j=0}^{n-1} \cos \frac{2 \pi j k}{n} \cos \frac{2 \pi j l}{n}$ result only)](#)
+- [(C10-P10) Exercise 10.1.6](#)

@@ -1,0 +1,12 @@
+{
+  "hash": "df821e43d9a8ea3fd58628b1d7b85efb",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: 'ROOT FINDING METHODS'\nformat:\n  html:\n    self-contained: true\n    page-layout: full\n    toc: true\n    toc-depth: 2\n    toc-location: right\n    number-sections: false\n    html-math-method: katex\n    embed-resources: true\n    code-fold: true\n    code-summary: 'Show the code'\n    code-overflow: wrap\n    code-copy: hover\n    code-tools:\n      source: false\n      toggle: true\n      caption: See code\nengine: jupyter\npreview:\n  port: 3000\n  browser: true\n  watch-inputs: true\n  navigate: true\n---\n\n\n# **WEEK 01**\n\n- [Bisection Method](./bisection-method.html)\n- [Fixed-Point Iteration](./fixed-point-iteration.html)\n- [Newtons's Method](./newtons-method.html)\n- [Secant Method](./secant-method.html)\n\n# **WEEK 02**\n\n- [Lagrange Interpolation](./lagrange-interpolation.html)\n- [Newton’s Divided Differences](./newtons-divided-differences.html)\n\n# **WEEK 03**\n\n- [Interpolation Error Formula](./interpolation-error-formula.html)\n- [Runge Phenomenon](./runge-phenomenon.html)\n- [Chebyshev Interpolation](./chebyshev-interpolation.html)\n\n# **WEEK 04**\n\n- [Trapezoidal Rule](./trapezoidal-rule.html)\n\n# **WEEK 05**\n\n# **WEEK 06**\n\n- [Linear Systems: $A\\mathbf{x} = \\mathbf{b}$](./linear-systems.html)\n- [Spectral Radius](./spectral-radius.htmlz)\n\n# **WEEK 07**\n\n- [LU Factorization](./lu-factorization.html)\n- [Iterative Methods for Solving Linear Systems](./ax-b-iterative-methods/index.html)\n- [Chapter 2 Section 3 Notes](./2-3.html)\n- [Norms](./norms/index.html)\n- [Linear System Error Analysis](./errors-analysis-linear-systems/index.html)\n\n# **WEEK 08**\n\n- [Least Squares Solution for Inconsistent Systems](./least-squares.html)\n- [Gram-Schmidt Orthogonalization](./gram-schmidt-orthogonalization.html)\n- [Modified Gram-Schmidt Orthogonalization](./modified-gram-schmidt-orthogonalization.html)\n\n\n\n- [The Fourier Transform](./fourier-transform.html)\n- [Roots of Unity](./root-of-unity.html)\n- [The Discrete Fourier Transform (DFT)](./discrete-fourier-transform.html)\n- [The Fast Fourier Transform (FFT)](./fast-fourier-transform.html)\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

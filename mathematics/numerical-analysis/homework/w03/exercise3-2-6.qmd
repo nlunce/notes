@@ -1,0 +1,80 @@
+---
+title: 'Exercise 3.1.6 (C3-P6)'
+subtitle: 'MATH411'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 1
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Problem:**
+
+**How do we construct a polynomial of degree exactly 5 that interpolates four points?**
+
+Given four points $(1, 1)$, $(2, 3)$, $(3, 3)$, and $(4, 4)$, the standard interpolation methods (such as Newton’s or Lagrange’s methods) would give us a unique polynomial of degree 3. However, constructing a polynomial of degree exactly 5 requires a different approach.
+
+### **Key Concepts**
+
+1. **Theorem 3.2** (Main Theorem of Polynomial Interpolation) guarantees that a unique polynomial of degree $n-1$ exists for $n$ distinct points.
+2. To create a polynomial of degree 5 when you only have 4 points, you need to add an **extra term** that still passes through all the original points but elevates the polynomial’s degree.
+
+## **Solution:**
+
+To create a degree 5 polynomial that still passes through all four points $(1, 1)$, $(2, 3)$, $(3, 3)$, and $(4, 4)$, follow these steps:
+
+1. **Find the degree 3 polynomial $P_3(x)$:**
+
+   - Use either **Newton’s divided differences** or **Lagrange interpolation** to find the polynomial of degree 3 that passes through the given points. Let’s call this polynomial $P_3(x)$.
+
+2. **Add a higher-degree term:**
+   - To turn this degree 3 polynomial into a degree 5 polynomial, we add a term that evaluates to zero at the given points:
+
+$$P_5(x) = P_3(x) + c(x - 1)(x - 2)(x - 3)(x - 4)$$
+
+- The new term $(x - 1)(x - 2)(x - 3)(x - 4)$ is zero at $x = 1, 2, 3, 4$, so it won’t affect the interpolation at those points. By multiplying this term by a constant $c$, we ensure that the degree of the polynomial is elevated to 5, but the polynomial still interpolates the original points.
+
+### **Final Degree 5 Polynomial**
+
+Thus, the degree 5 polynomial is given by:
+
+$$P_5(x) = P_3(x) + c(x - 1)(x - 2)(x - 3)(x - 4)$$
+
+- $P_3(x)$ is the degree 3 polynomial found using standard interpolation methods.
+- $c$ is an arbitrary constant that determines the shape of the polynomial outside the interpolation points.
+
+### **Example**
+
+Let’s assume the degree 3 polynomial $P_3(x)$ through the points $(1, 1)$, $(2, 3)$, $(3, 3)$, $(4, 4)$ is:
+
+$$P_3(x) = 1 + 2(x - 1) + 3(x - 1)(x - 2)$$
+
+Then the degree 5 polynomial becomes:
+
+$$P_5(x) = P_3(x) + c(x - 1)(x - 2)(x - 3)(x - 4)$$
+
+### **Does the Value of $c$ Matter?**
+
+No, the value of $c$ does not affect the interpolation at the given points. Since the additional term evaluates to 0 at $x = 1, 2, 3, 4$, the polynomial will still pass through the points, regardless of $c$.
+
+However, changing $c$ affects the behavior of the polynomial **outside** the interpolation points. For different values of $c$, the polynomial will look different beyond the four points, but it will still pass through $(1, 1)$, $(2, 3) $, $ (3, 3) $, and $ (4, 4)$.

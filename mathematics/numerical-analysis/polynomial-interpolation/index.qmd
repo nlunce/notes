@@ -1,0 +1,34 @@
+---
+title: 'POLYNOMIAL INTERPOLATION'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+
+- [Lagrange Interpolation](./lagrange-interpolation.html)
+- [Newton’s Divided Differences](./newtons-divided-differences.html)
+- [Interpolation Error Formula](./interpolation-error-formula.html)
+- [Runge Phenomenon](./runge-phenomenon.html)
+- [Chebyshev Interpolation](./chebyshev-interpolation.html)

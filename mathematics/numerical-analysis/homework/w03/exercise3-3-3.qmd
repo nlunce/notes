@@ -1,0 +1,78 @@
+---
+title: 'Exercise 3.3.3 (C3-P10)'
+subtitle: 'MATH411'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 1
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Problem:**
+
+**Assume that Chebyshev interpolation is used to find a fifth-degree interpolating polynomial $Q_5(x)$ on the interval $[-1, 1]$ for the function $f(x) = e^x$. Use the interpolation error formula to find a worst-case estimate for the error $|e^x - Q_5(x)|$ that is valid for $x$ throughout the interval $[-1, 1]$. How many digits after the decimal point will be correct when $Q_5(x)$ is used to approximate $e^x$?**
+
+## **Solution:**
+
+We need to compute the worst-case error for the interpolation of $f(x) = e^x$ using a Chebyshev interpolating polynomial $Q_5(x)$. We will use the interpolation error formula:
+
+$$
+|f(x) - P(x)| \leq \frac{M}{(n+1)!} \cdot \max_{x \in [-1,1]} |(x - x_1)(x - x_2) \cdots (x - x_n)|
+$$
+
+Where $M$ is an upper bound on the $6$th derivative of $f(x) = e^x$ over $[-1, 1]$, and $x_1, x_2, \dots, x_n$ are the Chebyshev nodes.
+
+### **Steps:**
+
+1. **Chebyshev Node Bound:**
+   For Chebyshev interpolation on the interval $[-1, 1]$, the product $(x - x_1)(x - x_2) \cdots (x - x_n)$ is bounded by $\frac{1}{2^n}$. For $n = 5$, this becomes:
+
+   $$
+   \frac{1}{2^5} = \frac{1}{32}
+   $$
+
+2. **Sixth Derivative of $e^x$:**
+   The 6th derivative of $f(x) = e^x$ is $f^{(6)}(x) = e^x$, and the maximum value of this derivative on the interval $[-1, 1]$ is at $x = 1$, where $f^{(6)}(1) = e \approx 2.718$.
+
+3. **Factorial Term:**
+   The term $6! = 720$.
+
+4. **Error Bound Formula:**
+   Now, we plug these values into the error bound formula:
+
+   $$
+   |e^x - Q_5(x)| \leq \frac{e}{6!} \cdot \frac{1}{32}
+   $$
+
+   Substituting $e \approx 2.718$, we get:
+
+   $$
+   |e^x - Q_5(x)| \leq \frac{2.718}{720 \times 32} \approx \frac{2.718}{23,040} \approx 0.000118
+   $$
+
+   This is the worst-case error estimate for the approximation of $e^x$ on the interval $[-1, 1]$.
+
+5. **Correct Decimal Places:**
+   Since the error bound is approximately $0.000118$, this means we can expect approximately 3 correct digits after the decimal point. The error affects the fourth decimal place, but the first three digits are expected to be correct.
+
+   Therefore, the approximation $Q_5(x)$ will be accurate to **3 digits** after the decimal point when approximating $e^x$ on the interval $[-1, 1]$.

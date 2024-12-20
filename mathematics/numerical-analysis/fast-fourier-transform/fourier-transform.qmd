@@ -1,0 +1,133 @@
+---
+title: 'Fourier Transform'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show Code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+The Fourier Transform is a mathematical operation that transforms a function of time $g(t)$ into a function of frequency $f$. It provides a powerful tool for analyzing the frequency components of signals and is widely used in physics, engineering, and signal processing.
+
+## **Definition**
+
+The Fourier Transform of a function $g(t)$ is given by:
+
+$$
+\hat{g}(f) = \int_{-\infty}^{+\infty} g(t) e^{-2\pi i f t} \, dt
+$$
+
+Here:
+
+- $g(t)$: The function in the time domain.
+- $f$: The frequency variable (in Hz).
+- $\hat{g}(f)$: The Fourier Transform, representing the frequency domain representation of $g(t)$.
+- $e^{-2\pi i f t}$: A complex exponential that encodes frequency components.
+
+The **Inverse Fourier Transform** allows reconstruction of $g(t)$ from its Fourier Transform $\hat{g}(f)$:
+
+$$
+g(t) = \int_{-\infty}^{+\infty} \hat{g}(f) e^{2\pi i f t} \, df
+$$
+
+## **Properties**
+
+1. **Linearity**:
+
+   $$
+   \mathcal{F}(a g_1 + b g_2)(f) = a \hat{g}_1(f) + b \hat{g}_2(f)
+   $$
+
+2. **Time Shift**:
+   If $g(t) \to \hat{g}(f)$, then $g(t - t_0) \to \hat{g}(f)e^{-2\pi i f t_0}$.
+
+3. **Frequency Shift**:
+   If $g(t) \to \hat{g}(f)$, then $e^{2\pi i f_0 t} g(t) \to \hat{g}(f - f_0)$.
+
+4. **Scaling**:
+   If $g(at) \to \frac{1}{|a|} \hat{g}\left(\frac{f}{a}\right)$.
+
+5. **Parseval's Theorem**:
+   The total energy of the signal in the time and frequency domains is the same:
+
+   $$
+   \int_{-\infty}^{+\infty} |g(t)|^2 \, dt = \int_{-\infty}^{+\infty} |\hat{g}(f)|^2 \, df
+   $$
+
+6. **Convolution**:
+   Convolution in the time domain corresponds to multiplication in the frequency domain:
+
+   $$
+   \mathcal{F}(g_1 \ast g_2)(f) = \hat{g}_1(f) \cdot \hat{g}_2(f)
+   $$
+
+   where $(g*1 \ast g_2)(t) = \int*{-\infty}^{+\infty} g_1(\tau) g_2(t - \tau) \, d\tau$.
+
+## **Applications**
+
+1. **Signal Processing**:
+
+   - Frequency analysis, filtering, and noise reduction.
+
+2. **Physics**:
+
+   - Analyzing waveforms, optics, and quantum mechanics.
+
+3. **Engineering**:
+
+   - Communication systems and control systems.
+
+4. **Image Processing**:
+   - Compression, edge detection, and restoration.
+
+### **Example: Fourier Transform of a Sine Wave**
+
+Consider the signal $g(t) = \sin(2\pi f_0 t)$. Using Euler's formula, $\sin(2\pi f_0 t) = \frac{e^{2\pi i f_0 t} - e^{-2\pi i f_0 t}}{2i}$, we find:
+
+$$
+\hat{g}(f) = \frac{1}{2i} [\delta(f - f_0) - \delta(f + f_0)]
+$$
+
+The Fourier Transform shows that the sine wave consists of two frequency components at $\pm f_0$.
+
+## [**Discrete Fourier Transform (DFT)**](./discrete-fourier-transform.html)
+
+For digital signals, the Fourier Transform is approximated using the Discrete Fourier Transform (DFT). For a sequence of $N$ samples $\{g_n\}$:
+
+$$
+\hat{g}_k = \sum_{n=0}^{N-1} g_n e^{-2\pi i k n / N}, \quad k = 0, 1, \dots, N-1
+$$
+
+The **Inverse DFT (IDFT)** is:
+
+$$
+g_n = \frac{1}{N} \sum_{k=0}^{N-1} \hat{g}_k e^{2\pi i k n / N}
+$$
+
+The Fast Fourier Transform (FFT) is an efficient algorithm to compute the DFT.
+
+## **Conclusion**
+
+The Fourier Transform bridges the time and frequency domains, enabling analysis and manipulation of signals. Its versatility and foundational properties make it an essential tool in science and engineering.

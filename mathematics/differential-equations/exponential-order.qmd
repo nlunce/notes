@@ -1,0 +1,163 @@
+---
+title: 'Exponential Order: Definition and Examples'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+A function $f(t)$ is said to be of **exponential order** if its growth is controlled by an exponential function $e^{\alpha t}$ as $t$ becomes large. This concept is crucial for ensuring the applicability of certain mathematical operations, such as the Laplace Transform, and for understanding the long-term behavior of functions.
+
+In simpler terms:
+
+- **Exponential Order**: $f(t)$ does not grow too quickly.
+- **"Too Fast"**: The growth of $f(t)$ is slower than or comparable to $e^{\alpha t}$ for some fixed $\alpha$.
+
+## **Definition**
+
+Formally, a function $f(t)$ is of **exponential order** $\alpha$ if there exist constants $M > 0$ and $t_0 \geq 0$ such that:
+
+$$
+|f(t)| \leq M e^{\alpha t}, \quad \text{for all } t \geq t_0
+$$
+
+### **Key Components:**
+
+1. **Bounded Growth**: For $t \geq t_0$, the magnitude of $f(t)$ does not exceed $M e^{\alpha t}$.
+2. **Constants**:
+   - $M$: A positive constant that bounds $f(t)$.
+   - $\alpha$: The exponential growth rate that controls the bound.
+   - $t_0$: The threshold after which the bound holds.
+
+This definition ensures that $f(t)$ does not grow faster than $e^{\alpha t}$ for sufficiently large $t$.
+
+## **Understanding "Too Fast" Growth**
+
+When we describe a function as growing "too fast" to be of exponential order, we mean that it **outpaces** the growth of any exponential function $e^{\alpha t}$, regardless of how large $\alpha$ is chosen. For instance, functions like $e^{t^2}$ grow so rapidly that no exponential bound $e^{\alpha t}$ can contain them for all large $t$.
+
+### **Intuition:**
+
+1. **Exponential Functions**: $e^{\alpha t}$ grow rapidly, but many functions (e.g., polynomials) grow slower or at a similar rate for large $t$.
+2. **Super-Exponential Functions**: Functions like $e^{t^2}$ grow faster than any $e^{\alpha t}$ because the exponent itself grows faster (e.g., $t^2$ vs. $\alpha t$).
+
+If a function grows faster than $e^{\alpha t}$, it cannot be bounded by any exponential function, and thus, it is **not** of exponential order.
+
+### **Example: Comparing $e^{t^2}$ and $e^{\alpha t}$**
+
+Consider $f(t) = e^{t^2}$ and $g(t) = e^{\alpha t}$ with $\alpha = 2$.
+
+1. **At $t = 1$**:
+
+   $$
+   e^{t^2} = e^1 \approx 2.718, \quad e^{\alpha t} = e^2 \approx 7.389
+   $$
+
+   Here, $e^{t^2} < e^{\alpha t}$.
+
+2. **At $t = 2$**:
+
+   $$
+   e^{t^2} = e^4 \approx 54.598, \quad e^{\alpha t} = e^4 \approx 54.598
+   $$
+
+   Now, $e^{t^2} = e^{\alpha t}$.
+
+3. **At $t = 3$**:
+   $$
+   e^{t^2} = e^9 \approx 8103, \quad e^{\alpha t} = e^6 \approx 403
+   $$
+   Here, $e^{t^2} > e^{\alpha t}$.
+
+As $t \to \infty$, $e^{t^2}$ grows much faster than $e^{\alpha t}$, no matter how large $\alpha$ is. This demonstrates that $f(t) = e^{t^2}$ is **not** of exponential order.
+
+## **Example 1: Polynomial Function $f(t) = t^2$**
+
+Let's determine if $f(t) = t^2$ is of exponential order.
+
+### **Step 1: Analyze the Growth of $f(t)$**
+
+The function $f(t) = t^2$ grows quadratically as $t \to \infty$. In contrast, an exponential function like $e^{\alpha t}$ grows much faster for large $t$. This suggests that $t^2$ might be bounded by $e^{\alpha t}$ for some $\alpha > 0$.
+
+### **Step 2: Choose $\alpha$ and $M$**
+
+- **Select $\alpha = 1$**: A reasonable starting point for the exponential growth rate.
+- **Determine $M$**: We aim to find $M$ such that $t^2 \leq M e^t$ for all $t \geq t_0$.
+
+### **Step 3: Verify the Bound**
+
+- **At $t = 3$**:
+
+  $$
+  t^2 = 9, \quad e^t \approx 20.09
+  $$
+
+  Clearly, $t^2 \leq e^t$.
+
+- **As $t$ increases**: $e^t$ grows significantly faster than $t^2$, ensuring that $t^2 \leq M e^t$ for some $M > 0$.
+
+**Conclusion**: For $t \geq t_0 = 3$, we can choose $M = 1$ and $\alpha = 1$ to satisfy:
+
+$$
+|f(t)| \leq M e^{\alpha t}
+$$
+
+Therefore, $f(t) = t^2$ is of exponential order with $\alpha = 1$.
+
+## **Example 2: Exponential Function $f(t) = e^{t^2}$**
+
+Now, let's examine whether $f(t) = e^{t^2}$ is of exponential order.
+
+### **Step 1: Analyze the Growth of $f(t)$**
+
+The function $f(t) = e^{t^2}$ grows much faster than any exponential function $e^{\alpha t}$ as $t \to \infty$.
+
+### **Step 2: Attempt to Establish the Bound**
+
+Assume, for contradiction, that $e^{t^2} \leq M e^{\alpha t}$. Taking the natural logarithm of both sides:
+
+$$
+t^2 \leq \ln(M) + \alpha t
+$$
+
+For large $t$, the left side ($t^2$) grows faster than the right side ($\ln(M) + \alpha t$), making the inequality impossible to satisfy.
+
+### **Conclusion**
+
+No constants $M > 0$ and $\alpha > 0$ can ensure $|f(t)| \leq M e^{\alpha t}$ for all sufficiently large $t$. Therefore, $f(t) = e^{t^2}$ is **not** of exponential order.
+
+## **Why Use Exponential Bounds?**
+
+Exponential functions $e^{\alpha t}$ serve as a benchmark for measuring the **rate of growth** of other functions:
+
+- **Controlled Growth**: If a function grows slower than or at the same rate as $e^{\alpha t}$, its growth is considered manageable, making it suitable for operations like the Laplace Transform.
+- **Uncontrolled Growth**: If a function grows faster than $e^{\alpha t}$, its growth becomes unmanageable, rendering it unsuitable for certain mathematical techniques.
+
+### **Summary:**
+
+- **Functions Growing "Too Fast"**: These **outpace** exponential functions $e^{\alpha t}$ and are **not** of exponential order.
+- **Functions of Exponential Order**: These grow **slower than or similarly to** $e^{\alpha t}$, ensuring their growth is under control.
+
+Understanding whether a function is of exponential order is essential for determining the applicability of various mathematical tools and for analyzing the function's long-term behavior.

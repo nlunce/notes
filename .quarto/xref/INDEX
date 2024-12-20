@@ -1,0 +1,371 @@
+{
+  "about.qmd": {
+    "about.html": "2890996e"
+  },
+  "differential-equations/exponential-order.qmd": {
+    "exponential-order.html": "6700607c"
+  },
+  "differential-equations/generalized-eigenvectors-DE.qmd": {
+    "generalized-eigenvectors-DE.html": "78911b60"
+  },
+  "differential-equations/index.qmd": {
+    "index.html": "795291ea"
+  },
+  "differential-equations/laplace-transform-properties/first-derivative-property.qmd": {
+    "first-derivative-property.html": "f0800b04"
+  },
+  "differential-equations/laplace-transform-properties/first-shifting-property.qmd": {
+    "first-shifting-property.html": "7316b4ac"
+  },
+  "differential-equations/laplace-transform-properties/index.qmd": {
+    "index.html": "7b4a2418"
+  },
+  "differential-equations/laplace-transform-properties/multiplication-by-t-property.qmd": {
+    "multiplication-by-t-property.html": "a6301a39"
+  },
+  "differential-equations/laplace-transforms.qmd": {
+    "laplace-transforms.html": "86bf1623"
+  },
+  "differential-equations/nonhomogeneous-systems-undetermined-coefficients.qmd": {
+    "nonhomogeneous-systems-undetermined-coefficients.html": "ad2bd69f"
+  },
+  "differential-equations/nonhomogeneous-systems-variation-of-parameters.qmd": {
+    "nonhomogeneous-systems-variation-of-parameters.html": "a6888a6f"
+  },
+  "differential-equations/power-series/important-power-series-expansions.qmd": {
+    "important-power-series-expansions.html": "b1497ca7"
+  },
+  "differential-equations/power-series/index.qmd": {
+    "index.html": "c93c3579"
+  },
+  "differential-equations/power-series/power-series-1-over-1-minus-x.qmd": {
+    "power-series-1-over-1-minus-x.html": "e272bd9e"
+  },
+  "differential-equations/power-series/power-series-cosine-function.qmd": {
+    "power-series-cosine-function.html": "6414f998"
+  },
+  "differential-equations/power-series/power-series-exponential-function.qmd": {
+    "power-series-exponential-function.html": "e06061b2"
+  },
+  "differential-equations/power-series/power-series-sine-function.qmd": {
+    "power-series-sine-function.html": "0aeac02d"
+  },
+  "differential-equations/stability-of-origin-2x2.qmd": {
+    "stability-of-origin-2x2.html": "d2e446a7"
+  },
+  "differential-equations/tests-for-series.qmd": {
+    "tests-for-series.html": "b396df8c"
+  },
+  "index.qmd": {
+    "index.html": "07aaee2c"
+  },
+  "mathematics/differential-equations/exponential-order.qmd": {
+    "exponential-order.html": "e5a5c43d"
+  },
+  "mathematics/differential-equations/generalized-eigenvectors-DE.qmd": {
+    "generalized-eigenvectors-DE.html": "dc27477f"
+  },
+  "mathematics/differential-equations/index.qmd": {
+    "index.html": "d6c285a1"
+  },
+  "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.qmd": {
+    "first-derivative-property.html": "15209322"
+  },
+  "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.qmd": {
+    "first-shifting-property.html": "6f2b2f65"
+  },
+  "mathematics/differential-equations/laplace-transform-properties/index.qmd": {
+    "index.html": "db7acd62"
+  },
+  "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.qmd": {
+    "multiplication-by-t-property.html": "dff6d079"
+  },
+  "mathematics/differential-equations/laplace-transforms.qmd": {
+    "laplace-transforms.html": "ae39d3e3"
+  },
+  "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.qmd": {
+    "nonhomogeneous-systems-undetermined-coefficients.html": "3f8aa0e0"
+  },
+  "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.qmd": {
+    "nonhomogeneous-systems-variation-of-parameters.html": "243925e3"
+  },
+  "mathematics/differential-equations/power-series/important-power-series-expansions.qmd": {
+    "important-power-series-expansions.html": "8fcf7540"
+  },
+  "mathematics/differential-equations/power-series/index.qmd": {
+    "index.html": "39de700a"
+  },
+  "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.qmd": {
+    "power-series-1-over-1-minus-x.html": "2b150fc0"
+  },
+  "mathematics/differential-equations/power-series/power-series-cosine-function.qmd": {
+    "power-series-cosine-function.html": "744f81c2"
+  },
+  "mathematics/differential-equations/power-series/power-series-exponential-function.qmd": {
+    "power-series-exponential-function.html": "78a000e2"
+  },
+  "mathematics/differential-equations/power-series/power-series-sine-function.qmd": {
+    "power-series-sine-function.html": "4e24ac7a"
+  },
+  "mathematics/differential-equations/stability-of-origin-2x2.qmd": {
+    "stability-of-origin-2x2.html": "cc86b201"
+  },
+  "mathematics/differential-equations/tests-for-series.qmd": {
+    "tests-for-series.html": "82e261e8"
+  },
+  "mathematics/numerical-analysis/fast-fourier-transform/discrete-fourier-transform.qmd": {
+    "discrete-fourier-transform.html": "a9a513e3"
+  },
+  "mathematics/numerical-analysis/fast-fourier-transform/fast-fourier-transform.qmd": {
+    "fast-fourier-transform.html": "02111887"
+  },
+  "mathematics/numerical-analysis/fast-fourier-transform/fourier-transform.qmd": {
+    "fourier-transform.html": "4bcf7cfb"
+  },
+  "mathematics/numerical-analysis/fast-fourier-transform/index.qmd": {
+    "index.html": "4e2e5ec5"
+  },
+  "mathematics/numerical-analysis/fast-fourier-transform/root-of-unity.qmd": {
+    "root-of-unity.html": "c6c4a71b"
+  },
+  "mathematics/numerical-analysis/homework/index.qmd": {
+    "index.html": "a0c3d2c8"
+  },
+  "mathematics/numerical-analysis/homework/math411-suggested-homework.qmd": {
+    "math411-suggested-homework.html": "b7385afb"
+  },
+  "mathematics/numerical-analysis/homework/w02/exercise3-1-1a.qmd": {
+    "exercise3-1-1a.html": "32f24684"
+  },
+  "mathematics/numerical-analysis/homework/w02/exercise3-1-1c.qmd": {
+    "exercise3-1-1c.html": "04bffa97"
+  },
+  "mathematics/numerical-analysis/homework/w02/exercise3-1-2a.qmd": {
+    "exercise3-1-2a.html": "e5ec587c"
+  },
+  "mathematics/numerical-analysis/homework/w02/exercise3-1-2c.qmd": {
+    "exercise3-1-2c.html": "1f7768f7"
+  },
+  "mathematics/numerical-analysis/homework/w02/exercise3-1-6.qmd": {
+    "exercise3-1-6.html": "a80c0836"
+  },
+  "mathematics/numerical-analysis/homework/w03/c0-p2.qmd": {
+    "c0-p2.html": "6498080d"
+  },
+  "mathematics/numerical-analysis/homework/w03/exercise3-2-2.qmd": {
+    "exercise3-2-2.html": "b4b85f98"
+  },
+  "mathematics/numerical-analysis/homework/w03/exercise3-2-5.qmd": {
+    "exercise3-2-5.html": "effdcc60"
+  },
+  "mathematics/numerical-analysis/homework/w03/exercise3-2-6.qmd": {
+    "exercise3-2-6.html": "e6dab6b3"
+  },
+  "mathematics/numerical-analysis/homework/w03/exercise3-3-3.qmd": {
+    "exercise3-3-3.html": "6aedca88"
+  },
+  "mathematics/numerical-analysis/homework/w04/exercise5-2-1a.qmd": {
+    "exercise5-2-1a.html": "1d6a65b8"
+  },
+  "mathematics/numerical-analysis/homework/w04/exercise5-2-1b.qmd": {
+    "exercise5-2-1b.html": "e6b34b91"
+  },
+  "mathematics/numerical-analysis/homework/w06/exercise2-1-2a.qmd": {
+    "exercise2-1-2a.html": "cb6d294e"
+  },
+  "mathematics/numerical-analysis/homework/w07/exercise2-4-4a.qmd": {
+    "exercise2-4-4a.html": "ff3e1afd"
+  },
+  "mathematics/numerical-analysis/homework/w07/exercise2-4-6.qmd": {
+    "exercise2-4-6.html": "2880a905"
+  },
+  "mathematics/numerical-analysis/homework/w08/exercise4-1-2a.qmd": {
+    "exercise4-1-2a.html": "342c2910"
+  },
+  "mathematics/numerical-analysis/homework/w09/exercise4-3-1d.qmd": {
+    "exercise4-3-1d.html": "357bad21"
+  },
+  "mathematics/numerical-analysis/homework/w09/exercise4-3-4.qmd": {
+    "exercise4-3-4.html": "f4c92522"
+  },
+  "mathematics/numerical-analysis/homework/w11/exercise10-1-1a.qmd": {
+    "exercise10-1-1a.html": "41968c22"
+  },
+  "mathematics/numerical-analysis/homework/w11/exercise10-1-1d.qmd": {
+    "exercise10-1-1d.html": "8f02545f"
+  },
+  "mathematics/numerical-analysis/homework/w12/exercise10-2-1a.qmd": {
+    "exercise10-2-1a.html": "e5960b98"
+  },
+  "mathematics/numerical-analysis/homework/w12/exercise10-2-1b.qmd": {
+    "exercise10-2-1b.html": "5f4a8d3a"
+  },
+  "mathematics/numerical-analysis/homework/w12/exercise10-2-3a-plot.qmd": {
+    "exercise10-2-3a-plot.html": "ed1e5f6a"
+  },
+  "mathematics/numerical-analysis/homework/w12/exercise10-2-3a.qmd": {
+    "exercise10-2-3a.html": "10c31994"
+  },
+  "mathematics/numerical-analysis/homework/w12/exercise10-2-3b-plot.qmd": {
+    "exercise10-2-3b-plot.html": "e4502a50"
+  },
+  "mathematics/numerical-analysis/homework/w12/exercise10-2-3b.qmd": {
+    "exercise10-2-3b.html": "b3a6c2ed"
+  },
+  "mathematics/numerical-analysis/index.qmd": {
+    "index.html": "e91c60f7"
+  },
+  "mathematics/numerical-analysis/linear-systems/2-3.qmd": {
+    "2-3.html": "97bc742a"
+  },
+  "mathematics/numerical-analysis/linear-systems/ax-b-iterative-methods/gauss-seidel-method.qmd": {
+    "gauss-seidel-method.html": "247f49b4"
+  },
+  "mathematics/numerical-analysis/linear-systems/ax-b-iterative-methods/index.qmd": {
+    "index.html": "22fd7590"
+  },
+  "mathematics/numerical-analysis/linear-systems/ax-b-iterative-methods/jacobi-method.qmd": {
+    "jacobi-method.html": "529b0bd0"
+  },
+  "mathematics/numerical-analysis/linear-systems/ax-b-iterative-methods/successive-over-relaxation.qmd": {
+    "successive-over-relaxation.html": "d85bcb2f"
+  },
+  "mathematics/numerical-analysis/linear-systems/errors-analysis-linear-systems/backward-error.qmd": {
+    "backward-error.html": "841bd3c9"
+  },
+  "mathematics/numerical-analysis/linear-systems/errors-analysis-linear-systems/condition-number-matrix.qmd": {
+    "condition-number-matrix.html": "8cb87d39"
+  },
+  "mathematics/numerical-analysis/linear-systems/errors-analysis-linear-systems/error-magnification-factor.qmd": {
+    "error-magnification-factor.html": "6c34a6de"
+  },
+  "mathematics/numerical-analysis/linear-systems/errors-analysis-linear-systems/forward-error.qmd": {
+    "forward-error.html": "97ef8204"
+  },
+  "mathematics/numerical-analysis/linear-systems/errors-analysis-linear-systems/index.qmd": {
+    "index.html": "456080f7"
+  },
+  "mathematics/numerical-analysis/linear-systems/errors-analysis-linear-systems/relative-backward-error.qmd": {
+    "relative-backward-error.html": "22c87e30"
+  },
+  "mathematics/numerical-analysis/linear-systems/errors-analysis-linear-systems/relative-forward-error.qmd": {
+    "relative-forward-error.html": "6b26e72e"
+  },
+  "mathematics/numerical-analysis/linear-systems/errors-analysis-linear-systems/residual-linear-systems.qmd": {
+    "residual-linear-systems.html": "6ea241ff"
+  },
+  "mathematics/numerical-analysis/linear-systems/errors-analysis-linear-systems/swamping.qmd": {
+    "swamping.html": "baaf19e9"
+  },
+  "mathematics/numerical-analysis/linear-systems/gram-schmidt-orthogonalization.qmd": {
+    "gram-schmidt-orthogonalization.html": "af9fb5bf"
+  },
+  "mathematics/numerical-analysis/linear-systems/index.qmd": {
+    "index.html": "c9303a96"
+  },
+  "mathematics/numerical-analysis/linear-systems/least-squares.qmd": {
+    "least-squares.html": "8488b30c"
+  },
+  "mathematics/numerical-analysis/linear-systems/linear-systems.qmd": {
+    "linear-systems.html": "a14b2926"
+  },
+  "mathematics/numerical-analysis/linear-systems/lu-factorization.qmd": {
+    "lu-factorization.html": "a1a4b5ab"
+  },
+  "mathematics/numerical-analysis/linear-systems/modified-gram-schmidt-orthogonalization.qmd": {
+    "modified-gram-schmidt-orthogonalization.html": "605b8471"
+  },
+  "mathematics/numerical-analysis/linear-systems/norms/euclidean-vector-norm.qmd": {
+    "euclidean-vector-norm.html": "695c1a8a"
+  },
+  "mathematics/numerical-analysis/linear-systems/norms/index.qmd": {
+    "index.html": "a4e05960"
+  },
+  "mathematics/numerical-analysis/linear-systems/norms/infinity-norm-matrices.qmd": {
+    "infinity-norm-matrices.html": "6ac1ca95"
+  },
+  "mathematics/numerical-analysis/linear-systems/norms/infinity-vector-norm.qmd": {
+    "infinity-vector-norm.html": "8e84141b"
+  },
+  "mathematics/numerical-analysis/linear-systems/norms/taxicab-vector-norm.qmd": {
+    "taxicab-vector-norm.html": "99f80f12"
+  },
+  "mathematics/numerical-analysis/linear-systems/practice-problems/jacobi-method-convergence/jacobi-method-convergence.qmd": {
+    "jacobi-method-convergence.html": "312c0191"
+  },
+  "mathematics/numerical-analysis/linear-systems/spectral-radius.qmd": {
+    "spectral-radius.html": "b0d06c77"
+  },
+  "mathematics/numerical-analysis/polynomial-interpolation/chebyshev-interpolation.qmd": {
+    "chebyshev-interpolation.html": "2a200826"
+  },
+  "mathematics/numerical-analysis/polynomial-interpolation/index.qmd": {
+    "index.html": "991f61b7"
+  },
+  "mathematics/numerical-analysis/polynomial-interpolation/interpolation-error-formula.qmd": {
+    "interpolation-error-formula.html": "1b342591"
+  },
+  "mathematics/numerical-analysis/polynomial-interpolation/lagrange-interpolation.qmd": {
+    "lagrange-interpolation.html": "7cf36240"
+  },
+  "mathematics/numerical-analysis/polynomial-interpolation/newtons-divided-differences.qmd": {
+    "newtons-divided-differences.html": "e67853b7"
+  },
+  "mathematics/numerical-analysis/polynomial-interpolation/practice-problems/newtons-method-convergence/newtons-method-convergence.qmd": {
+    "newtons-method-convergence.html": "55ff2359"
+  },
+  "mathematics/numerical-analysis/polynomial-interpolation/practice-problems/root-analysis.qmd": {
+    "root-analysis.html": "35702769"
+  },
+  "mathematics/numerical-analysis/polynomial-interpolation/runge-phenomenon.qmd": {
+    "runge-phenomenon.html": "be9fbb91"
+  },
+  "mathematics/numerical-analysis/projects/index.qmd": {
+    "index.html": "f27abef5"
+  },
+  "mathematics/numerical-analysis/projects/rc01/rc01.qmd": {
+    "rc01.html": "9087f832"
+  },
+  "mathematics/numerical-analysis/projects/rc01/rc01_writeup/rc01_writeup.qmd": {
+    "rc01_writeup.tex": "e5544472"
+  },
+  "mathematics/numerical-analysis/projects/rc04/rc04-code.qmd": {
+    "rc04-code.html": "a3393063"
+  },
+  "mathematics/numerical-analysis/projects/rc04/rc04-info.qmd": {
+    "rc04-info.html": "cae5a813"
+  },
+  "mathematics/numerical-analysis/projects/rc04/rc04-pdf.qmd": {
+    "rc04-pdf.tex": "bb268ab5"
+  },
+  "mathematics/numerical-analysis/projects/rc04/rc04.qmd": {
+    "rc04.html": "49c5f0ed"
+  },
+  "mathematics/numerical-analysis/projects/rc05/rc05.qmd": {
+    "rc05.html": "1c8acff1"
+  },
+  "mathematics/numerical-analysis/quadrature/index.qmd": {
+    "index.html": "ee505eab"
+  },
+  "mathematics/numerical-analysis/quadrature/trapezoidal-rule.qmd": {
+    "trapezoidal-rule.html": "a0162d08"
+  },
+  "mathematics/numerical-analysis/root-finding-methods/bisection-method.qmd": {
+    "bisection-method.html": "1a81d37e"
+  },
+  "mathematics/numerical-analysis/root-finding-methods/fixed-point-iteration.qmd": {
+    "fixed-point-iteration.html": "5536908a"
+  },
+  "mathematics/numerical-analysis/root-finding-methods/index.qmd": {
+    "index.html": "a50934ec"
+  },
+  "mathematics/numerical-analysis/root-finding-methods/newtons-method.qmd": {
+    "newtons-method.html": "6b60cd95"
+  },
+  "mathematics/numerical-analysis/root-finding-methods/secant-method.qmd": {
+    "secant-method.html": "2f855ce2"
+  },
+  "mathematics/numerical-analysis/trigonometric-interpolation/index.qmd": {
+    "index.html": "42082cf0"
+  }
+}

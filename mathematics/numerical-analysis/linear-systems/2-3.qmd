@@ -1,0 +1,347 @@
+---
+title: 'Understanding Vector and Matrix Norms, Error Analysis, and Condition Numbers'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+When solving linear systems of the form $A\mathbf{x} = \mathbf{b}$, two significant issues may arise:
+
+1. **Controllable Errors**: Errors due to computational methods, which we can manage or minimize.
+2. **Uncontrollable Errors**: Errors inherent to the problem's nature, which we cannot eliminate but need to understand.
+
+This document explores vector and matrix norms, their importance in numerical computations, and how they relate to error analysis and condition numbers when solving $A\mathbf{x} = \mathbf{b}$.
+
+## **Vector Norms**
+
+A **norm** is a function that assigns a non-negative length or size to vectors in a vector space. Norms help measure the magnitude of vectors, which is essential in analyzing algorithms and numerical stability.
+
+For a vector $\mathbf{v} = [v_1, v_2, \dots, v_n]^T$, common norms include:
+
+### **1. $\ell_2$-Norm (Euclidean Norm)**
+
+Measures the straight-line distance from the origin to the point $\mathbf{v}$:
+
+$$
+\|\mathbf{v}\|_2 = \sqrt{v_1^2 + v_2^2 + \dots + v_n^2}
+$$
+
+### **2. $\ell_1$-Norm (Taxicab or Manhattan Norm)**
+
+Sums the absolute values of the vector components:
+
+$$
+\|\mathbf{v}\|_1 = |v_1| + |v_2| + \dots + |v_n|
+$$
+
+### **3. $\ell_\infty$-Norm (Maximum or Infinity Norm)**
+
+Takes the maximum absolute value among the components:
+
+$$
+\|\mathbf{v}\|_\infty = \max_{1 \leq i \leq n} |v_i|
+$$
+
+Also expressed as:
+
+$$
+\|\mathbf{v}\|_\infty = \lim_{p \to \infty} \left( \sum_{i=1}^n |v_i|^p \right)^{1/p}.
+$$
+
+## **Matrix Norms**
+
+Matrix norms measure the "size" of matrices and help understand how matrices affect vector norms when used as linear transformations.
+
+Common matrix norms include:
+
+### **1. Spectral Norm ($\|A\|_2$)**
+
+Involves the largest singular value of $A$:
+
+$$
+\|A\|_2 = \sqrt{\lambda_{\text{max}}(A^TA)},
+$$
+
+where $\lambda_{\text{max}}$ is the largest eigenvalue of $A^TA$.
+
+### **2. Maximum Column Sum Norm ($\|A\|_1$)**
+
+The largest sum of absolute values in any column:
+
+$$
+\|A\|_1 = \max_j \sum_i |a_{ij}|
+$$
+
+### **3. Maximum Row Sum Norm ($\|A\|_\infty$)**
+
+The largest sum of absolute values in any row:
+
+$$
+\|A\|_\infty = \max_i \sum_j |a_{ij}|
+$$
+
+## **The Matrix Infinity Norm and Row Sums**
+
+### **Definition of $\|A\|_\infty$**
+
+Formally defined as:
+
+$$
+\|A\|_\infty = \sup_{\mathbf{x} \neq 0} \frac{\|A\mathbf{x}\|_\infty}{\|\mathbf{x}\|_\infty} = \sup_{\|\mathbf{x}\|_\infty = 1} \|A\mathbf{x}\|_\infty
+$$
+
+### **Key Insight**
+
+- The infinity norm of $A$ is equal to the maximum row sum of $A$.
+- It represents the maximum effect $A$ can have on any vector $\mathbf{x}$ with $\|\mathbf{x}\|_\infty = 1$.
+
+## **Proof: $\|A\|_\infty =$ Maximum Row Sum of $A$**
+
+For matrix $A$:
+
+$$
+\|A\|_\infty = \max_i \sum_j |a_{ij}|.
+$$
+
+### **Example**
+
+Consider:
+
+$$
+A = \begin{bmatrix}
+-1 & -2 & 3 \\
+3 & -4 & -5 \\
+-2 & 3 & -4
+\end{bmatrix}
+$$
+
+#### **Compute Row Sums**
+
+1. **Row 1**: $|-1| + |-2| + |3| = 6$
+2. **Row 2**: $|3| + |-4| + |-5| = 12$
+3. **Row 3**: $|-2| + |3| + |-4| = 9$
+
+**Maximum Row Sum**: $12$ (Row 2)
+
+Therefore, $\|A\|_\infty = 12$.
+
+### **Choosing $\mathbf{\hat{x}}$**
+
+To achieve $\|A\mathbf{\hat{x}}\|_\infty = \|A\|_\infty$, select $\mathbf{\hat{x}}$ with $\|\mathbf{\hat{x}}\|_\infty = 1$ that aligns with the signs of Row 2:
+
+$$
+\mathbf{\hat{x}} = \begin{bmatrix}
+1 \\
+-1 \\
+-1
+\end{bmatrix}
+$$
+
+#### **Compute $A\mathbf{\hat{x}}$:**
+
+$$
+A\mathbf{\hat{x}} = \begin{bmatrix}
+-1(1) + -2(-1) + 3(-1) \\
+3(1) + -4(-1) + -5(-1) \\
+-2(1) + 3(-1) + -4(-1)
+\end{bmatrix} = \begin{bmatrix}
+-2 \\
+12 \\
+-1
+\end{bmatrix}
+$$
+
+#### **Compute $\|A\mathbf{\hat{x}}\|_\infty$:**
+
+$$
+\|A\mathbf{\hat{x}}\|_\infty = \max(|-2|, |12|, |-1|) = 12 = \|A\|_\infty
+$$
+
+### **Conclusion**
+
+It is **not possible** to find $\mathbf{\hat{x}}$ such that $\|A\mathbf{\hat{x}}\|_\infty > \|A\|_\infty$ when $\|\mathbf{\hat{x}}\|_\infty = 1$, because $\|A\|_\infty$ is the supremum of $\|A\mathbf{x}\|_\infty$ over all such $\mathbf{x}$.
+
+## **Error Analysis and Condition Numbers**
+
+### **Why Care About Errors in $A\mathbf{x} = \mathbf{b}$?**
+
+When solving $A\mathbf{x} = \mathbf{b}$, understanding errors helps improve numerical accuracy and stability.
+
+Let $\mathbf{x_a}$ be an **approximate solution** to $A\mathbf{x} = \mathbf{b}$, meaning:
+
+$$
+A\mathbf{x_a} \neq \mathbf{b}
+$$
+
+We quantify errors to assess the accuracy of $\mathbf{x_a}$ and evaluate the impact of approximations.
+
+### **Definitions**
+
+- **Residual**: The difference between $\mathbf{b}$ and $A\mathbf{x_a}$:
+
+  $$
+  \mathbf{r} = \mathbf{b} - A\mathbf{x_a}
+  $$
+
+- **Backward Error (BE)**: Measures the infinity norm of the residual:
+
+  $$
+  \text{BE} = \|\mathbf{r}\|_\infty = \|\mathbf{b} - A\mathbf{x_a}\|_\infty
+  $$
+
+- **Relative Backward Error (RBE)**: Normalizes the backward error relative to $\mathbf{b}$:
+
+  $$
+  \text{RBE} = \frac{\|\mathbf{r}\|_\infty}{\|\mathbf{b}\|_\infty}
+  $$
+
+- **Forward Error (FE)**: Measures the difference between the true solution $\mathbf{x}$ and the approximate solution $\mathbf{x_a}$:
+
+  $$
+  \text{FE} = \|\mathbf{x} - \mathbf{x_a}\|_\infty
+  $$
+
+- **Relative Forward Error (RFE)**: Normalizes the forward error relative to $\mathbf{x}$:
+
+  $$
+  \text{RFE} = \frac{\|\mathbf{x} - \mathbf{x_a}\|_\infty}{\|x\|_\infty}
+  $$
+
+## **Error Magnification Factor (EMF)**
+
+The **error magnification factor (EMF)** relates the relative forward error (RFE) to the relative backward error (RBE):
+
+$$
+\text{EMF} = \frac{\text{RFE}}{\text{RBE}}
+$$
+
+This quantifies how much the backward error is amplified when reflected in the forward error.
+
+## **Condition Number of a Matrix**
+
+The **condition number** of a matrix $A$ measures the sensitivity of the solution $\mathbf{x}$ to changes in $\mathbf{b}$. It is defined as:
+
+$$
+\text{cond}(A) = \|A\|_\infty \cdot \|A^{-1}\|_\infty
+$$
+
+### **Interpretation:**
+
+- A **low condition number** (close to 1) indicates a well-conditioned matrix.
+- A **high condition number** suggests an ill-conditioned matrix, meaning small changes in $\mathbf{b}$ can result in large changes in $\mathbf{x}$.
+
+## **Example**
+
+Given:
+
+$$
+\mathbf{x} = \begin{bmatrix} 2 \\ 1 \end{bmatrix}, \quad
+\mathbf{x_a} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}, \quad
+A = \begin{bmatrix} 1 & 1 \\ 3 & -4 \end{bmatrix}, \quad
+\mathbf{b} = \begin{bmatrix} 3 \\ 2 \end{bmatrix}
+$$
+
+### **Step 1: Compute Errors**
+
+1. **Forward Error (FE)**:
+
+   $$
+   \text{FE} = \|\mathbf{x} - \mathbf{x_a}\|_\infty = \left\| \begin{bmatrix} 2 \\ 1 \end{bmatrix} - \begin{bmatrix} 1 \\ 1 \end{bmatrix} \right\|_\infty = 1
+   $$
+
+2. **Relative Forward Error (RFE)**:
+
+   $$
+   \text{RFE} = \frac{\text{FE}}{\|\mathbf{x}\|_\infty} = \frac{1}{2} = 0.5
+   $$
+
+3. **Residual**:
+
+   $$
+   r = b - Ax_a = \begin{bmatrix} 3 \\ 2 \end{bmatrix} - \begin{bmatrix} 2 \\ -1 \end{bmatrix} = \begin{bmatrix} 1 \\ 3 \end{bmatrix}
+   $$
+
+4. **Backward Error (BE)**:
+
+   $$
+   \text{BE} = \|\mathbf{r}\|_\infty = 3
+   $$
+
+5. **Relative Backward Error (RBE)**:
+
+   $$
+   \text{RBE} = \frac{\text{BE}}{\|\mathbf{b}\|_\infty} = \frac{3}{3} = 1
+   $$
+
+### **Step 2: Compute EMF**
+
+Using:
+
+$$
+\text{EMF} = \frac{\text{RFE}}{\text{RBE}}
+$$
+
+we find:
+
+$$
+\text{EMF} = \frac{0.5}{1} = 0.5
+$$
+
+### **Step 3: Compute Condition Number**
+
+1. **Compute $\|A\|_\infty$**:
+
+   $$
+   \|A\|_\infty = \max\left( |1| + |1|, |3| + |-4| \right) = \max(2, 7) = 7
+   $$
+
+2. **Compute $\|A^{-1}\|_\infty$**:
+
+   From $A^{-1}$, we find:
+
+   $$
+   \|A^{-1}\|_\infty = \max\left( \frac{4}{7} + \frac{1}{7}, \frac{3}{7} + \frac{1}{7} \right) = \frac{5}{7}
+   $$
+
+3. **Condition Number**:
+
+   $$
+   \text{cond}(A) = \|A\|_\infty \cdot \|A^{-1}\|_\infty = 7 \cdot \frac{5}{7} = 5
+   $$
+
+## **Next Steps: $PA = LU$ Decomposition (Partial Pivoting)**
+
+### **What is Partial Pivoting?**
+
+Partial pivoting rearranges rows of $A$ during LU decomposition to place the largest available pivot element on the diagonal. This ensures numerical stability by reducing rounding errors.
+
+### **Consequences of Partial Pivoting:**
+
+1. **Controlled Multipliers**: Ensures all multipliers satisfy $|m_{ij}| \leq 1$.
+2. **Prevents Swamping**: Avoids large numerical errors caused by small pivot elements.
+
+Understanding norms, errors, and condition numbers is foundational for solving $A\mathbf{x} = \mathbf{b}$ efficiently and accurately.

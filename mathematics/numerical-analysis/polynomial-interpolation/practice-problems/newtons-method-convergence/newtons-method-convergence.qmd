@@ -1,0 +1,381 @@
+---
+title: 'Newtons Method - Convergence Proof'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show Code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Fixed-Point Iteration Convergence Theorem**
+
+_Theorem 1.6 (p. 35)_
+
+Assume that $g$ is continuously differentiable, $g(r) = r$, and $S = |g'(r)| < 1$. Under these conditions, Fixed-Point Iteration converges linearly with rate $S$ to the fixed point $r$ for initial guesses sufficiently close to $r$.
+
+### **Proof**
+
+Let $x_i$ represent the $i$-th iteration. By the Mean Value Theorem, there exists some $c_i$ between $x_i$ and $r$ such that:
+
+$$
+x_{i+1} - r = g'(c_i)(x_i - r)
+$$
+
+Here, we substitute $x_{i+1} = g(x_i)$ and $r = g(r)$. Defining the error $e_i = |x_i - r|$, this equation can be rewritten as:
+
+$$
+e_{i+1} = |g'(c_i)|e_i
+$$
+
+If $S = |g'(r)|$ is less than one, the continuity of $g'$ ensures that there exists a small neighborhood around $r$ where $|g'(x)| < (S + 1)/2$. This value is slightly larger than $S$, but still less than one. If $x_i$ lies within this neighborhood, then $c_i$, being between $x_i$ and $r$, also lies within this neighborhood. Consequently:
+
+$$
+e_{i+1} \leq \frac{S + 1}{2} e_i
+$$
+
+This inequality shows that the error decreases by at least a factor of $(S + 1)/2$ on this and every subsequent step. As a result, $\lim_{i \to \infty} x_i = r$. Furthermore, taking the limit of the ratio of consecutive errors yields:
+
+$$
+\lim_{i \to \infty} \frac{e_{i+1}}{e_i} = \lim_{i \to \infty} |g'(c_i)| = |g'(r)| = S
+$$
+
+This establishes that the iteration converges linearly with rate $S$.
+
+## **Newton's Method Convergence Theorem**
+
+_Theorem 1.11 (p. 53)_
+
+Let $f$ be twice continuously differentiable and $f(r) = 0$. If $f'(r) \neq 0$, then Newton’s Method is locally and quadratically convergent to $r$. The error $e_i$ at step $i$ satisfies:
+
+$$
+\lim_{i \to \infty} \frac{e_{i+1}}{e_i^2} = M
+$$
+
+where
+
+$$
+M = \left| \frac{f''(r)}{2f'(r)} \right|
+$$
+
+## **Proof**
+
+::: {.callout-note icon=false}
+
+## **1. Show $g'(r) = 0$:**
+
+Newton’s Method is
+
+$$
+x_{i+1} = x_i - \frac{f(x_i)}{f'(x_i)}
+$$
+
+This has the form of Fixed-Point Iteration (i.e., $x_{i+1} = g(x_i)$), where
+
+$$
+g(x) = x - \frac{f(x)}{f'(x)}
+$$
+
+Show that $g'(r) = 0$.
+
+What does this imply about the convergence of Newton’s Method? _(Hint: see Theorem 1.6)_
+
+:::
+
+::: {.callout-tip collapse="true"}
+
+## **Answer**
+
+Newton’s Method is given by the iteration formula:
+
+$$
+x_{i+1} = x_i - \frac{f(x_i)}{f'(x_i)}
+$$
+
+This can be expressed in the form of Fixed-Point Iteration by defining:
+
+$$
+g(x) = x - \frac{f(x)}{f'(x)}
+$$
+
+Therefore, the iteration becomes:
+
+$$
+x_{i+1} = g(x_i)
+$$
+
+To find $g'(r)$, first differentiate $g(x)$ with respect to $x$:
+
+$$
+g'(x) = \frac{d}{dx} \left( x - \frac{f(x)}{f'(x)} \right) = 1 - \frac{d}{dx} \left( \frac{f(x)}{f'(x)} \right)
+$$
+
+Using the **Quotient Rule** for differentiation:
+
+$$
+\frac{d}{dx} \left( \frac{f(x)}{f'(x)} \right) = \frac{f'(x)f'(x) - f(x)f''(x)}{[f'(x)]^2} = \frac{[f'(x)]^2 - f(x)f''(x)}{[f'(x)]^2}
+$$
+
+Substituting back into the expression for $g'(x)$:
+
+$$
+g'(x) = 1 - \frac{[f'(x)]^2 - f(x)f''(x)}{[f'(x)]^2} = 1 - 1 + \frac{f(x)f''(x)}{[f'(x)]^2} = \frac{f(x)f''(x)}{[f'(x)]^2}
+$$
+
+Given that $r$ is the root of $f(x)$:
+
+$$
+f(r) = 0
+$$
+
+Plugging $x = r$ into the derivative:
+
+$$
+g'(r) = \frac{f(r)f''(r)}{[f'(r)]^2} = \frac{0 \cdot f''(r)}{[f'(r)]^2} = 0
+$$
+
+Therefore:
+
+$$
+g'(r) = 0
+$$
+
+**This implies that convergence is guaranteed locally:**
+
+_Theorem 1.6_ states that if $|g'(r)| < 1$, the Fixed-Point Iteration will converge to $r$, provided the initial guess $x_0$ is sufficiently close to $r$. Since $g'(r) = 0$, this condition is satisfied with $|g'(r)| = 0 < 1$. Thus, Newton’s Method will converge to the root $r$ if the initial guess is close enough.
+
+:::
+
+::: {.callout-note icon=false}
+
+## **2. First two terms of the Taylor series for $f(r)$:**
+
+To complete our proof, we need to show that
+
+$$
+\lim_{i \to \infty} \frac{e_{i+1}}{e_i^2} = \left| \frac{f''(r)}{2f'(r)} \right|
+$$
+
+Begin by writing out the first **two** terms of the Taylor series for $f(r)$ centered at $x_i$, along with the remainder term (see p. 21, with $x = r$, $x_0 = x_i$, and $c = c_i$).
+
+:::
+
+::: {.callout-tip collapse="true"}
+
+## **Answer**
+
+The Taylor series expansion of a function $f(x)$ around a point $x_i$ up to the second term is given by:
+
+$$
+f(r) = f(x_i) + f'(x_i)(r - x_i) + \frac{f''(c_i)}{2}(r - x_i)^2
+$$
+
+Here:
+
+- $x_i$ is the current approximation.
+- $c_i$ is a point between $x_i$ and $r$.
+
+:::
+
+::: {.callout-note icon=false}
+
+## **3. Manipulate result:**
+
+Manipulate your result so it looks like this _(note: the LHS of this equation is the RHS of Newton’s Method)_:
+
+$$
+x_i - \frac{f(x_i)}{f'(x_i)} = r + \frac{f''(c_i)}{2f'(x_i)}(r - x_i)^2
+$$
+
+In order for these expressions to be defined, we must have $f'(x_i) \neq 0$. By assumption, we have $f'(r) \neq 0$. What allows us to conclude that the same is true for $f'(x_i)$?
+
+:::
+
+::: {.callout-tip collapse="true"}
+
+## **Answer**
+
+From the Taylor series expansion of $f(r)$ centered at $x_i$, we have:
+
+$$
+f(r) = f(x_i) + f'(x_i)(r - x_i) + \frac{f''(c_i)}{2}(r - x_i)^2
+$$
+
+Since $r$ is the root of $f(x)$, $f(r) = 0$. Substitute $f(r) = 0$:
+
+$$
+0 = f(x_i) + f'(x_i)(r - x_i) + \frac{f''(c_i)}{2}(r - x_i)^2
+$$
+
+Rearrange to solve for $f(x_i)$:
+
+$$
+f(x_i) = -f'(x_i)(r - x_i) - \frac{f''(c_i)}{2}(r - x_i)^2
+$$
+
+The formula for Newton’s Method is:
+
+$$
+x_{i+1} = x_i - \frac{f(x_i)}{f'(x_i)}
+$$
+
+Substitute $f(x_i) = -f'(x_i)(r - x_i) - \frac{f''(c_i)}{2}(r - x_i)^2$ into $x_i - \frac{f(x_i)}{f'(x_i)}$:
+
+$$
+x_i - \frac{f(x_i)}{f'(x_i)} = x_i - \frac{-f'(x_i)(r - x_i) - \frac{f''(c_i)}{2}(r - x_i)^2}{f'(x_i)}
+$$
+
+Break this into two terms:
+
+- The first term:
+
+  $$
+  -\frac{-f'(x_i)(r - x_i)}{f'(x_i)} = r - x_i
+  $$
+
+- The second term:
+  $$
+  -\frac{\frac{f''(c_i)}{2}(r - x_i)^2}{f'(x_i)} = \frac{f''(c_i)}{2f'(x_i)}(r - x_i)^2
+  $$
+
+Combine the terms:
+
+$$
+x_i - \frac{f(x_i)}{f'(x_i)} = r + \frac{f''(c_i)}{2f'(x_i)}(r - x_i)^2
+$$
+
+**As the index $i \to \infty$, $x_i \to r$. Since $f'(x)$ is continuous and $f'(r) \neq 0$, it follows that $f'(x_i) \neq 0$ for all sufficiently large $i$.**
+:::
+
+::: {.callout-note icon=false}
+
+## **4. Combine results:**
+
+Let $e_i = |r - x_i|$ (so $e_{i+1} = |r - x_{i+1}|$). Use these together with the definition of Newton’s method in step (1) and your result from step (3) to obtain:
+
+$$
+e_{i+1} = \left| \frac{f''(c_i)}{2f'(x_i)} \right| e_i^2
+$$
+
+:::
+
+::: {.callout-tip collapse="true"}
+
+## **Answer**
+
+Start with the error definition at step $i+1$:
+
+$$
+e_{i+1} = |r - x_{i+1}|
+$$
+
+From the earlier derived formula for $x_{i+1}$, we have:
+
+$$
+x_{i+1} = r + \frac{f''(c_i)}{2f'(x_i)}(r - x_i)^2
+$$
+
+Substituting this into the error formula:
+
+$$
+e_{i+1} = |r - (r + \frac{f''(c_i)}{2f'(x_i)}(r - x_i)^2)|
+$$
+
+Simplify the terms:
+
+$$
+e_{i+1} = |\frac{f''(c_i)}{2f'(x_i)}(r - x_i)^2|
+$$
+
+Using the definition of $e_i = |r - x_i|$, substitute $e_i$ for $|r - x_i|$:
+
+$$
+e_{i+1} = \left| \frac{f''(c_i)}{2f'(x_i)} \right| e_i^2
+$$
+
+This matches the desired formula:
+
+$$
+e_{i+1} = \left| \frac{f''(c_i)}{2f'(x_i)} \right| e_i^2
+$$
+
+:::
+
+::: {.callout-note icon=false}
+
+## **5. Explain why:**
+
+Dividing both sides by $e_i^2$ and taking the limit as $i \to \infty$ will complete the proof. However, evaluating the limit on the right-hand side requires some care. Justify each of the following steps in this process:
+
+$$
+\lim_{i \to \infty} \frac{e_{i+1}}{e_i^2} = \lim_{i \to \infty} \left| \frac{f''(c_i)}{2f'(x_i)} \right|
+$$
+
+:::
+
+::: {.callout-tip collapse="true"}
+
+## **Answer**
+
+To solve the limit
+
+$$
+\lim_{i \to \infty} \frac{e_{i+1}}{e_i^2} = \lim_{i \to \infty} \left| \frac{f''(c_i)}{2f'(x_i)} \right|
+$$
+
+proceed as follows:
+
+$$
+\lim_{i \to \infty} \left| \frac{f''(c_i)}{2f'(x_i)} \right| = \lim_{i \to \infty} \frac{|f''(c_i)|}{|2f'(x_i)|}
+$$
+
+This works because the absolute value of a fraction is equal to the fraction of the absolute values.
+
+$$
+\lim_{i \to \infty} \frac{|f''(c_i)|}{|2f'(x_i)|} = \frac{\lim_{i \to \infty} |f''(c_i)|}{\lim_{i \to \infty} |2f'(x_i)|}
+$$
+
+This step follows from the property of limits that allows the limit of a fraction to be written as the fraction of the limits, provided the limits of both the numerator and denominator exist and the denominator does not approach zero.
+
+$$
+\lim_{i \to \infty} |f''(c_i)| = |f''(r)|
+$$
+
+The point $c_i$ approaches $r$ as $i \to \infty$ because $c_i$ is always between $x_i$ and $r$, and Newton's Method ensures $x_i \to r$, causing the interval $(x_i, r)$ to shrink to a single point, while the continuity of $f''(x)$ guarantees $f''(c_i) \to f''(r)$.
+
+$$
+\lim_{i \to \infty} |2f'(x_i)| = 2|f'(r)|
+$$
+
+This is valid because as $i \to \infty$, $x_i \to r$, and $f'(x_i)$ is continuous. The factor of $2$ in the denominator is a constant, so it remains unchanged during the limit process.
+
+$$
+\frac{\lim_{i \to \infty} |f''(c_i)|}{\lim_{i \to \infty} |2f'(x_i)|} = \left|\frac{f''(r)}{2f'(r)}\right|
+$$
+
+Thus, the solution to the limit is:
+
+$$
+\lim_{i \to \infty} \frac{e_{i+1}}{e_i^2} = \left|\frac{f''(r)}{2f'(r)}\right|
+$$
+
+This completes the proof by showing that the error $e_{i+1}$ at each step decreases quadratically in relation to the square of the error $e_i$ at the previous step, demonstrating the **quadratic convergence** of Newton's Method.
+:::

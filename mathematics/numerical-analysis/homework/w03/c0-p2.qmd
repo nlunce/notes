@@ -1,0 +1,133 @@
+---
+title: 'Exercise 3.1.1c (C3-P1)'
+subtitle: 'MATH411'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+```{python}
+#| label: libraries
+#| include: false
+import numpy as np
+import matplotlib.pyplot as plt
+```
+
+## Question
+
+**Create a Python function that takes as input three points (six scalars, three pairs, or perhaps a 6-element numpy array–choose a method that makes sense to you) and uses the matplotlib package to create a figure window and then render a triangle with small open circles at each of the points and straight lines between each pair of circles. Include code to save your figure to a .png or .jpg file. Validate your function with the points (1, 2), (2, 1), and (2, 3).**
+
+```{python}
+#| label: Function
+#| code-summary: Create function and figure
+
+# Define the function
+def plot_triangle(points, save_path='triangle_plot.png'):
+    """
+    Takes an input of three points (a list of 3 tuples or a 3x2 numpy array)
+    and plots a triangle with small open circles at each of the points.
+    The triangle is rendered with lines connecting each point.
+
+    Parameters:
+    points (list of tuples or numpy array): Points representing the vertices of the triangle.
+    save_path (str): File path to save the plotted figure.
+    """
+
+    # Ensure points is a numpy array
+    points = np.array(points)
+
+    # Check if the input is in the correct shape (3x2)
+    if points.shape != (3, 2):
+        raise ValueError("Input should be a list of 3 points, each as a pair of (x, y) coordinates.")
+
+    # Extract the x and y coordinates
+    x_coords = points[:, 0]
+    y_coords = points[:, 1]
+
+    # Close the triangle by repeating the first point at the end
+    x_closed = np.append(x_coords, x_coords[0])
+    y_closed = np.append(y_coords, y_coords[0])
+
+    # Create the plot
+    plt.figure(figsize=(6, 6))
+
+    # Plot the triangle with open circles at each vertex
+    plt.plot(x_closed, y_closed, 'b-', marker='o', markerfacecolor='none',
+             markeredgecolor='r', markersize=10, label='Triangle')
+
+    # Set labels and title
+    plt.title("Triangle with Given Vertices")
+    plt.xlabel("x")
+    plt.ylabel("y")
+
+    # Set axis limits for better visualization
+    plt.xlim(min(x_closed) - 1, max(x_closed) + 1)
+    plt.ylim(min(y_closed) - 1, max(y_closed) + 1)
+
+    # Add grid for better visualization
+    plt.grid(True)
+
+
+    # Save the figure
+    plt.savefig(save_path, dpi=300)
+
+    # Show the plot
+   #  plt.show()
+
+# Test the function with the points (1, 2), (2, 1), and (2, 3)
+test_points = [(1, 2), (2, 1), (2, 3)]
+plot_triangle(test_points, save_path='triangle_plot.png')
+```
+
+### **Explanation:**
+
+1. **Function Definition:**
+
+   - **`plot_triangle`**: This function takes in three points and an optional `save_path` parameter to specify where to save the plot.
+   - **Parameters:**
+     - `points`: A list of three tuples representing the vertices of the triangle or a 3x2 numpy array.
+     - `save_path`: The file path where the plot image will be saved (default is `'triangle_plot.png'`).
+
+2. **Input Validation:**
+
+   - The function first converts the input `points` to a numpy array and checks if it has the correct shape `(3, 2)`. If not, it raises a `ValueError`.
+
+3. **Plotting:**
+
+   - **Closing the Triangle:** To draw a complete triangle, the first point is appended to the end of the `x_coords` and `y_coords` arrays.
+   - **Plotting Lines and Markers:**
+     - The triangle is plotted with blue lines (`'b-'`) connecting the points.
+     - Small open red circles (`marker='o'`, `markerfacecolor='none'`, `markeredgecolor='r'`) are placed at each vertex.
+   - **Labels and Grid:** The plot includes titles, axis labels, and a grid for better visualization.
+
+4. **Saving and Displaying the Plot:**
+   - The plot is saved as a `.png` file with a resolution of 300 DPI.
+   - The plot window is then displayed using `plt.show()`.
+
+### **Result:**
+
+After running the function with the test points `(1, 2)`, `(2, 1)`, and `(2, 3)`, the resulting triangle will be saved as `triangle_plot.png` and displayed as shown below:
+
+![Triangle Plot](triangle_plot.png)

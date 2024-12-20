@@ -1,0 +1,126 @@
+---
+title: 'Fixed-Point Iteration'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show Code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+**Fixed-Point Iteration** is a simple numerical method for solving equations of the form $x = g(x)$. It is based on the idea of iteratively applying a function $g(x)$ to approximate a fixed point $x^*$, where $x^* = g(x^*)$. This method is commonly used in numerical root-finding and optimization.
+
+## **Fixed-Point Iteration Formula**
+
+The fixed-point iteration method uses the recursive formula:
+
+$$
+x_{k+1} = g(x_k)
+$$
+
+where $x_k$ is the $k$-th approximation of the solution. Starting from an initial guess $x_0$, the sequence of approximations is generated iteratively, and convergence is expected when $|x_{k+1} - x_k|$ becomes sufficiently small.
+
+## **Convergence Criteria**
+
+For the fixed-point iteration to converge, certain conditions must be met:
+
+1. The function $g(x)$ must be continuous.
+2. The derivative $g'(x)$ at the fixed point $x^*$ must satisfy:
+   $$
+   |g'(x^*)| < 1
+   $$
+
+If $|g'(x^*)| \geq 1$, the method may fail to converge.
+
+## **Step-by-Step Procedure**
+
+1. Rewrite the given equation $f(x) = 0$ in the form $x = g(x)$.
+2. Choose an initial guess $x_0$.
+3. Apply the iteration formula:
+   $$
+   x_{k+1} = g(x_k)
+   $$
+4. Repeat the iteration until $|x_{k+1} - x_k| < \epsilon$, where $\epsilon$ is the tolerance.
+5. The final $x_k$ is an approximate solution.
+
+## **Example**
+
+Consider the equation:
+
+$$
+x^2 - 2 = 0
+$$
+
+Rewriting it as $x = g(x)$:
+
+$$
+g(x) = \frac{2}{x}
+$$
+
+### **Iterative Steps**
+
+1. **Initial Guess**: $x_0 = 1.5$.
+2. **First Iteration**:
+   $$
+   x_1 = g(x_0) = \frac{2}{1.5} = 1.3333
+   $$
+3. **Second Iteration**:
+   $$
+   x_2 = g(x_1) = \frac{2}{1.3333} \approx 1.5
+   $$
+4. **Third Iteration**:
+   $$
+   x_3 = g(x_2) = \frac{2}{1.5} \approx 1.3333
+   $$
+
+The values oscillate around the solution $\sqrt{2}$. With more iterations and a smaller tolerance $\epsilon$, the method converges to the actual solution.
+
+## **Convergence and Stability**
+
+For fixed-point iteration to converge:
+
+- $|g'(x^*)| < 1$ ensures stability near the fixed point.
+- Poorly chosen $g(x)$ or initial guesses can lead to divergence or slow convergence.
+
+### **Example of Divergence**
+
+If $g(x)$ is poorly chosen such that $|g'(x^*)| > 1$, the method may fail to converge. For instance, using $g(x) = x^2$ for the same equation would cause the iteration to diverge.
+
+## **Applications**
+
+- **Root-Finding**: Solve equations like $f(x) = 0$.
+- **Dynamical Systems**: Analyze equilibrium points.
+- **Optimization**: Solve constraints arising in optimization problems.
+
+## **Advantages and Limitations**
+
+### **Advantages**
+
+1. **Simple Implementation**: Requires minimal computation.
+2. **Versatile**: Applicable to a wide range of problems.
+
+### **Limitations**
+
+1. **Convergence Issues**: Sensitive to $g(x)$ and initial guess.
+2. **Slow Convergence**: May require many iterations for highly accurate solutions.

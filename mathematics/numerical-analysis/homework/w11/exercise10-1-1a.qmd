@@ -1,0 +1,158 @@
+---
+title: 'Exercise 10.1.1a'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 1
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: false
+  watch-inputs: true
+---
+
+# **Problem:**
+
+::: {.callout-note icon=false }
+
+## **10.1.1a**
+
+Find the Discrete Fourier Transform (DFT) of the following vector:
+
+$$
+\begin{bmatrix}
+0 \\ 1 \\ 0 \\ -1
+\end{bmatrix}
+$$
+
+:::
+
+# **Solution:**
+
+### **Compute the DFT using the matrix formulation:**
+
+$$
+\mathbf{y} = F \mathbf{x}
+$$
+
+Where:
+
+- $F$ is the Fourier matrix, with entries:
+  $$
+  F_{k,j} = \omega^{k j}, \quad \omega = e^{-i \frac{2\pi}{n}}
+  $$
+- $\mathbf{x} = \begin{bmatrix} x_0 \\ x_1 \\ x_2 \\ x_3 \end{bmatrix}$ is the input vector
+
+\vspace{.25cm}
+
+- $\mathbf{y} = \begin{bmatrix} y_0 \\ y_1 \\ y_2 \\ y_3 \end{bmatrix}$ is the DFT of the input vector
+
+### **Define Parameters**
+
+The input vector is:
+
+$$
+\mathbf{x} = \begin{bmatrix} 0 \\ 1 \\ 0 \\ -1 \end{bmatrix}
+$$
+
+The length of the vector is $n = 4$. The primitive root of unity is:
+
+$$
+\omega = e^{-i \frac{2\pi}{n}} = e^{-i \frac{\pi}{2}} = \cos\left(\frac{\pi}{2}\right) - i \sin\left(\frac{\pi}{2}\right) = -i
+$$
+
+### **Construct the Fourier Matrix $F_4$**
+
+The Fourier matrix $F_4$ is given by:
+
+$$
+F_4 =
+\begin{bmatrix}
+\omega^{0 \cdot 0} & \omega^{0 \cdot 1} & \omega^{0 \cdot 2} & \omega^{0 \cdot 3} \\
+\omega^{1 \cdot 0} & \omega^{1 \cdot 1} & \omega^{1 \cdot 2} & \omega^{1 \cdot 3} \\
+\omega^{2 \cdot 0} & \omega^{2 \cdot 1} & \omega^{2 \cdot 2} & \omega^{2 \cdot 3} \\
+\omega^{3 \cdot 0} & \omega^{3 \cdot 1} & \omega^{3 \cdot 2} & \omega^{3 \cdot 3}
+\end{bmatrix}
+$$
+
+### **Compute Powers of $\omega$**
+
+- $\omega^0 = 1$
+- $\omega^1 = -i$
+- $\omega^2 = (-i)^2 = -1$
+- $\omega^3 = (-i)^3 = i$
+
+#### **Fill in the Matrix $F_4$:**
+
+$$
+F_4 =
+\begin{bmatrix}
+1 & 1 & 1 & 1 \\
+1 & -i & -1 & i \\
+1 & -1 & 1 & -1 \\
+1 & i & -1 & -i
+\end{bmatrix}
+$$
+
+### **Perform the Matrix Multiplication**
+
+- **$y_0$:**
+
+  $$
+  y_0 = 1 \cdot 0 + 1 \cdot 1 + 1 \cdot 0 + 1 \cdot (-1) = 0 + 1 + 0 - 1 = 0
+  $$
+
+- **$y_1$:**
+
+  $$
+  y_1 = 1 \cdot 0 + (-i) \cdot 1 + (-1) \cdot 0 + i \cdot (-1)
+  $$
+
+  $$
+  y_1 = 0 - i + 0 - i = -2i
+  $$
+
+- **$y_2$:**
+
+  $$
+  y_2 = 1 \cdot 0 + (-1) \cdot 1 + 1 \cdot 0 + (-1) \cdot (-1)
+  $$
+
+  $$
+  y_2 = 0 - 1 + 0 + 1 = 0
+  $$
+
+- **$y_3$:**
+  $$
+  y_3 = 1 \cdot 0 + i \cdot 1 + (-1) \cdot 0 + (-i) \cdot (-1)
+  $$
+  $$
+  y_3 = 0 + i + 0 + i = 2i
+  $$
+
+::: {.callout-tip icon=false}
+
+## **Final Answer:**
+
+The DFT of $\mathbf{x}$ is:
+
+$$
+\mathbf{y} = \begin{bmatrix} 0 \\ -2i \\ 0 \\ 2i \end{bmatrix}
+$$
+
+:::

@@ -1,0 +1,105 @@
+---
+title: 'Least Squares Solution for Inconsistent Systems'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show Code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## Overview
+
+The least squares solution minimizes the distance between the vector $\mathbf{b}$ and the column space of $A$. The column space of $A$, denoted $\mathrm{Col}(A)$, is equivalent to the span of the columns of $A$, written as $\mathrm{span}(A_1, A_2, \dots, A_n)$, where $A_1, A_2, \dots, A_n$ are the columns of $A$.
+
+This distance corresponds to the residual $\|\mathbf{b} - \mathbf{\hat{b}}\|$, where $\mathbf{\hat{b}} = A\mathbf{\hat{x}}$ is the projection of $\mathbf{b}$ onto $\mathrm{Col}(A)$.
+
+## **Visualizing the Least Squares Solution**
+
+The figure below illustrates how the least squares solution $\mathbf{\hat{x}}$ projects $\mathbf{b}$ onto $\mathrm{Col}(A)$, which is spanned by the columns of $A$. The vector $\mathbf{r} = \mathbf{b} - \mathbf{\hat{b}}$ is orthogonal to $\mathrm{Col}(A)$.
+
+![](least-squares.jpg)
+
+- **$\mathbf{b}$**: The target vector outside $\mathrm{Col}(A)$.
+- **$\mathbf{\hat{b}}$**: The projection of $\mathbf{b}$ onto $\mathrm{Col}(A)$, calculated as $\mathbf{\hat{b}} = A(A^\top A)^{-1}A^\top \mathbf{b}$.
+- **$\mathbf{r}$**: The residual vector, orthogonal to $\mathrm{Col}(A)$.
+- **$A_1, A_2, \dots, A_n$**: Basis vectors spanning $\mathrm{Col}(A)$.
+
+## Intuitive Walkthrough of the Proof
+
+### 1. **The Problem**
+
+Given a matrix $A$ with columns $A_1, A_2, \dots, A_n$ and a vector $\mathbf{b}$, the system $A\mathbf{x} = \mathbf{b}$ is inconsistent if $\mathbf{b}$ does not lie in $\mathrm{Col}(A)$. The objective is to find $\mathbf{\hat{x}}$, which minimizes the distance between $\mathbf{b}$ and $\mathrm{Col}(A)$.
+
+### 2. **Projection and Residual**
+
+Minimizing the distance involves projecting $\mathbf{b}$ onto $\mathrm{Col}(A)$. The projection is denoted $\mathbf{\hat{b}} = A\mathbf{\hat{x}}$. The residual $\mathbf{r} = \mathbf{b} - \mathbf{\hat{b}}$ represents the difference, and the goal is to minimize $\|\mathbf{r}\|^2$, which can be written as:
+
+$$
+\|\mathbf{r}\|^2 = \|\mathbf{b} - A\mathbf{\hat{x}}\|^2.
+$$
+
+### 3. **Orthogonality Condition**
+
+The residual $\mathbf{r}$ is orthogonal to $\mathrm{Col}(A)$ when $\mathbf{\hat{b}}$ is the best approximation of $\mathbf{b}$. This condition is expressed as:
+
+$$
+A^\top \mathbf{r} = 0 \quad \text{or equivalently} \quad A^\top (\mathbf{b} - A\mathbf{\hat{x}}) = 0.
+$$
+
+### 4. **Normal Equations**
+
+Expanding the orthogonality condition yields:
+
+$$
+A^\top \mathbf{b} - A^\top A\mathbf{\hat{x}} = 0 \quad \Rightarrow \quad A^\top A\mathbf{\hat{x}} = A^\top \mathbf{b}.
+$$
+
+This is the **normal equation**. Solving it provides $\mathbf{\hat{x}}$, the least squares solution.
+
+### 5. **Computing $\mathbf{\hat{x}}$**
+
+If $A^\top A$ is invertible, the solution for $\mathbf{\hat{x}}$ is:
+
+$$
+\mathbf{\hat{x}} = (A^\top A)^{-1}A^\top \mathbf{b}.
+$$
+
+### 6. **Geometric Interpretation**
+
+The projection $\mathbf{\hat{b}}$ lies in $\mathrm{Col}(A)$, and the residual $\mathbf{r} = \mathbf{b} - \mathbf{\hat{b}}$ is orthogonal to this space. This makes $\mathbf{\hat{b}}$ the closest vector in $\mathrm{Col}(A)$ to $\mathbf{b}$.
+
+## **Summary**
+
+The least squares method projects $\mathbf{b}$ onto $\mathrm{Col}(A)$, solving the equation:
+
+$$
+A^\top A\mathbf{\hat{x}} = A^\top \mathbf{b}.
+$$
+
+The solution is:
+
+$$
+\mathbf{\hat{x}} = (A^\top A)^{-1}A^\top \mathbf{b}.
+$$
+
+This projection minimizes the residual $\|\mathbf{b} - \mathbf{\hat{b}}\|$, making it the best approximation of $\mathbf{b}$ within $\mathrm{Col}(A)$. The accompanying diagram visually demonstrates this projection and the orthogonal residual.

@@ -1,0 +1,112 @@
+---
+title: 'Power Series Expansion for Sine Function'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+The **power series expansion** for the sine function is another important result in calculus and analysis. Derived from the Taylor series at $x = 0$, it provides an exact representation of $\sin(x)$ as an infinite sum, allowing for precise approximations of its values.
+
+## **Power Series for Sine**
+
+The sine function can be expressed as:
+
+$$
+\sin(x) = \sum_{n=0}^\infty \frac{(-1)^n}{(2n+1)!} x^{2n+1}
+$$
+
+This series converges to the true value of $\sin(x)$ for all $x$. The first four terms of the series are:
+
+$$
+\sin(x) \approx x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!}
+$$
+
+which simplifies to:
+
+$$
+\sin(x) \approx x - \frac{x^3}{6} + \frac{x^5}{120} - \frac{x^7}{5040}
+$$
+
+## **Explanation**
+
+### **1. Taylor Series**
+
+The power series for $\sin(x)$ comes from the Taylor series expansion about $x = 0$:
+
+$$
+f(x) = f(0) + f'(0)x + \frac{f''(0)}{2!}x^2 + \frac{f^{(3)}(0)}{3!}x^3 + \cdots
+$$
+
+For $\sin(x)$, the derivatives follow a cyclic pattern:
+
+- $\sin(x)$
+- $\cos(x)$
+- $-\sin(x)$
+- $-\cos(x)$
+
+Evaluating these derivatives at $x = 0$:
+
+- $\sin(0) = 0$
+- $\cos(0) = 1$
+- $-\sin(0) = 0$
+- $-\cos(0) = -1$
+
+Only the odd derivatives contribute to the series.
+
+### **2. General Term**
+
+The general term of the series is:
+
+$$
+\frac{(-1)^n}{(2n+1)!} x^{2n+1}
+$$
+
+where $n$ is a non-negative integer. This results in a series with only odd powers of $x$, alternating in sign.
+
+## **Examples**
+
+1. **Small $x$:**  
+   For $x = 0.1$, using the first four terms:
+
+   $$
+   \sin(0.1) \approx 0.1 - \frac{(0.1)^3}{6} + \frac{(0.1)^5}{120} - \frac{(0.1)^7}{5040}
+   $$
+
+   This gives a close approximation to the true value of $\sin(0.1)$.
+
+2. **Error Reduction:**  
+   Adding more terms improves the approximation by reducing the truncation error.
+
+## **Summary**
+
+The power series expansion for $\sin(x)$ is a cornerstone in mathematics:
+
+- **Exact Representation:** The infinite series converges to $\sin(x)$ for all real $x$.
+- **Approximation:** Truncated series provide practical approximations.
+- **Applications:** Used in numerical analysis, physics, and solving differential equations.
+
+The first four terms, $x - \frac{x^3}{6} + \frac{x^5}{120} - \frac{x^7}{5040}$, often provide sufficient accuracy for small $x$. This series highlights the utility and elegance of representing functions as infinite sums.

@@ -1,0 +1,98 @@
+---
+title: 'Runge Phenomenon'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 1
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Introduction**
+
+The **Runge Phenomenon** refers to the oscillatory behavior that occurs when using high-degree polynomial interpolation on evenly spaced data points, particularly near the endpoints of an interval. The phenomenon is named after Carl Runge, who discovered this issue while studying interpolation of functions with large oscillations near the boundaries of an interval.
+
+### **The Issue with High-Degree Polynomials**
+
+When interpolating a smooth function using polynomials of high degree, the interpolation can become highly oscillatory near the edges of the interval, even if the function being interpolated is smooth and well-behaved. This is particularly problematic with **equally spaced points**, as the polynomial tries to fit too closely to the data points near the boundaries, leading to large errors.
+
+### **Runge's Example**
+
+The most famous example illustrating the Runge phenomenon is based on the **Runge function**:
+
+$$
+f(x) = \frac{1}{1 + 25x^2}
+$$
+
+Runge showed that using high-degree polynomial interpolation on this function with evenly spaced points over the interval $[-5, 5]$ leads to significant oscillations near the edges. The interpolation error grows as the degree of the polynomial increases, especially near the endpoints of the interval.
+
+### **Why Does It Happen?**
+
+The Runge phenomenon arises because high-degree polynomials tend to oscillate more as their degree increases, especially when they are forced to pass through many points. With equally spaced points, the interpolation error is concentrated near the edges of the interval, causing large deviations from the true function in those regions.
+
+Mathematically, for a function $f(x)$ interpolated at $n$ evenly spaced points using a polynomial $P_n(x)$ of degree $n-1$, the interpolation error is given by:
+
+$$
+|f(x) - P_n(x)| = \frac{|f^{(n)}(c)|}{n!} \prod_{i=1}^{n}(x - x_i)
+$$
+
+As the number of interpolation points $n$ increases, the product term $\prod_{i=1}^{n}(x - x_i)$ becomes very large near the endpoints of the interval, causing the interpolation error to increase dramatically.
+
+### **Graphical Representation**
+
+The following figure illustrates the Runge phenomenon. For the Runge function $f(x) = \frac{1}{1 + 25x^2}$, the polynomial interpolation for large $n$ shows excessive oscillations near the interval boundaries:
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+def runge_function(x):
+    return 1 / (1 + 25 * x**2)
+
+x_values = np.linspace(-5, 5, 1000)
+
+plt.figure(figsize=(8, 6))
+plt.plot(x_values, runge_function(x_values), label="Runge Function", color="blue")
+
+plt.title("Runge Phenomenon")
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+
+### **Chebyshev Nodes as a Solution**
+
+The **Runge phenomenon** can be mitigated by using [**Chebyshev nodes**](./chebyshev-interpolation.html) instead of equally spaced points. Chebyshev nodes distribute the points more densely near the edges of the interval, where the oscillations are most likely to occur. This results in more accurate interpolation with less oscillation near the boundaries.
+
+Chebyshev nodes $x_i$ for $n$ interpolation points on the interval $[-1, 1]$ are given by:
+
+$$
+x_i = \cos\left(\frac{(2i - 1)\pi}{2n}\right)
+$$
+
+Using Chebyshev interpolation reduces the risk of large oscillations near the endpoints, providing a more stable approximation.
+
+### **Conclusion**
+
+The **Runge phenomenon** highlights the dangers of using high-degree polynomials for interpolation with evenly spaced points. To avoid this issue, it is recommended to use **Chebyshev interpolation** or lower-degree polynomial interpolation in smaller intervals (piecewise interpolation).

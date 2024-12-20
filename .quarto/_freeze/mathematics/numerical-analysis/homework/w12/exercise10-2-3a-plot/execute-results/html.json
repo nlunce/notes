@@ -1,0 +1,12 @@
+{
+  "hash": "715c757525d57b601c9c062522fc8785",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: 'Exercise 10.2.3a Plot (C10-P5)'\nauthor: 'Nathan Lunceford'\nformat:\n  html:\n    self-contained: true\n    page-layout: full\n    toc: true\n    toc-depth: 1\n    toc-location: right\n    number-sections: false\n    html-math-method: katex\n    embed-resources: true\n    code-fold: true\n    code-summary: 'Show the code'\n    code-overflow: wrap\n    code-copy: hover\n    code-tools:\n      source: false\n      toggle: true\n      caption: See code\nengine: jupyter\npreview:\n  port: 3000\n  browser: false\n  watch-inputs: true\n---\n\n\n# **Problem:**\n\n::: {.callout-note icon=false }\n\n## **10.2.3a Plot**\n\nUse the trigonometric interpolating function found previously to verify that it interpolates the given data:\n\n| $t$           | $x$ |\n| ------------- | --- |\n| 0             | 0   |\n| $\\frac{1}{8}$ | 1   |\n| $\\frac{1}{4}$ | 0   |\n| $\\frac{3}{8}$ | -1  |\n| $\\frac{1}{2}$ | 0   |\n| $\\frac{5}{8}$ | 1   |\n| $\\frac{3}{4}$ | 0   |\n| $\\frac{7}{8}$ | -1  |\n\n:::\n\n# **Solution:**\n\nThe interpolating function is:\n\n$$\nP_8(t) = \\sin(4\\pi t)\n$$\n\n## **Plot**\n\n::: {#cell-Plot .cell execution_count=1}\n``` {.python .cell-code code-summary=\"Show code\"}\nimport numpy as np\nimport matplotlib.pyplot as plt\n\n# Given data\nt_data = np.array([0, 1/8, 1/4, 3/8, 1/2, 5/8, 3/4, 7/8])\nx_data = np.array([0, 1, 0, -1, 0, 1, 0, -1])\n\n# Interpolating function\ndef P_8(t):\n    return np.sin(4*np.pi*t)\n\nt_plot = np.linspace(0, 1, 400)\nx_plot = P_8(t_plot)\n\n# Plot the interpolating function\nplt.figure(figsize=(8,5))\nplt.plot(t_plot, x_plot, label='Interpolating Function', color='blue')\n\n# Plot the original data points\nplt.scatter(t_data, x_data, color='red', zorder=5, label='Data Points')\n\nplt.title('Trigonometric Interpolation')\nplt.xlabel('t')\nplt.ylabel('x')\nplt.grid(True)\nplt.legend()\n\nplt.show()\n```\n\n::: {.cell-output .cell-output-display}\n![](exercise10-2-3a-plot_files/figure-html/plot-output-1.png){#plot width=683 height=449}\n:::\n:::\n\n\n::: {.callout-tip icon=false}\n\n## **Verification:**\n\nAs seen in the plot, the function $P_8(t)$ passes through all the given data points.\n\n:::\n\n",
+    "supporting": [
+      "exercise10-2-3a-plot_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

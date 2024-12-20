@@ -1,0 +1,218 @@
+---
+title: 'Modified Gram-Schmidt Orthogonalization'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+The **Modified Gram-Schmidt Orthogonalization (MGS)** is a variation of the [**classical Gram-Schmidt process**](./gram-schmidt-orthogonalization.html) that improves numerical stability during computations. While it produces the same mathematical results as the classical process, MGS incrementally updates the working vector, avoiding the accumulation of rounding errors. This is especially beneficial when working with floating-point arithmetic in machine computations.
+
+## **Definition and Process**
+
+Given a set of linearly independent vectors $A_1, A_2, \dots, A_n$, the Modified Gram-Schmidt process produces an orthogonal (or orthonormal) set of vectors $q_1, q_2, \dots, q_n$ such that:
+
+1. Each vector $q_i$ is orthogonal to the previous vectors $q_1, q_2, \dots, q_{i-1}$.
+2. The span of $q_1, q_2, \dots, q_n$ is the same as the span of $A_1, A_2, \dots, A_n$.
+
+The primary distinction of MGS is its incremental update of the working vector $y$, ensuring orthogonality is preserved at every step.
+
+## **Steps of the Modified Gram-Schmidt Process**
+
+1. **Initialize with the First Vector**: Normalize $A_1$ to obtain $q_1$:
+
+   $$
+   q_1 = \frac{A_1}{\|A_1\|}
+   $$
+
+2. **Compute Subsequent Vectors Incrementally**:
+
+   - Start with $y = A_i$ (the current vector being processed).
+   - Subtract the projections of $y$ onto all previously computed $q_j$ vectors, updating $y$ step-by-step:
+     $$
+     y \gets y - (q_j^\top y) q_j \quad \text{for } j = 1, 2, \dots, i-1
+     $$
+   - Normalize the updated $y$ to obtain $q_i$:
+     $$
+     q_i = \frac{y}{\|y\|}
+     $$
+
+3. Repeat this process for all vectors $A_i$.
+
+## Differences Between Classical and Modified Gram-Schmidt
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid black; 
+    }
+    th, td {
+        border: 1px solid black; 
+        text-align: center;
+        vertical-align: top;
+        font-family: Arial, sans-serif;
+        padding: 5px;
+    }
+</style>
+
+<table>
+    <tr>
+        <th>Aspect</th>
+        <th>Classical Gram-Schmidt</th>
+        <th>Modified Gram-Schmidt</th>
+    </tr>
+    <tr>
+        <td><strong>Projection Calculation</strong></td>
+        <td>Subtracts all projections at once.</td>
+        <td>Subtracts projections incrementally, one at a time.</td>
+    </tr>
+    <tr>
+        <td><strong>Numerical Stability</strong></td>
+        <td>Prone to rounding errors, especially for small or nearly parallel vectors.</td>
+        <td>Less prone to rounding errors due to incremental updates.</td>
+    </tr>
+    <tr>
+        <td><strong>Intermediate Vector Updates</strong></td>
+        <td>Projections are computed using the original vector, so errors accumulate.</td>
+        <td>Projections are computed step-by-step using updated vectors, reducing error propagation.</td>
+    </tr>
+    <tr>
+        <td><strong>Orthogonality of Output</strong></td>
+        <td>Orthogonality may degrade due to numerical issues.</td>
+        <td>Better orthogonality preservation in finite-precision arithmetic.</td>
+    </tr>
+    <tr>
+        <td><strong>Use Case</strong></td>
+        <td>Useful for theoretical computations and small-scale problems.</td>
+        <td>Preferred for numerical applications and large-scale computations.</td>
+    </tr>
+</table>
+
+## **Properties of Modified Gram-Schmidt Orthogonalization**
+
+- **Orthogonality**: Each vector $q_i$ is orthogonal to all previously generated vectors $q_1, \dots, q_{i-1}$.
+- **Span Preservation**: The set $\{q_1, q_2, \dots, q_n\}$ spans the same subspace as $\{A_1, A_2, \dots, A_n\}$.
+- **Numerical Stability**: Incremental updates reduce the impact of rounding errors, making it more robust in practice.
+
+## **Example Problem**
+
+**Problem:** Given the matrix
+
+$$
+\mathbf{A} =
+\begin{bmatrix}
+1 & 1 & 1 \\
+\delta & 0 & 0 \\
+0 & \delta & 0 \\
+0 & 0 & \delta
+\end{bmatrix}, \quad \delta = 10^{-10}
+$$
+
+find the orthonormal basis $Q = [q_1, q_2, q_3]$ using the Modified Gram-Schmidt process.
+
+### **Solution Steps**
+
+1. **Compute $q_1$:**
+   Normalize $A_1$:
+
+   $$
+   q_1 = \frac{A_1}{\|A_1\|} =
+   \begin{bmatrix}
+   1 \\ \delta \\ 0 \\ 0
+   \end{bmatrix}
+   $$
+
+2. **Compute $q_2$:**
+
+   - Start with $y = A_2 = \begin{bmatrix} 1 \\ 0 \\ \delta \\ 0 \end{bmatrix}$.
+   - Subtract the projection onto $q_1$:
+
+     $$
+     \text{proj}_{q_1}(y) = (q_1^\top y) q_1, \quad q_1^\top y = 1
+     $$
+
+     $$
+     y \gets y - \text{proj}_{q_1}(y) =
+     \begin{bmatrix}
+     1 \\ 0 \\ \delta \\ 0
+     \end{bmatrix}
+     -
+     \begin{bmatrix}
+     1 \\ \delta \\ 0 \\ 0
+     \end{bmatrix}
+     =
+     \begin{bmatrix}
+     0 \\ -\delta \\ \delta \\ 0
+     \end{bmatrix}
+     $$
+
+   - Normalize $y$:
+     $$
+     q_2 = \frac{y}{\|y\|} = \frac{1}{\delta \sqrt{2}}
+     \begin{bmatrix}
+     0 \\ -\delta \\ \delta \\ 0
+     \end{bmatrix}
+     =
+     \begin{bmatrix}
+     0 \\ -\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} \\ 0
+     \end{bmatrix}
+     $$
+
+3. **Compute $q_3$:**
+   - Start with $y = A_3 = \begin{bmatrix} 1 \\ 0 \\ 0 \\ \delta \end{bmatrix}$.
+   - Subtract the projection onto $q_1$:
+     $$
+     y \gets y - \text{proj}_{q_1}(y), \quad \text{proj}_{q_1}(y) =
+     \begin{bmatrix}
+     1 \\ \delta \\ 0 \\ 0
+     \end{bmatrix}
+     $$
+     $$
+     y = \begin{bmatrix} 1 \\ 0 \\ 0 \\ \delta \end{bmatrix} -
+     \begin{bmatrix} 1 \\ \delta \\ 0 \\ 0 \end{bmatrix} =
+     \begin{bmatrix} 0 \\ -\delta \\ 0 \\ \delta \end{bmatrix}
+     $$
+   - Subtract the projection onto $q_2$:
+     $$
+     y \gets y - \text{proj}_{q_2}(y), \quad q_2^\top y = \frac{\delta}{\sqrt{2}}
+     $$
+     $$
+     y = \begin{bmatrix} 0 \\ -\delta \\ 0 \\ \delta \end{bmatrix} -
+     \begin{bmatrix} 0 \\ -\frac{\delta}{2} \\ \frac{\delta}{2} \\ 0 \end{bmatrix} =
+     \begin{bmatrix} 0 \\ -\frac{\delta}{2} \\ -\frac{\delta}{2} \\ \delta \end{bmatrix}
+     $$
+   - Normalize $y$:
+     $$
+     q_3 = \frac{1}{\|y\|} \begin{bmatrix} 0 \\ -\frac{\delta}{2} \\ -\frac{\delta}{2} \\ \delta \end{bmatrix} =
+     \begin{bmatrix}
+     0 \\ -\frac{1}{\sqrt{6}} \\ -\frac{1}{\sqrt{6}} \\ \frac{2}{\sqrt{6}}
+     \end{bmatrix}
+     $$
+
+## **Conclusion**
+
+Modified Gram-Schmidt is a more stable alternative to the classical process, particularly when dealing with small or near-parallel vectors. By incrementally updating the working vector $y$, MGS ensures numerical stability and maintains orthogonality even in the presence of rounding errors. It is especially useful in applications like QR factorization and solving least squares problems in computational settings.

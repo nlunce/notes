@@ -1,0 +1,517 @@
+---
+title: 'Jacobi Method - Convergence Proof'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show Code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Diagonal Dominance Convergence Theorem**
+
+_Theorem 2.10 (p. 107)_
+
+If the $n \times n$ matrix $A$ is strictly diagonally dominant, then:
+
+- $A$ is a nonsingular matrix (invertible matrix).
+- For every vector $b$ and every starting guess, the [**Jacobi Method**](../notes/w07/ax-b-iterative-methods/jacobi-method.html) applied to $A \mathbf{x} = \mathbf{b}$ converges to the (unique) solution.
+
+## **Spectral Radius Convergence Theorem**
+
+_Theorem A.7 (p. 588)_
+
+If the $n \times n$ matrix $A$ has spectral radius $\rho(A) < 1$, and $\mathbf{b}$ is arbitrary, then, for any vector $\mathbf{x}_0$, the iteration $\mathbf{x}_{k+1} = A \mathbf{x}_k + \mathbf{b}$ converges. In fact, there exists a unique $\mathbf{x}$, such that $\lim_{k \to \infty} \mathbf{x}_k = \mathbf{x}$, and $\mathbf{x} = A \mathbf{x} + \mathbf{b}$.
+
+## **Definitions**
+
+- [**Spectral radius**](../notes/w06/spectral-radius.html):  
+  The spectral radius $\rho(A)$ of a square matrix $A$ is the maximum magnitude of its eigenvalues.
+
+- [**Infinity or max norm**](../notes/w07/norms/infinity-vector-norm.html):  
+  For a vector $\mathbf{x} \in \mathbb{R}^n$, the infinity norm is $\|\mathbf{x}\|_\infty = \max_{1 \leq i \leq n} |x_i|$.
+
+## **Proof**
+
+Recall that the Jacobi Method for solving $A \mathbf{x} = \mathbf{b}$ is
+
+$$
+\mathbf{x}_{k+1} = -D^{-1}(L + U) \mathbf{x}_k + D^{-1} \mathbf{b},
+$$
+
+where
+
+$$
+A = L + D + U,
+$$
+
+$L$ is the lower triangular part of $A$, $D$ is the diagonal part of $A$, and $U$ is the upper triangular part of $A$.
+
+We will apply _Theorem A.7_ by showing that the spectral radius of $-D^{-1}(L + U)$ is less than 1:
+
+$$
+\rho(D^{-1}(L + U)) < 1
+$$
+
+For notational convenience, let $R = L + U$ denote the non-diagonal part of the matrix $A$. Then we must show that $\rho(D^{-1}R) < 1$.
+
+::: {.callout-note icon=false}
+
+## **1. Scaled Vector $\mathbf{v}$:**
+
+Given any vector $\mathbf{x}$, we can create a scaled version of $\mathbf{x}$, say $\mathbf{v}$, as $\mathbf{v} = \frac{\mathbf{x}}{c}$.
+What value of $c$ will guarantee that $\|\mathbf{v}\|_\infty = 1$?
+
+:::
+
+::: {.callout-tip collapse="true"}
+
+## **Answer**
+
+To ensure $\|\mathbf{v}\|_\infty = 1$, define $\mathbf{v} = \frac{\mathbf{x}}{c}$, where $c$ is a scalar.
+
+The infinity norm of $\mathbf{v}$ is:
+
+$$
+\|\mathbf{v}\|_\infty = \max_{1 \leq i \leq n} \left| \frac{x_i}{c} \right|
+$$
+
+Set $\|\mathbf{v}\|_\infty = 1$, so:
+
+$$
+\frac{\max_{1 \leq i \leq n} |x_i|}{c} = 1
+$$
+
+Solve for $c$:
+
+$$
+c = \|\mathbf{x}\|_\infty = \max_{1 \leq i \leq n} |x_i|
+$$
+
+Thus, scaling $\mathbf{x}$ by $c = \|\mathbf{x}\|_\infty$ guarantees $\|\mathbf{v}\|_\infty = 1$.
+
+:::
+
+::: {.callout-note icon=false}
+
+## **2. Eigenvalue Analysis:**
+
+Let $\lambda$ represent an arbitrary eigenvalue of $D^{-1}R$ with corresponding eigenvector $\mathbf{v}$. Then $D^{-1}R \mathbf{v} = \lambda \mathbf{v}$, or $R \mathbf{v} = \lambda D \mathbf{v}$.
+
+Why?
+
+We’ll look at each side of this equation in turn.
+Suppose we scale the eigenvector $\mathbf{v}$ such that $\|\mathbf{v}\|_\infty = 1$. Then $|v_i| \leq 1$ for every index $i$, $1 \leq i \leq n$, and $|v_m| = 1$ for at least one index $m$, $1 \leq m \leq n$.
+
+Using this index $m$, explain why the absolute value of the $m$-th row of $R \mathbf{v}$ is:
+
+$$
+|r_{m,1}v_1 + r_{m,2}v_2 + \cdots + r_{m,m-1}v_{m-1} + r_{m,m+1}v_{m+1} + \cdots + r_{m,n}v_n|
+$$
+
+:::
+
+::: {.callout-tip collapse="true"}
+
+## **Answer**
+
+To analyze the absolute value of the $m$-th row of $R \mathbf{v}$, start with the eigenvalue equation:
+
+$$
+D^{-1} R \mathbf{v} = \lambda \mathbf{v}
+$$
+
+Multiply through by $D$ to rewrite it as:
+
+$$
+R \mathbf{v} = \lambda D \mathbf{v}
+$$
+
+Here:
+
+- $R = L + U$, where $L$ is the strictly lower triangular part of $A$ and $U$ is the strictly upper triangular part of $A$.
+- $D$ is the diagonal part of $A$.
+- $\mathbf{v}$ is an eigenvector scaled such that $\|\mathbf{v}\|_\infty = 1$, meaning $|v_i| \leq 1$ for all $i$, and $|v_m| = 1$ for at least one $m$.
+
+The $m$-th row of $R$ is:
+
+$$
+\begin{bmatrix}
+r_{m,1} & r_{m,2} & \cdots & r_{m,m-1} & 0 & r_{m,m+1} & \cdots & r_{m,n}
+\end{bmatrix}
+$$
+
+Multiplying this row by the vector $\mathbf{v}$, the $m$-th entry of $R \mathbf{v}$ is:
+
+$$
+\left( R \mathbf{v} \right)_m = \sum_{i=1}^n r_{m,i} v_i
+$$
+
+Since $r_{m,m} = 0$ (as $R = L + U$ excludes the diagonal), this simplifies to:
+
+$$
+\left( R \mathbf{v} \right)_m = \sum_{i=1, i \neq m}^n r_{m,i} v_i
+$$
+
+:::
+
+::: {.callout-note icon=false}
+
+## **3. Scaling with $D$:**
+
+Now, explain why the absolute value of the $m$-th row of $\lambda D \mathbf{v}$ is $|\lambda| |d_{m,m}|$.
+
+:::
+
+::: {.callout-tip collapse="true"}
+
+## **Answer**
+
+To explain why the absolute value of the $m$-th row of $\lambda D \mathbf{v}$ is $|\lambda| |d_{m,m}|$, begin by recalling the structure of $D$, the diagonal matrix of $A$:
+
+$$
+D =
+\begin{bmatrix}
+d_{1,1} & 0 & \cdots & 0 \\
+0 & d_{2,2} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & d_{n,n}
+\end{bmatrix}
+$$
+
+When $D$ is multiplied by the eigenvector $\mathbf{v}$, the result is:
+
+$$
+D \mathbf{v} =
+\begin{bmatrix}
+d_{1,1} v_1 \\
+d_{2,2} v_2 \\
+\vdots \\
+d_{n,n} v_n
+\end{bmatrix}
+$$
+
+Now multiply by $\lambda$, giving:
+
+$$
+\lambda D \mathbf{v} =
+\begin{bmatrix}
+\lambda d_{1,1} v_1 \\
+\lambda d_{2,2} v_2 \\
+\vdots \\
+\lambda d_{n,n} v_n
+\end{bmatrix}
+$$
+
+The $m$-th row of this result is:
+
+$$
+\left( \lambda D \mathbf{v} \right)_m = \lambda d_{m,m} v_m
+$$
+
+Taking the absolute value:
+
+$$
+\left| \left( \lambda D \mathbf{v} \right)_m \right| = |\lambda| |d_{m,m}| |v_m|
+$$
+
+Since $\|\mathbf{v}\|_\infty = 1$, we know:
+
+$$
+|v_i| \leq 1 \quad \text{for all } i, \quad \text{and} \quad |v_m| = 1
+$$
+
+Substitute $|v_m| = 1$:
+
+$$
+\left| \left( \lambda D \mathbf{v} \right)_m \right| = |\lambda| |d_{m,m}|
+$$
+
+Thus, the absolute value of the $m$-th row of $\lambda D \mathbf{v}$ is determined by $|\lambda|$, the eigenvalue, and $|d_{m,m}|$, the diagonal entry of $D$ at row $m$.
+:::
+
+::: {.callout-tip icon=false appearance="simple"}
+
+# **_EQUATION 1_**
+
+**Combining steps (2) and (3), we can write:**
+
+$$
+|\lambda||d_{m,m}| = |r_{m,1}v_1 + r_{m,2}v_2 + \cdots + r_{m,m-1}v_{m-1} + r_{m,m+1}v_{m+1} + \cdots + r_{m,n}v_n|
+$$
+
+:::
+
+::: {.callout-note icon=false}
+
+## **4. Explain why:**
+
+$$
+|r_{m,1}v_1 + r_{m,2}v_2 + \cdots + r_{m,m-1}v_{m-1} + r_{m,m+1}v_{m+1} + \cdots + r_{m,n}v_n| \leq \sum_{j \neq m} |r_{m,j}|
+$$
+
+:::
+
+::: {.callout-tip collapse="true"}
+
+## **Answer**
+
+To explain why
+
+$$
+\big| r_{m,1}v_1 + r_{m,2}v_2 + \cdots + r_{m,m-1}v_{m-1} + r_{m,m+1}v_{m+1} + \cdots + r_{m,n}v_n \big| \leq \sum_{j \neq m} |r_{m,j}|,
+$$
+
+we begin by recalling the **triangle inequality** for absolute values. For any sum of terms $a_1, a_2, \dots, a_k$, the triangle inequality ensures:
+
+$$
+|a_1 + a_2 + \cdots + a_k| \leq |a_1| + |a_2| + \cdots + |a_k|
+$$
+
+In our case, the sum of interest is:
+
+$$
+r_{m,1}v_1 + r_{m,2}v_2 + \cdots + r_{m,m-1}v_{m-1} + r_{m,m+1}v_{m+1} + \cdots + r_{m,n}v_n
+$$
+
+Applying the triangle inequality to this sum gives:
+
+$\quad \big| r_{m,1}v_1 + r_{m,2}v_2 + \cdots + r_{m,m-1}v_{m-1} + r_{m,m+1}v_{m+1} + \cdots + r_{m,n}v_n \big|$
+
+$$
+\leq |r_{m,1}v_1| + |r_{m,2}v_2| + \cdots + |r_{m,m-1}v_{m-1}| + |r_{m,m+1}v_{m+1}| + \cdots + |r_{m,n}v_n|
+$$
+
+Each term in the sum has the form $|r_{m,j}v_j|$. Using the property of absolute values $|ab| = |a||b|$, we can rewrite each term as:
+
+$$
+|r_{m,j}v_j| = |r_{m,j}| \cdot |v_j|
+$$
+
+Since it is assumed that $|v_j| \leq 1$ for all $j$, it follows that:
+
+$$
+|r_{m,j}v_j| \leq |r_{m,j}|
+$$
+
+Substituting this bound for each term into the inequality gives:
+
+$\quad \big| r_{m,1}v_1 + r_{m,2}v_2 + \cdots + r_{m,m-1}v_{m-1} + r_{m,m+1}v_{m+1} + \cdots + r_{m,n}v_n \big|$
+
+$$
+\leq |r_{m,1}v_1| + |r_{m,2}v_2| + \cdots + |r_{m,m-1}v_{m-1}| + |r_{m,m+1}v_{m+1}| + \cdots + |r_{m,n}v_n|
+$$
+
+The indices $j \neq m$ correspond to all off-diagonal entries in the $m$-th row of the matrix. Thus, we can express the sum of the absolute values of the coefficients as:
+
+$$
+|r_{m,1}| + |r_{m,2}| + \cdots + |r_{m,m-1}| + |r_{m,m+1}| + \cdots + |r_{m,n}| = \sum_{j \neq m} |r_{m,j}|
+$$
+
+Substituting this back, we find:
+
+$$
+\big| r_{m,1}v_1 + r_{m,2}v_2 + \cdots + r_{m,m-1}v_{m-1} + r_{m,m+1}v_{m+1} + \cdots + r_{m,n}v_n \big| \leq \sum_{j \neq m} |r_{m,j}|
+$$
+
+The inequality holds because:
+
+1. The **triangle inequality** ensures that the absolute value of a sum is at most the sum of the absolute values of its terms.
+2. The assumption $|v_j| \leq 1$ allows us to bound $|r_{m,j}v_j|$ by $|r_{m,j}|$.
+
+Thus, the magnitude of the weighted sum of $v_j$ values (for $j \neq m$) is always less than or equal to the sum of the absolute values of the off-diagonal entries in the $m$-th row of the matrix.
+:::
+
+::: {.callout-note icon=false}
+
+## **5. Explain why:**
+
+$$
+\sum_{j \neq m} |r_{m,j}| < |d_{m,m}|
+$$
+
+:::
+
+::: {.callout-tip collapse="true"}
+
+## **Answer**
+
+By assumption, the matrix $A$ is strictly diagonally dominant. This means that, for each row of $A$, the absolute value of the diagonal entry $|d_{m,m}|$ is strictly greater than the sum of the absolute values of all the off-diagonal entries in that row:
+
+$$
+|d_{m,m}| > \sum_{j \neq m} |r_{m,j}|
+$$
+
+In other words, the diagonal entry $d_{m,m}$ has the largest contribution in the row, ensuring that the total influence of the off-diagonal terms is strictly smaller.
+:::
+
+::: {.callout-note icon=false}
+
+## **6. Use the results from Steps (4) and (5) with _EQUATION 1_ to show show that:**
+
+$$
+|\lambda||d_{m,m}| < |d_{m,m}|
+$$
+
+What does this say about $|\lambda|$?
+
+:::
+
+::: {.callout-tip collapse="true"}
+
+## **Answer**
+
+To explain why
+
+$$
+|\lambda||d_{m,m}| < |d_{m,m}|
+$$
+
+we combine the results from **Step (4)** and **Step (5)** with **_EQUATION 1_**.
+
+**_EQUATION 1_** states:
+
+$$
+|\lambda||d_{m,m}| = \big| r_{m,1}v_1 + r_{m,2}v_2 + \cdots + r_{m,m-1}v_{m-1} + r_{m,m+1}v_{m+1} + \cdots + r_{m,n}v_n \big|
+$$
+
+From **Step (4)**, we know:
+
+$$
+\big| r_{m,1}v_1 + r_{m,2}v_2 + \cdots + r_{m,m-1}v_{m-1} + r_{m,m+1}v_{m+1} + \cdots + r_{m,n}v_n \big| \leq \sum_{j \neq m} |r_{m,j}|
+$$
+
+Substituting this into **_EQUATION 1_**, we have:
+
+$$
+|\lambda||d_{m,m}| \leq \sum_{j \neq m} |r_{m,j}|
+$$
+
+From **Step (5)**, we know:
+
+$$
+\sum_{j \neq m} |r_{m,j}| < |d_{m,m}|
+$$
+
+Combining this with the inequality above gives:
+
+$$
+|\lambda||d_{m,m}| < |d_{m,m}|
+$$
+
+Dividing both sides of the inequality by $|d_{m,m}|$ (which is nonzero), we find:
+
+$$
+|\lambda| < 1
+$$
+
+This result shows that the magnitude of the eigenvalue $|\lambda|$ is strictly less than 1 and this implies that the spectral radius $\rho(D^{-1}R) < 1$.
+:::
+
+::: {.callout-note icon=false}
+
+## **7. Final Conclusion**
+
+Since $\lambda$ is an arbitrary eigenvalue, then $|\lambda|_{\text{max}} < 1$. In other words, the spectral radius $\rho(D^{-1}R) < 1$. Thus, by the **Spectral Radius Convergence Theorem** (Theorem A.7), the Jacobi Method (iteration with $A = D^{-1}R$) converges for any starting point $\mathbf{x}_0$.
+
+Let $\mathbf{x}_* = \lim_{k \to \infty} \mathbf{x}_k$, and show that $\mathbf{x}_*$ is the solution to $A \mathbf{x} = \mathbf{b}$, so $A$ must be nonsingular. This completes the proof of the **Diagonal Dominance Convergence Theorem** (Theorem 2.10).
+
+:::
+
+::: {.callout-tip collapse="true"}
+
+## **Answer**
+
+From earlier, we showed that the spectral radius $\rho(D^{-1}R)$, which is the largest magnitude of the eigenvalues of $D^{-1}R$, satisfies:
+
+$$
+\rho(D^{-1}R) < 1
+$$
+
+This result guarantees that the Jacobi method converges to a solution $\mathbf{x}_*$ of $A\mathbf{x} = \mathbf{b}$ for any starting point $\mathbf{x}_0$, as stated in the **Diagonal Dominance Convergence Theorem** (_Theorem A.7_).
+
+Therefore, we can write the limit of the iterates $\mathbf{x}_k$ as:
+
+$$
+\mathbf{x}_* = \lim_{k \to \infty} \mathbf{x}_k
+$$
+
+The Jacobi iteration formula is:
+
+$$
+\mathbf{x}_{k+1} = D^{-1}(\mathbf{b} - R\mathbf{x}_k)
+$$
+
+where $A = D - R$, $D$ is the diagonal matrix, and $R$ is the remainder matrix (containing the off-diagonal terms).
+
+Substituting the limit $\mathbf{x}_*$ into this equation (as $\mathbf{x}_{k+1} \to \mathbf{x}_*$ and $\mathbf{x}_k \to \mathbf{x}_*$), we get:
+
+$$
+\mathbf{x}_* = D^{-1}(\mathbf{b} - R\mathbf{x}_*)
+$$
+
+Expanding this:
+
+$$
+\mathbf{x}_* = -D^{-1}R\mathbf{x}_* + D^{-1}\mathbf{b}
+$$
+
+Rewriting:
+
+::: {.callout-tip icon=false appearance="simple" style="background-color: #fffff; border-left: 5px solid #9c27b0; color: #9c27b0; font-weight: 900;"}
+
+# ‎
+
+$$
+\mathbf{x}_* = -D^{-1}(L + U)\mathbf{x}_* + D^{-1}\mathbf{b}
+$$
+
+:::
+
+where $R = L + U$, with $L$ being the strictly lower triangular part of $A$ and $U$ the strictly upper triangular part.
+
+To verify $\mathbf{x}_*$ satisfies $A\mathbf{x}_* = \mathbf{b}$, substitute $A = D + L + U$ into the system:
+
+$$
+(D + L + U)\mathbf{x}_* = \mathbf{b}
+$$
+
+Multiply both sides by $D^{-1}$:
+
+$$
+\mathbf{x}_* + D^{-1}(L + U)\mathbf{x}_* = D^{-1}\mathbf{b}
+$$
+
+Rearranging terms gives:
+
+$$
+\mathbf{x}_* = -D^{-1}(L + U)\mathbf{x}_* + D^{-1}\mathbf{b}
+$$
+
+This matches the Jacobi iteration formula, verifying $\mathbf{x}_*$ satisfies $A\mathbf{x}_* = \mathbf{b}$.
+
+**Conclusion**
+
+1. We proved that $\rho(D^{-1}R) < 1$, so the Jacobi method converges to $\mathbf{x}_*$.
+2. Substituting $\mathbf{x}_*$ into $A\mathbf{x} = \mathbf{b}$, we verified that it satisfies the system.
+3. Since $A\mathbf{x}_* = \mathbf{b}$ has a solution, $A$ is nonsingular.
+
+:::

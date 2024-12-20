@@ -1,0 +1,174 @@
+---
+title: 'The Jacobi Method for Solving Linear Systems'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show Code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+The **Jacobi Method** is a type of [**fixed-point iteration**](../../w01/fixed-point-iteration.html) specifically designed for solving [**systems of linear equations**](../../w06/linear-systems.html). The approach involves rewriting each equation to solve for one variable at a time and iterating over these equations to approximate the solution.
+
+For a system of equations $A\mathbf{x} = \mathbf{b}$, the Jacobi Method works by isolating the $i$-th variable in the $i$-th equation, updating its value based on the other variables' values from the previous iteration.
+
+## **The Jacobi Method**
+
+Consider the system of equations:
+
+$$
+A\mathbf{x} = \mathbf{b}
+$$
+
+Let $A$ be decomposed into three parts:
+
+- $D$: The diagonal components of $A$.
+- $L$: The strictly lower triangular components of $A$.
+- $U$: The strictly upper triangular components of $A$.
+
+Thus,
+
+$$
+A = D + L + U
+$$
+
+Rewriting $A\mathbf{x} = \mathbf{b}$, we have:
+
+$$
+D\mathbf{x} = \mathbf{b} - (L + U)\mathbf{x}
+$$
+
+Solving for $\mathbf{x}$:
+
+$$
+\mathbf{x} = D^{-1} \left( \mathbf{b} - (L + U)\mathbf{x} \right)
+$$
+
+The Jacobi Method then iteratively updates the values of $\mathbf{x}$ as:
+
+$$
+\mathbf{x}_{k+1} = D^{-1} \left( \mathbf{b} - (L + U)\mathbf{x}_{k} \right)
+$$
+
+where $k$ denotes the iteration step.
+
+## **Example**
+
+### **System of Equations**
+
+Consider the system:
+
+$$
+3u + v = 5, \quad u + 2v = 5
+$$
+
+### **Step 1: Rearrange Equations**
+
+Rewrite each equation to isolate the variables:
+
+$$
+u = \frac{5 - v}{3}, \quad v = \frac{5 - u}{2}
+$$
+
+### **Step 2: Iterative Updates**
+
+Start with an initial guess $\mathbf{x}^{(0)} = \begin{bmatrix} u_0 \\ v_0 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}$. The iterations proceed as follows:
+
+1. **Iteration 1 ($k = 1$):**
+
+   $$
+   u_1 = \frac{5 - v_0}{3} = \frac{5 - 0}{3} = \frac{5}{3}, \quad v_1 = \frac{5 - u_0}{2} = \frac{5 - 0}{2} = \frac{5}{2}
+   $$
+
+   Thus, $\mathbf{x}^{(1)} = \begin{bmatrix} \frac{5}{3} \\ \frac{5}{2} \end{bmatrix}$.
+
+2. **Iteration 2 ($k = 2$):**
+
+   $$
+   u_2 = \frac{5 - v_1}{3} = \frac{5 - \frac{5}{2}}{3} = \frac{5}{6}, \quad v_2 = \frac{5 - u_1}{2} = \frac{5 - \frac{5}{3}}{2} = \frac{5}{3}
+   $$
+
+   Thus, $\mathbf{x}^{(2)} = \begin{bmatrix} \frac{5}{6} \\ \frac{5}{3} \end{bmatrix}$.
+
+3. **Iteration 3 ($k = 3$):**
+
+   $$
+   u_3 = \frac{5 - v_2}{3} = \frac{5 - \frac{5}{3}}{3} = \frac{10}{9}, \quad v_3 = \frac{5 - u_2}{2} = \frac{5 - \frac{5}{6}}{2} = \frac{25}{12}
+   $$
+
+   Thus, $\mathbf{x}^{(3)} = \begin{bmatrix} \frac{10}{9} \\ \frac{25}{12} \end{bmatrix}$.
+
+### **Convergence**
+
+The iterative updates show convergence to the solution $\mathbf{x} = \begin{bmatrix} 1 \\ 2 \end{bmatrix}$.
+
+## **Convergence Conditions**
+
+The Jacobi Method converges if the matrix $A$ is **strictly diagonally dominant**, meaning:
+
+$$
+|a_{ii}| > \sum_{j \neq i} |a_{ij}|
+$$
+
+for all rows $i$. Alternatively, if $A$ is **symmetric positive definite**, the Jacobi Method is also guaranteed to converge.
+
+## **Limitations**
+
+In cases where $A$ is not strictly diagonally dominant or symmetric positive definite, the Jacobi Method may fail to converge.
+
+### **Example of Divergence**
+
+Consider the system:
+
+$$
+u + 2v = 5, \quad 3u + v = 5
+$$
+
+Rewriting:
+
+$$
+u = 5 - 2v, \quad v = 5 - 3u
+$$
+
+Starting with $\mathbf{x}^{(0)} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}$, the iterations diverge:
+
+1. **Iteration 1 ($k = 1$):**
+
+   $$
+   u_1 = 5 - 2v_0 = 5, \quad v_1 = 5 - 3u_0 = 5
+   $$
+
+   $\mathbf{x}^{(1)} = \begin{bmatrix} 5 \\ 5 \end{bmatrix}$.
+
+2. **Iteration 2 ($k = 2$):**
+   $$
+   u_2 = 5 - 2v_1 = -5, \quad v_2 = 5 - 3u_1 = -10
+   $$
+   $\mathbf{x}^{(2)} = \begin{bmatrix} -5 \\ -10 \end{bmatrix}$
+
+The divergence occurs because the matrix is not strictly diagonally dominant.
+
+## **Summary**
+
+The Jacobi Method is a simple and effective iterative technique for solving linear systems, particularly when the system matrix is strictly diagonally dominant or symmetric positive definite. However, it is sensitive to the properties of the matrix $A$ and may not converge for all systems.

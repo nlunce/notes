@@ -1,0 +1,167 @@
+---
+title: 'The Gauss-Seidel Method for Solving Linear Systems'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show Code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+The **Gauss-Seidel Method** is an iterative technique for solving [**systems of linear equations**](../../w06/linear-systems.html). It improves upon the [**Jacobi Method**](./jacobi-method.html) by using updated values of variables immediately within each iteration, often leading to faster convergence.
+
+## **The Gauss-Seidel Method**
+
+Consider the system:
+
+$$
+A\mathbf{x} = \mathbf{b}
+$$
+
+where $A$ is decomposed into:
+
+- $D$: The diagonal components of $A$,
+- $L$: The strictly lower triangular components of $A$,
+- $U$: The strictly upper triangular components of $A$.
+
+Thus:
+
+$$
+A = D + L + U
+$$
+
+Rewriting the system:
+
+$$
+(D + L + U)\mathbf{x} = \mathbf{b}
+$$
+
+Solving for $\mathbf{x}$, the iterative formula for the Gauss-Seidel Method is:
+
+$$
+\mathbf{x}_{k+1} = D^{-1} \left( \mathbf{b} - U\mathbf{x}_{k} - L\mathbf{x}_{k+1} \right), \quad \text{for } k = 0, 1, 2, \dots
+$$
+
+Here:
+
+- $\mathbf{x}_0$: Initial guess vector.
+- $k$: Iteration number.
+
+## **Example**
+
+### **System of Equations**
+
+Consider the system:
+
+$$
+4u + v + w = 7, \quad u + 3v + w = 8, \quad u + v + 5w = 6
+$$
+
+### **Step 1: Rearrange Equations**
+
+Rewriting each equation to isolate the variables:
+
+$$
+u = \frac{7 - v - w}{4}, \quad v = \frac{8 - u - w}{3}, \quad w = \frac{6 - u - v}{5}
+$$
+
+### **Step 2: Iterative Updates**
+
+Start with an initial guess, $\mathbf{x}_0 = \begin{bmatrix} u_0 \\ v_0 \\ w_0 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}$. The iterations proceed as follows:
+
+1. **Iteration 1 ($k = 1$):**
+
+   $$
+   u^{(1)} = \frac{7 - 0 - 0}{4} = 1.75, \quad
+   v^{(1)} = \frac{8 - 1.75 - 0}{3} = 2.083, \quad
+   w^{(1)} = \frac{6 - 1.75 - 2.083}{5} = 0.833
+   $$
+
+   $$
+   \mathbf{x}^{(1)} = \begin{bmatrix} 1.75 \\ 2.083 \\ 0.833 \end{bmatrix}
+   $$
+
+2. **Iteration 2 ($k = 2$):**
+
+   Using updated values:
+
+   $$
+   u^{(2)} = \frac{7 - 2.083 - 0.833}{4} = 1.521
+   $$
+
+   $$
+   v^{(2)} = \frac{8 - 1.521 - 0.833}{3} = 1.882
+   $$
+
+   $$
+   w^{(2)} = \frac{6 - 1.521 - 1.882}{5} = 0.919
+   $$
+
+   $$
+   \mathbf{x}^{(2)} = \begin{bmatrix} 1.521 \\ 1.882 \\ 0.919 \end{bmatrix}
+   $$
+
+3. **Iteration 3 ($k = 3$):**
+
+   Repeating the process:
+
+   $$
+   u^{(3)} = 1.550, \quad v^{(3)} = 1.866, \quad w^{(3)} = 0.916
+   $$
+
+   $$
+   \mathbf{x}^{(3)} = \begin{bmatrix} 1.550 \\ 1.866 \\ 0.916 \end{bmatrix}
+   $$
+
+## **Convergence**
+
+The iterations converge to:
+
+$$
+\mathbf{x} = \begin{bmatrix} 1.6 \\ 1.8 \\ 0.9 \end{bmatrix}
+$$
+
+## **Convergence Conditions**
+
+The Gauss-Seidel Method converges if $A$ is **strictly diagonally dominant**, meaning:
+
+$$
+|a_{ii}| > \sum_{j \neq i} |a_{ij}|
+$$
+
+for all rows $i$, or if $A$ is **symmetric positive definite**.
+
+## **Advantages**
+
+- Faster convergence than the Jacobi Method due to the use of updated values.
+- Efficient for solving large systems with appropriate properties.
+
+## **Limitations**
+
+- May fail to converge if $A$ is not strictly diagonally dominant or symmetric positive definite.
+- Sequential updates limit parallel computation.
+
+## **Summary**
+
+The Gauss-Seidel Method is a powerful iterative technique for solving linear systems, particularly when $A$ is strictly diagonally dominant or symmetric positive definite. Its reliance on updated values accelerates convergence but also imposes matrix property requirements for guaranteed success.

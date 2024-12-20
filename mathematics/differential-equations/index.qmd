@@ -1,0 +1,48 @@
+---
+title: 'DIFFERENTIAL EQUATIONS'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+
+
+- [Generalized Eigenvectors in Differential Equations](./generalized-eigenvectors-DE.html)
+- [Stability of the Origin in 2x2 Systems of Differential Equations](./stability-of-origin-2x2.html)
+
+## WEEK 08
+
+- [Nonhomogeneous Systems: Undetermined Coefficients](./nonhomogeneous-systems-undetermined-coefficients.html)
+- [Nonhomogeneous Systems: Variation of Parameters](./nonhomogeneous-systems-variation-of-parameters.html)
+
+## WEEK 09
+
+- [Exponential Order](./exponential-order.html)
+- [Laplace Transforms](./laplace-transforms.html)
+- [Properties of the Laplace Transform](./laplace-transform-properties/index.html)
+
+## WEEK 10
+
+- [Summary of Tests for Series](./tests-for-series.html)
+- [Power Series](./power-series/index.html)

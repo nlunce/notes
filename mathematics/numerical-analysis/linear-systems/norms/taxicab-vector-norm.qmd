@@ -1,0 +1,115 @@
+---
+title: 'Taxicab Norm'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+The **Taxicab norm** (also known as the Manhattan norm or $\ell_1$-norm) is a way of measuring the "distance" of a vector in a grid-like space. Unlike the [**Euclidean**](./euclidean-vector-norm.html) norm, which measures the straight-line distance, the Taxicab norm sums the absolute values of a vector's components. It is often used in scenarios where movement is constrained to axes, like navigating a city grid.
+
+## **Definition**
+
+For a vector $\mathbf{v} = [v_1, v_2, \dots, v_n]$ in $\mathbb{R}^n$, the Taxicab norm is defined as:
+
+$$
+\|\mathbf{v}\|_1 = \sum_{i=1}^n |v_i|
+$$
+
+This measures the total "travel distance" required along the axes to reach the endpoint of the vector.
+
+## **Properties**
+
+The Taxicab norm satisfies the following properties:
+
+1. **Non-negativity**: $\|\mathbf{v}\|_1 \geq 0$, and $\|\mathbf{v}\|_1 = 0$ if and only if $\mathbf{v} = \mathbf{0}$.
+2. **Homogeneity**: For any scalar $c$, $\|c \mathbf{v}\|_1 = |c| \|\mathbf{v}\|_1$.
+3. **Triangle Inequality**: $\|\mathbf{u} + \mathbf{v}\|_1 \leq \|\mathbf{u}\|_1 + \|\mathbf{v}\|_1$.
+
+## **Examples**
+
+### **1. 2D Example**
+
+For $\mathbf{v} = [3, -4]$:
+
+$$
+\|\mathbf{v}\|_1 = |3| + |-4| = 3 + 4 = 7
+$$
+
+### **2. 3D Example**
+
+For $\mathbf{v} = [1, -2, 3]$:
+
+$$
+\|\mathbf{v}\|_1 = |1| + |-2| + |3| = 1 + 2 + 3 = 6
+$$
+
+### **3. General Case**
+
+For $\mathbf{v} = [v_1, v_2, \dots, v_n]$:
+
+$$
+\|\mathbf{v}\|_1 = |v_1| + |v_2| + \cdots + |v_n|
+$$
+
+## **Applications**
+
+### **1. Urban Navigation**
+
+The Taxicab norm models distance in grid-based systems, such as city streets, where movement is restricted to horizontal and vertical directions.
+
+### **2. Machine Learning**
+
+In machine learning, the $\ell_1$-norm is used as a regularization term (Lasso regression) to encourage sparsity in models.
+
+### **3. Optimization**
+
+The Taxicab norm is used in linear programming and optimization problems where constraints align with the $\ell_1$-metric.
+
+### **4. Signal Processing**
+
+The $\ell_1$-norm is used in compressed sensing and sparse recovery to find solutions with minimal non-zero components.
+
+## **Visualization**
+
+In 2D, the set of points at a fixed Taxicab norm distance from the origin forms a diamond shape (rotated square). For example, all points satisfying $\|\mathbf{v}\|_1 = 3$ in $\mathbb{R}^2$ would form the square:
+
+$$
+|x| + |y| = 3
+$$
+
+## **Example Problem**
+
+**Problem:** Compute the Taxicab norm of $\mathbf{v} = [-3, 4, -5]$.
+
+### **Solution:**
+
+1. Take the absolute values of the components: $|-3| = 3$, $|4| = 4$, $|-5| = 5$.
+2. Sum them: $\|\mathbf{v}\|_1 = 3 + 4 + 5 = 12$.
+
+## **Conclusion**
+
+The Taxicab norm is a useful measure of distance in grid-based systems and finds applications in various fields such as geometry, optimization, and machine learning. Its simplicity and intuitive interpretation make it a valuable tool for analyzing vector magnitudes under $\ell_1$-metrics.

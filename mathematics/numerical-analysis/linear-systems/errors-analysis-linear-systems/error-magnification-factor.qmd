@@ -1,0 +1,366 @@
+---
+title: 'Understanding the Error Magnification Factor (EMF)'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show Code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+When tackling mathematical problems, especially those involving systems of equations, understanding how errors influence the solutions is paramount. The **Error Magnification Factor (EMF)** is a crucial tool that allows us to analyze the relationship between different types of errors in numerical computations, helping us assess the reliability and stability of our solutions.
+
+## **What is EMF?**
+
+The **Error Magnification Factor (EMF)** quantifies how an initial error, known as the [**backward error**](./backward-error.html), is amplified when computing a solution, leading to the [**forward error**](./forward-error.html). Think of EMF as a magnifying glass that reveals how minor inaccuracies can escalate into significant discrepancies in the final answer.
+
+Mathematically, EMF is defined as:
+
+$$
+\text{EMF} = \frac{\text{Relative Forward Error (RFE)}}{\text{Relative Backward Error (RBE)}}
+$$
+
+### **Breaking Down the Components**
+
+- [**Relative Forward Error (RFE)**](./relative-forward-error.html): Measures the deviation of the computed solution from the true solution relative to the true solution's magnitude.
+
+  $$
+  \text{RFE} = \frac{\|\mathbf{x} - \mathbf{x_a}\|_\infty}{\|\mathbf{x}\|_\infty}
+  $$
+
+- [**Relative Backward Error (RBE)**](./relative-backward-error.html): Quantifies the adjustment needed in the original problem data to make the computed solution exact, relative to the input data's magnitude.
+
+  $$
+  \text{RBE} = \frac{\|\mathbf{b} - A\mathbf{x_a}\|_\infty}{\|\mathbf{b}\|_\infty}
+  $$
+
+Substituting these into the EMF formula:
+
+$$
+\text{EMF} = \frac{\|\mathbf{x} - \mathbf{x_a}\|_\infty / \|\mathbf{x}\|_\infty}{\|\mathbf{b} - A\mathbf{x_a}\|_\infty / \|\mathbf{b}\|_\infty} = \frac{\|\mathbf{x} - \mathbf{x_a}\|_\infty}{\|\mathbf{x}\|_\infty} \cdot \frac{\|\mathbf{b}\|_\infty}{\|\mathbf{b} - A\mathbf{x_a}\|_\infty}
+$$
+
+Where:
+
+- $\mathbf{x}$: **True Solution**
+- $\mathbf{x_a}$: **Approximate (Computed) Solution**
+- $\mathbf{b}$: **Original Input Data**
+- $A$: **Coefficient Matrix** in the system of equations
+
+## **What EMF Represents**
+
+Understanding EMF involves dissecting its components and recognizing what they reveal about the system under analysis.
+
+### **1. Forward vs. Backward Error**
+
+- **Backward Error (RBE)**: Think of it as a small mistake in the initial setup of a problem, such as an incorrect measurement or input. It quantifies this initial discrepancy.
+- **Forward Error (RFE)**: Represents how this initial mistake propagates and affects the final solution, showing the deviation from the intended outcome.
+
+**EMF** bridges these two by indicating how much an initial error (RBE) influences the final result (RFE). A higher EMF implies that even minor initial errors can lead to significant deviations in the solution.
+
+### **2. Sensitivity of Solutions**
+
+- **High EMF**: Indicates that the system is **sensitive** or **unstable**. Small errors in the input data can cause large errors in the solution.
+- **Low EMF**: Suggests that the system is **stable**, with errors in input data having minimal impact on the solution.
+
+### **3. Well-Conditioned vs. Ill-Conditioned Systems**
+
+- **Well-Conditioned Systems**: EMF values close to 1. Errors do not get significantly magnified, making the solutions reliable.
+- **Ill-Conditioned Systems**: High EMF values. Small errors can lead to large discrepancies in solutions, rendering them unreliable.
+
+## **Why EMF Matters**
+
+Understanding EMF is essential for several reasons:
+
+- **Stability Analysis**: EMF helps determine whether a numerical algorithm will produce reliable results or amplify errors.
+- **Condition Number Connection**: EMF is related to the condition number of matrix $A$, another measure of sensitivity in systems.
+- **Error Propagation**: By analyzing EMF, we can predict how errors in our input data will affect the final solution, enabling us to take corrective measures.
+
+## **A Practical Example**
+
+Let's delve into a concrete example to illustrate how EMF operates in practice.
+
+### **The Problem Setup**
+
+Consider the system of equations:
+
+$$
+A\mathbf{x} = \mathbf{b}
+$$
+
+Where:
+
+- $\mathbf{x} = \begin{bmatrix} 2 \\ 1 \end{bmatrix}$ is the **true solution**.
+- $\mathbf{x_a} = \begin{bmatrix} 1 \\ -1 \end{bmatrix}$ is the **approximate solution**.
+- $\mathbf{b} = \begin{bmatrix} 3 \\ 2 \end{bmatrix}$ is the **input data**.
+- $A = \begin{bmatrix} 1 & 1 \\ 3 & -4 \end{bmatrix}$ is the **coefficient matrix**.
+
+### **Step 1: Compute the Relative Forward Error (RFE)**
+
+The RFE measures the deviation of the computed solution from the true solution.
+
+$$
+\text{RFE} = \frac{\|\mathbf{x} - \mathbf{x_a}\|_\infty}{\|\mathbf{x}\|_\infty}
+$$
+
+**Calculations:**
+
+1. **Difference Vector**:
+
+   $$
+   \mathbf{e} = \mathbf{x} - \mathbf{x_a} = \begin{bmatrix} 2 \\ 1 \end{bmatrix} - \begin{bmatrix} 1 \\ -1 \end{bmatrix} = \begin{bmatrix} 1 \\ 2 \end{bmatrix}
+   $$
+
+2. **Infinity Norm of $\mathbf{e}$**:
+
+   $$
+   \|\mathbf{e}\|_\infty = \max(|1|, |2|) = 2
+   $$
+
+3. **Infinity Norm of $\mathbf{x}$**:
+
+   $$
+   \|\mathbf{x}\|_\infty = \max(|2|, |1|) = 2
+   $$
+
+4. **RFE**:
+
+   $$
+   \text{RFE} = \frac{2}{2} = 1
+   $$
+
+### **Step 2: Compute the Relative Backward Error (RBE)**
+
+The RBE measures the adjustment needed in the original input data to make the computed solution exact.
+
+$$
+\text{RBE} = \frac{\|\mathbf{b} - A\mathbf{x_a}\|_\infty}{\|\mathbf{b}\|_\infty}
+$$
+
+**Calculations:**
+
+1. **Compute $A\mathbf{x_a}$**:
+
+   $$
+   A\mathbf{x_a} = \begin{bmatrix} 1 \cdot 1 + 1 \cdot (-1) \\ 3 \cdot 1 + (-4) \cdot (-1) \end{bmatrix} = \begin{bmatrix} 0 \\ 7 \end{bmatrix}
+   $$
+
+2. **Residual Vector**:
+
+   $$
+   \mathbf{r} = \mathbf{b} - A\mathbf{x_a} = \begin{bmatrix} 3 \\ 2 \end{bmatrix} - \begin{bmatrix} 0 \\ 7 \end{bmatrix} = \begin{bmatrix} 3 \\ -5 \end{bmatrix}
+   $$
+
+3. **Infinity Norm of $\mathbf{r}$**:
+
+   $$
+   \|\mathbf{r}\|_\infty = \max(|3|, |5|) = 5
+   $$
+
+4. **Infinity Norm of $\mathbf{b}$**:
+
+   $$
+   \|\mathbf{b}\|_\infty = \max(|3|, |2|) = 3
+   $$
+
+5. **RBE**:
+
+   $$
+   \text{RBE} = \frac{5}{3} \approx 1.6667
+   $$
+
+### **Step 3: Compute the EMF**
+
+Using the RFE and RBE:
+
+$$
+\text{EMF} = \frac{\text{RFE}}{\text{RBE}} = \frac{1}{1.6667} \approx 0.6
+$$
+
+### **Step 4: Interpretation**
+
+An EMF of **0.6** implies that the backward error is magnified by a factor of 0.6 in the forward error. This indicates that the system is **moderately sensitive** but not highly unstable. While there is some error amplification, it isn't excessively large, suggesting a reasonable level of stability in the solution.
+
+## **Visualization of Errors**
+
+Visual representations can significantly enhance our understanding of EMF. Below is a refined graph that visually illustrates the backward and forward errors in our example, with synchronized domains and ranges for better comparison.
+
+### **Graph of EMF Components**
+
+```{python}
+#| label: emf-components
+#| code-summary: "Show Code"
+
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.patches import FancyArrowPatch
+from matplotlib.patches import Patch
+import matplotlib.patheffects as pe
+
+def create_fancy_arrow(start, end, color, width=2, alpha=1.0, zorder=5):
+    """Create a fancy arrow without shadow effect for simplicity"""
+    arrow = FancyArrowPatch(
+        start, end,
+        arrowstyle='->',
+        color=color,
+        linewidth=width,
+        alpha=alpha,
+        zorder=zorder
+    )
+    return arrow
+
+x_true = np.array([2, 1])
+x_a = np.array([1, -1])
+b = np.array([3, 2])
+A = np.array([[1, 1], [3, -4]])
+
+Ax_a = A @ x_a
+residual = b - Ax_a
+forward_error = x_true - x_a
+
+all_vectors = [
+    [0, 0], b, Ax_a, x_true, x_a
+]
+min_vals = np.min(all_vectors, axis=0) - 1
+max_vals = np.max(all_vectors, axis=0) + 1
+x_min, x_max = min_vals[0], max_vals[0]
+y_min, y_max = min_vals[1], max_vals[1]
+
+plt.style.use('seaborn-v0_8-whitegrid')
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 8))
+
+colors = {
+    'b': '#1f77b4',        # blue
+    'Ax_a': '#2ca02c',     # green
+    'residual': '#d62728', # red
+    'x_true': '#000000',   # black
+    'x_a': '#7f7f7f',      # gray
+    'forward': '#ff7f0e'   # orange
+}
+
+input_vectors = [
+    ((0, 0), b, colors['b'], r'$\mathbf{b}$'),
+    ((0, 0), Ax_a, colors['Ax_a'], r'$A\mathbf{x}_a$'),
+    (Ax_a, b, colors['residual'], r'$\mathbf{r}$')
+]
+
+for start, end, color, name in input_vectors:
+    ax1.quiver(*start, *(np.array(end) - np.array(start)), color=color, angles='xy', scale_units='xy', scale=1, width=0.01, zorder=5)
+
+    vector = np.array(end) - np.array(start)
+    vector_norm = np.linalg.norm(vector)
+    if vector_norm > 0:
+        direction = vector / vector_norm
+    else:
+        direction = np.array([0, 0])
+
+    perp_direction = np.array([-direction[1], direction[0]])
+    offset = perp_direction * 0.5
+
+    if name == r'$A\mathbf{x}_a$':
+        offset += np.array([-0.3, 0])
+
+    mid_point = np.array(start) + vector / 2
+    ax1.text(mid_point[0] + offset[0], mid_point[1] + offset[1],
+             name, color=color, fontsize=10, fontweight='bold', zorder=6)
+
+solution_vectors = [
+    ((0, 0), x_true, colors['x_true'], r'$\mathbf{x}$'),
+    ((0, 0), x_a, colors['x_a'], r'$\mathbf{x}_a$'),
+    (x_a, x_true, colors['forward'], r'$\mathbf{e}$')
+]
+
+for start, end, color, name in solution_vectors:
+    ax2.quiver(*start, *(np.array(end) - np.array(start)), color=color, angles='xy', scale_units='xy', scale=1, width=0.01, zorder=5)
+
+    vector = np.array(end) - np.array(start)
+    mid_point = np.array(start) + vector / 2
+    offset = np.array([0.3, 0.3])
+
+    if name == r'$\mathbf{x}_a$':
+        offset += np.array([-0.1, -0.3])
+
+    ax2.text(mid_point[0] + offset[0], mid_point[1] + offset[1],
+             name, color=color, fontsize=10, fontweight='bold', zorder=6)
+
+for ax, title in zip([ax1, ax2], ['Input Space (Backward Error)', 'Solution Space (Forward Error)']):
+    ax.set_aspect('equal')
+
+    x_padding = (x_max - x_min) * 0.1
+    y_padding = (y_max - y_min) * 0.1
+    ax.set_xlim(x_min - x_padding, x_max + x_padding)
+    ax.set_ylim(y_min - y_padding, y_max + y_padding)
+
+    ax.set_title(title, fontsize=12, pad=15, fontweight='bold')
+
+    ax.set_xlabel('')
+    ax.set_ylabel('')
+
+    ax.grid(color='lightgray', linestyle='--', linewidth=0.7, zorder=0)
+
+    ax.axhline(0, color='black', linewidth=0.8, zorder=1)
+    ax.axvline(0, color='black', linewidth=0.8, zorder=1)
+
+legend_elements = [
+    Patch(facecolor='none', edgecolor=colors['b'], label=r'$\mathbf{b}$ (Input)'),
+    Patch(facecolor='none', edgecolor=colors['Ax_a'], label=r'$A\mathbf{x}_a$ (Computed)'),
+    Patch(facecolor='none', edgecolor=colors['residual'], label=r'$\mathbf{r}$ (Residual)'),
+    Patch(facecolor='none', edgecolor=colors['x_true'], label=r'$\mathbf{x}$ (True Solution)'),
+    Patch(facecolor='none', edgecolor=colors['x_a'], label=r'$\mathbf{x}_a$ (Approximate)'),
+    Patch(facecolor='none', edgecolor=colors['forward'], label=r'$\mathbf{e}$ (Forward Error)')
+]
+
+fig.legend(handles=legend_elements,
+           loc='upper center',
+           bbox_to_anchor=(0.5, 0.05),
+           ncol=3,
+           fontsize=9)
+
+fig.suptitle('Error Magnification Factor Components', fontsize=14, y=0.98, fontweight='bold')
+
+plt.tight_layout()
+plt.subplots_adjust(top=0.87, bottom=0.15, right=0.95, wspace=-0.4)
+
+plt.show()
+```
+
+### **Explanation of the Visualization**
+
+- **Left Plot: Input Space (Backward Error)**
+
+  - **$\mathbf{b}$ (Input)**: Represents the original input data vector.
+  - **$A\mathbf{x}_a$ (Computed)**: The result of applying the coefficient matrix $A$ to the approximate solution $\mathbf{x_a}$.
+  - **$\mathbf{r}$ (Residual)**: The difference between the original input $\mathbf{b}$ and the computed $A\mathbf{x}_a$, indicating the backward error.
+
+- **Right Plot: Solution Space (Forward Error)**
+
+  - **$\mathbf{x}$ (True Solution)**: The actual solution to the system.
+  - **$\mathbf{x}_a$ (Approximate)**: The computed solution.
+  - **$\mathbf{e}$ (Forward Error)**: The difference between the true solution and the approximate solution, representing the forward error.
+
+The arrows visually demonstrate how the backward error in the input space relates to the forward error in the solution space, encapsulating the essence of the EMF.
+
+## **Conclusion**
+
+The **Error Magnification Factor (EMF)** is a vital concept in numerical analysis, providing insight into how errors propagate through computational processes. By quantifying the relationship between backward and forward errors, EMF helps in assessing the stability and reliability of numerical solutions. Understanding and calculating EMF enables mathematicians and engineers to design more robust algorithms and make informed decisions when interpreting computational results.

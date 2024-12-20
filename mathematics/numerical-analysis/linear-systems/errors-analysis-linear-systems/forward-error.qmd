@@ -1,0 +1,215 @@
+---
+title: 'Forward Error in Linear Systems'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show Code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## **Overview**
+
+The **forward error** is a critical concept in numerical linear algebra, measuring the difference between the approximate solution $\mathbf{x_a}$ and the true solution $\mathbf{x}$ of a linear system $A\mathbf{x} = \mathbf{b}$. It quantifies how far the computed solution is from the exact solution, providing insight into the accuracy of numerical methods.
+
+The forward error is defined as:
+
+$$
+\text{FE} = \|\mathbf{x} - \mathbf{x_a}\|_\infty
+$$
+
+where:
+
+- $\mathbf{x}$: The **true solution** of the system $A\mathbf{x} = \mathbf{b}$,
+- $\mathbf{x_a}$: The **approximate solution**,
+- $\|\cdot\|_\infty$: The [**infinity norm**](../norms/infinity-vector-norm.html), measuring the maximum absolute entry of the vector.
+
+## **What Forward Error Represents**
+
+1. **Solution Accuracy**:
+
+   - The forward error reflects the maximum difference between the components of the true solution and the approximate solution.
+
+2. **Component-wise Deviation**:
+
+   - It indicates the largest deviation in any component of the solution vector.
+
+3. **Exact Solution**:
+
+   - If $\mathbf{x_a}$ is the exact solution, then:
+
+     $$
+     \text{FE} = 0
+     $$
+
+## **Why Forward Error Matters**
+
+- **Assessing Solution Quality**:
+
+  - The forward error directly measures the accuracy of the approximate solution, helping determine how close it is to the true solution.
+
+- **Error Propagation**:
+
+  - Understanding the forward error aids in analyzing how errors in computations propagate through the solution process.
+
+- **Numerical Stability**:
+
+  - A small forward error indicates that the numerical method is producing reliable results.
+
+## **Example**
+
+To enhance the visualization, we'll adjust the approximate solution $\mathbf{x_a}$ so that the differences in both components are whole numbers but **not equal**, providing a clearer depiction of forward error in multiple dimensions.
+
+Consider the system:
+
+$$
+A = \begin{bmatrix} 1 & 1 \\ 3 & -4 \end{bmatrix}, \quad
+\mathbf{b} = \begin{bmatrix} 3 \\ 2 \end{bmatrix}, \quad
+\mathbf{x} = \begin{bmatrix} 2 \\ 1 \end{bmatrix}, \quad
+\mathbf{x_a} = \begin{bmatrix} 1 \\ -1 \end{bmatrix}
+$$
+
+### **Step 1: Verify the True Solution**
+
+Check that $\mathbf{x}$ satisfies $A\mathbf{x} = \mathbf{b}$:
+
+$$
+A\mathbf{x} = \begin{bmatrix} 1 \times 2 + 1 \times 1 \\ 3 \times 2 + (-4) \times 1 \end{bmatrix} = \begin{bmatrix} 3 \\ 2 \end{bmatrix} = \mathbf{b}
+$$
+
+### **Step 2: Compute the Forward Error**
+
+Compute the difference between $\mathbf{x}$ and $\mathbf{x_a}$:
+
+$$
+\mathbf{e} = \mathbf{x} - \mathbf{x_a} = \begin{bmatrix} 2 - 1 \\ 1 - (-1) \end{bmatrix} = \begin{bmatrix} 1 \\ 2 \end{bmatrix}
+$$
+
+The forward error is the infinity norm of $\mathbf{e}$:
+
+$$
+\text{FE} = \|\mathbf{e}\|_\infty = \max(|1|, |2|) = 2
+$$
+
+### **Step 3: Interpretation**
+
+- The maximum deviation between the true and approximate solutions is $2$, occurring in the second component.
+- The approximate solution $\mathbf{x_a}$ differs from $\mathbf{x}$ by $1$ in the $x$-component and $2$ in the $y$-component.
+
+## **Visualization of Forward Error**
+
+To illustrate the forward error, we will visualize the true solution $\mathbf{x}$ and the approximate solution $\mathbf{x_a}$, along with the error vector $\mathbf{e} = \mathbf{x} - \mathbf{x_a}$. By plotting these vectors, we can see how the approximate solution deviates from the true solution in both components.
+
+- **Black Vector** ($\mathbf{x}$): The true solution vector.
+- **Gray Vector** ($\mathbf{x_a}$): The approximate solution vector.
+- **Orange Vector** ($\mathbf{e} = \mathbf{x} - \mathbf{x_a}$): The error vector.
+- **Error Components**: Projections of $\mathbf{e}$ onto the $x$ and $y$ axes.
+
+```{python}
+#| label: forward-error
+#| code-summary: "Show Code"
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+x_true = np.array([2, 1])
+x_a = np.array([1, -1])
+e = x_true - x_a
+
+plt.figure(figsize=(12, 8))
+origin = np.zeros(2)
+
+plt.quiver(*origin, *x_true, color='black', angles='xy', scale_units='xy', scale=1, label=r'$\mathbf{x}$ (True Solution)', width=0.01, zorder=5)
+plt.quiver(*origin, *x_a, color='gray', angles='xy', scale_units='xy', scale=1, label=r'$\mathbf{x}_a$ (Approximate Solution)', width=0.01, zorder=5)
+plt.quiver(*x_a, *e, color='orange', angles='xy', scale_units='xy', scale=1, label=r'$\mathbf{e} = \mathbf{x} - \mathbf{x}_a$', width=0.01, zorder=5)
+plt.quiver(*x_a, e[0], 0, color='red', angles='xy', scale_units='xy', scale=1, label=r'$\mathbf{e_1}$', width=0.01, zorder=5)
+plt.quiver(x_a[0] + e[0], x_a[1], 0, e[1], color='purple', angles='xy', scale_units='xy', scale=1, label=r'$\mathbf{e_2}$', width=0.01, zorder=5)
+
+plt.annotate(r'$\mathbf{x}_a$', (x_a[0], x_a[1]), textcoords="offset points", xytext=(-30, -15), ha='center', color='gray', fontsize=14, zorder=6)
+plt.annotate(r'$\mathbf{x}$', (x_true[0], x_true[1]), textcoords="offset points", xytext=(0, 10), ha='center', color='black', fontsize=14, zorder=6)
+plt.annotate(r'$\mathbf{e}$', (x_a[0] + e[0]/2, x_a[1] + e[1]/2), textcoords="offset points", xytext=(15, -15), ha='center', color='orange', fontsize=14, zorder=6)
+plt.annotate(r'$\mathbf{e_1}$', (x_a[0] + e[0]/2, x_a[1] - 0.2), textcoords="offset points", xytext=(0, -20), ha='center', color='red', fontsize=14, zorder=6)
+plt.annotate(r'$\mathbf{e_2}$', (x_a[0] + e[0] + 0.1, x_a[1] + e[1]/2), textcoords="offset points", xytext=(20, 0), ha='center', color='purple', fontsize=14, zorder=6)
+
+plt.text(x_a[0] + e[0] + 0.3, x_a[1] + e[1] + 0.3, r'$\max(|\mathbf{e_1}|, |\mathbf{e_2}|) = |\mathbf{e_2}| = 2$', color='purple', fontsize=14, zorder=6)
+
+plt.plot([x_a[0], x_true[0]], [x_a[1], x_true[1]], color='orange', linewidth=1.5, zorder=4)  # Keep the connecting line below vectors
+plt.xlim(-1, 5)
+plt.ylim(-2, 3)
+plt.axhline(0, color='black', linewidth=0.8, zorder=1)
+plt.axvline(0, color='black', linewidth=0.8, zorder=1)
+plt.grid(color='lightgray', linestyle='--', linewidth=0.7, zorder=0)
+plt.legend(loc='upper left', fontsize=12)
+plt.title('Visualization of Forward Error with Error Components', fontsize=18)
+plt.xlabel('x-axis', fontsize=14)
+plt.ylabel('y-axis', fontsize=14)
+plt.gca().set_aspect('equal', adjustable='box')
+plt.show()
+```
+
+### E**xplanation of the Visualization**
+
+- **Vector Addition**:
+
+  - The error vector $\mathbf{e}$ is drawn starting from $\mathbf{x_a}$ and pointing towards $\mathbf{x}$, demonstrating that:
+
+    $$
+    \mathbf{x_a} + \mathbf{e} = \mathbf{x}
+    $$
+
+- **Error Components**:
+
+  - The error vector $\mathbf{e}$ is decomposed into its $x$-component $e_1$ (red dashed arrow) and $y$-component $e_2$ (purple dashed arrow).
+
+  - The components are:
+
+    $$
+    e_1 = 1, \quad e_2 = 2
+    $$
+
+- **Infinity Norm Highlighted**:
+
+  - The maximum absolute component of the error is $|e_2| = 2$, which is the forward error $\text{FE} = \|\mathbf{e}\|_\infty$.
+
+  - This is highlighted in the graph with a text annotation.
+
+- **Understanding the Forward Error**:
+
+  - By visualizing the error components, we see that the deviation occurs in both the $x$ and $y$ components.
+
+  - The largest error is in the $y$-component, which determines the forward error.
+
+## **Conclusion**
+
+- **Forward Error Significance**:
+
+  - The forward error provides a direct measure of the accuracy of the approximate solution $\mathbf{x_a}$ in relation to the true solution $\mathbf{x}$.
+
+- **Visualization Enhancements**:
+
+  - By adjusting $\mathbf{x_a}$ to differ by whole numbers in both components, the visualization effectively demonstrates how errors in multiple dimensions contribute to the overall forward error.
+
+  - Decomposing the error vector into its components and highlighting the infinity norm offers a clearer understanding of how the forward error is calculated.
+
+- **Practical Implications**:
+
+  - In numerical computations, minimizing the forward error is crucial for obtaining accurate solutions.

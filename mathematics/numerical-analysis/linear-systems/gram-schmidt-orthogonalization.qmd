@@ -1,0 +1,119 @@
+---
+title: 'Gram-Schmidt Orthogonalization'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 1
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## Overview
+
+The Gram-Schmidt Orthogonalization process is a fundamental technique in linear algebra for transforming a set of linearly independent vectors into an orthogonal (or orthonormal) set that spans the same subspace. This method is widely used in applications such as QR factorization, solving [**least squares problems**](./least-squares.html), and numerical linear algebra. This note explores the definition, properties, computation, and applications of the Gram-Schmidt process.
+
+## Definition and Process
+
+Given a set of linearly independent vectors $A_1, A_2, \dots, A_n$, the Gram-Schmidt process produces an orthogonal (or orthonormal) set of vectors $q_1, q_2, \dots, q_n$ such that:
+
+1. Each vector $q_i$ is orthogonal to the previous vectors $q_1, q_2, \dots, q_{i-1}$.
+2. The span of $q_1, q_2, \dots, q_n$ is the same as the span of $A_1, A_2, \dots, A_n$.
+
+This orthogonal set can also be normalized to create an orthonormal basis.
+
+## Steps of the Gram-Schmidt Process
+
+The Gram-Schmidt process involves the following steps:
+
+1. **Initialize with the First Vector**: Set $q_1$ as the normalized version of $A_1$:
+
+   $$
+   q_1 = \frac{A_1}{\|A_1\|}
+   $$
+
+2. **Compute Subsequent Vectors**: For each vector $A_i$, construct a new vector $u_i$ by subtracting components that align with previously computed $q$-vectors. Normalize $u_i$ to obtain $q_i$:
+   - Define the non-normalized vector $u_i$:
+     $$
+     u_i = A_i - \sum_{j=1}^{i-1} (q_j \cdot A_i) \, q_j
+     $$
+   - Normalize $u_i$ to obtain $q_i$:
+     $$
+     q_i = \frac{u_i}{\|u_i\|}
+     $$
+
+Each vector $q_i$ is thus orthogonal to the preceding $q$-vectors and has unit length if normalized.
+
+## Example
+
+Given vectors $A_1$ and $A_2$, the Gram-Schmidt process works as follows:
+
+1. **Calculate $q_1$**:
+
+   $$
+   q_1 = \frac{A_1}{\|A_1\|}
+   $$
+
+2. **Calculate $q_2$**:
+   - First, remove the component of $A_2$ in the direction of $q_1$ to obtain $u_2$:
+     $$
+     u_2 = A_2 - (q_1 \cdot A_2) q_1
+     $$
+   - Then, normalize $u_2$ to get $q_2$:
+     $$
+     q_2 = \frac{u_2}{\|u_2\|}
+     $$
+
+## Properties of Gram-Schmidt Orthogonalization
+
+- **Orthogonality**: Each vector $q_i$ is orthogonal to all previously generated vectors $q_1, \dots, q_{i-1}$.
+- **Span Preservation**: The set $\{q_1, q_2, \dots, q_n\}$ spans the same subspace as the original set $\{A_1, A_2, \dots, A_n\}$.
+- **Orthonormal Basis**: By normalizing each $u_i$ to get $q_i$, the process yields an orthonormal basis for the subspace.
+
+## Applications of Gram-Schmidt Orthogonalization
+
+Gram-Schmidt orthogonalization is widely applied in various fields due to its utility in creating orthogonal bases:
+
+- **QR Factorization**: Used to decompose a matrix into an orthogonal matrix $Q$ and an upper triangular matrix $R$.
+- [**Least Squares Problems**](./least-squares.html): Assists in minimizing the error in fitting data to a model by creating orthogonal projections.
+- **Signal Processing and Data Compression**: Forms the foundation for methods that reduce redundancy by representing data in orthogonal bases.
+- **Machine Learning and Statistics**: Simplifies computations by projecting data onto orthogonal components.
+
+## Example Problem
+
+**Problem:** Given the vectors
+
+$$
+A_1 = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}, \quad A_2 = \begin{pmatrix} 4 \\ 5 \\ 6 \end{pmatrix}
+$$
+
+1. **Use Gram-Schmidt to find orthogonal vectors $q_1$ and $q_2$**.
+2. **Normalize $q_1$ and $q_2$ to form an orthonormal basis.**
+
+### Solution Steps
+
+1. **Compute $q_1$** by normalizing $A_1$.
+2. **Calculate $u_2$** by removing the component of $A_2$ in the direction of $q_1$.
+3. **Normalize $u_2$ to obtain $q_2$**.
+
+## Conclusion
+
+The Gram-Schmidt process is a valuable tool in linear algebra for constructing orthogonal (or orthonormal) bases. By transforming a set of linearly independent vectors, it simplifies many matrix operations and lays the groundwork for QR factorization, data projections, and error minimization in least squares problems.

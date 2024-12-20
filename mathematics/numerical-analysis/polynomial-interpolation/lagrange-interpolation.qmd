@@ -1,0 +1,137 @@
+---
+title: 'Lagrange Interpolation'
+author: 'Nathan Lunceford'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 1
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+**Lagrange Interpolation** is a method of constructing a polynomial that passes through a given set of points. It is particularly useful when you have a small number of data points and want to determine the polynomial function that exactly fits those points.
+
+## **The Lagrange Interpolating Polynomial**
+
+Given $n$ distinct data points $(x_1, y_1), (x_2, y_2), ..., (x_n, y_n)$, the Lagrange interpolating polynomial is the polynomial $P(x)$ of degree at most $n-1$ that passes through all the points, meaning:
+
+$$
+P(x_i) = y_i \quad \text{for each} \ i = 1, 2, ..., n
+$$
+
+The Lagrange form of the polynomial is given by:
+
+$$
+P(x) = \sum_{i=1}^{n} y_i L_i(x)
+$$
+
+where $L_i(x)$ are the **Lagrange basis polynomials**, defined as:
+
+$$
+L_i(x) = \prod_{j=1, j \neq i}^{n} \frac{x - x_j}{x_i - x_j}
+$$
+
+Here, the product is taken over all $j \neq i$, ensuring that $L_i(x_j) = 0$ for $j \neq i$ and $L_i(x_i) = 1$. This ensures that $P(x_i) = y_i$ for each $i$.
+
+### Step-by-Step Calculation
+
+Suppose we are given a set of three points: $(x_1, y_1)$, $(x_2, y_2)$, $(x_3, y_3)$. The Lagrange interpolating polynomial is:
+
+$$
+P(x) = y_1 L_1(x) + y_2 L_2(x) + y_3 L_3(x)
+$$
+
+where the Lagrange basis polynomials are:
+
+$$
+L_1(x) = \frac{(x - x_2)(x - x_3)}{(x_1 - x_2)(x_1 - x_3)}
+$$
+
+$$
+L_2(x) = \frac{(x - x_1)(x - x_3)}{(x_2 - x_1)(x_2 - x_3)}
+$$
+
+$$
+L_3(x) = \frac{(x - x_1)(x - x_2)}{(x_3 - x_1)(x_3 - x_2)}
+$$
+
+By evaluating these expressions and plugging in the values of $y_1$, $y_2$, and $y_3$, we obtain the polynomial $P(x)$ that passes through all the given points.
+
+### **Example**
+
+Let’s go through an example where we are given three points: $(1, 2)$, $(2, 3)$, and $(3, 5)$.
+
+1. **Points**:  
+   $(x_1, y_1) = (1, 2)$  
+   $(x_2, y_2) = (2, 3)$  
+   $(x_3, y_3) = (3, 5)$
+
+2. **Lagrange basis polynomials**:
+
+$$
+L_1(x) = \frac{(x - 2)(x - 3)}{(1 - 2)(1 - 3)} = \frac{(x - 2)(x - 3)}{2}
+$$
+
+$$
+L_2(x) = \frac{(x - 1)(x - 3)}{(2 - 1)(2 - 3)} = \frac{(x - 1)(x - 3)}{-1}
+$$
+
+$$
+L_3(x) = \frac{(x - 1)(x - 2)}{(3 - 1)(3 - 2)} = \frac{(x - 1)(x - 2)}{2}
+$$
+
+3. **Lagrange interpolating polynomial**:
+
+$$
+P(x) = 2 \cdot L_1(x) + 3 \cdot L_2(x) + 5 \cdot L_3(x)
+$$
+
+Substituting the values for $L_1(x)$, $L_2(x)$, and $L_3(x)$:
+
+$$
+P(x) = 2 \cdot \frac{(x - 2)(x - 3)}{2} + 3 \cdot \frac{(x - 1)(x - 3)}{-1} + 5 \cdot \frac{(x - 1)(x - 2)}{2}
+$$
+
+Simplifying this expression will give you the final polynomial $P(x)$ that passes through all three points.
+
+### **General Properties of Lagrange Interpolation**
+
+1. **Uniqueness**: There is exactly one polynomial of degree $n-1$ that interpolates $n$ points. This is guaranteed by the **fundamental theorem of algebra**, which states that a polynomial of degree $n-1$ is uniquely determined by $n$ distinct points.
+
+2. **Efficiency**: Lagrange interpolation is not the most computationally efficient method for large datasets, because each term depends on all the data points, making the calculation costly for large $n$. Methods like [**Newton’s divided differences**](./newtons-divided-differences.html) are generally preferred for interpolation with larger datasets.
+
+3. **Accuracy**: Interpolation works well if the points are well-distributed and the function is smooth. However, for unevenly spaced points or functions with high curvature, the interpolation polynomial may oscillate significantly, a phenomenon known as [**Runge's phenomenon**](../w03/runge-phenomenon.html).
+
+### **Applications of Lagrange Interpolation**
+
+- **Curve Fitting**: Lagrange interpolation can be used to construct a polynomial that exactly fits a given set of data points.
+- **Numerical Integration**: The interpolating polynomial can be used to approximate integrals through methods such as Newton-Cotes formulas.
+- **Graphics and Animation**: In computer graphics, Lagrange interpolation is used to smoothly interpolate between keyframes in animations.
+- **Signal Processing**: It is used in digital signal processing for reconstructing missing samples from a set of known data points.
+
+### **Drawbacks**
+
+- **Runge’s Phenomenon**: Lagrange interpolation can lead to significant oscillation, especially when interpolating over large intervals with a high degree polynomial.
+- **Not Easily Updateable**: If a new point is added, the entire Lagrange polynomial must be recalculated. In contrast, methods like **Newton's divided differences** allow for easier updates when new points are added.
+
+### **Conclusion**
+
+Lagrange interpolation is a powerful tool for constructing polynomials that pass through a set of points, but it can suffer from inefficiencies and oscillations for large datasets. It’s important to understand its benefits and limitations to use it effectively in applications.

@@ -1,0 +1,33 @@
+---
+title: 'POWER SERIES'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+- [Quick Reference: Important Power Series Expansions](./important-power-series-expansions.html)
+- [Power Series Expansion for Cosine Function](./power-series-cosine-function.html)
+- [Power Series Expansion for Sine Function](./power-series-sine-function.html)
+- [Power Series Expansion for $e^x$](./power-series-exponential-function.html)
+- [Power Series Expansion for $\frac{1}{1-x}$](./power-series-1-over-1-minus-x.html)
