@@ -102,7 +102,7 @@
     "href": "mathematics/numerical-analysis/projects/rc05/rc05.html#path-equipartitioning-using-newtons-method",
     "title": "REALITY CHECK 05",
     "section": "Path Equipartitioning Using Newton’s Method",
-    "text": "Path Equipartitioning Using Newton’s Method\n\nProblem Statement\nReplace the Bisection Method in Step 2 with Newton’s Method, and repeat Steps 2 and 3. What is the derivative needed? What is a good choice for the initial guess? Is computation time decreased by this replacement?\n\n\nObjective and Approach\n\nObjective: Use Newton’s Method to locate each partition point t_i along the path, ensuring equal arc-length segments for a specified number of partitions n. Newton’s Method is expected to offer faster convergence than the Bisection Method, especially when starting with a good initial guess.\nRequired Derivative: Newton’s Method requires the derivative of the arc length function with respect to t, which is simply the arc length integrand evaluated at t:\n\nf'(t) = \\sqrt{\\left( \\frac{dx}{dt} \\right)^2 + \\left( \\frac{dy}{dt} \\right)^2}\n\nInitial Guess: A reasonable initial guess for each t_i is t_i = \\frac{i}{n}, which provides a uniformly spaced initial estimate along t, aiding the convergence of Newton’s Method.\nPerformance Comparison: To evaluate if Newton’s Method reduces computation time, we will measure the time taken by both the Bisection and Newton’s methods to achieve the same accuracy.\n\n\nWhy t_i = \\frac{i}{n} is a Good Initial Guess\n\nUniform Parameter Distribution: The parameter t varies between 0 and 1 (or the specified range of t), and \\frac{i}{n} provides evenly spaced points within this interval. This ensures that the initial guess is distributed consistently across the parameter space.\nProximity to the True Solution: For smooth and “well-behaved” curves, the true t_i values for equal arc-length segments are often near \\frac{i}{n}. This proximity ensures that Newton’s Method starts “in the ballpark” of the correct value.\nSimplicity and Efficiency: Computing \\frac{i}{n} is computationally trivial and requires no extra effort. This simplicity makes it a practical choice compared to complex initialization schemes.\nImproved Convergence: Starting close to the actual solution allows Newton’s Method to converge quadratically, reducing the number of iterations needed to achieve the desired accuracy.\n\n\n\n\nSolution Code\nThe following Python code implements Newton’s Method to find partition points and compares its performance with the Bisection Method.\n\nimport time\n\n# Newton's Method to find t for a target arc length\ndef newton_find_t(target_length, initial_guess, tol=1e-8, max_iter=100):\n    t = initial_guess\n    for _ in range(max_iter):\n        f_t = compute_arc_length(t) - target_length\n        f_prime_t = integrand(t)\n        if abs(f_t) &lt; tol:\n            return t\n        t -= f_t / f_prime_t  # Update t\n    return t\n\n# Compare performance of Bisection and Newton's methods\ndef compare_performance(target_length):\n    start_time_bisection = time.time()\n    bisection_result = bisection_find_t(target_length)\n    bisection_time = time.time() - start_time_bisection\n\n    start_time_newton = time.time()\n    newton_result = newton_find_t(target_length, initial_guess=0.5)\n    newton_time = time.time() - start_time_newton\n\n    print(f\"Bisection Method Result: {bisection_result:.9f} Time: {bisection_time:.9f} seconds\")\n    print(f\"Newton's Method Result: {newton_result:.9f} Time: {newton_time:.9f} seconds\")\n\n# Example target length (e.g., half the arc length)\ntotal_length = compute_arc_length(1)\ncompare_performance(total_length / 2)\n\nBisection Method Result: 0.800593771 Time: 0.006005049 seconds\nNewton's Method Result: 0.800593767 Time: 0.001001358 seconds\n\n\n\n\nExplanation of Solution Components\n\nNewton’s Method Implementation: The newton_find_t function applies Newton’s Method to locate the parameter t for a given arc length. It iteratively refines t by calculating f(t) and f'(t), adjusting t based on the result.\nPerformance Comparison: The compare_performance function compares the time taken by Bisection and Newton’s methods to find the target t-value. This illustrates the efficiency difference between the two methods.\n\n\n\nResults and Observations\n\nPerformance Gain: Newton’s Method generally converges faster than the Bisection Method due to its quadratic convergence rate.\nAccuracy: With an appropriately chosen initial guess, Newton’s Method efficiently reaches an accurate solution within fewer iterations.\n\n\n\nConclusion\nNewton’s Method provides a more efficient approach for finding the partition points, particularly when an initial guess is available. This reduction in computation time makes it suitable for tasks requiring high precision and quick convergence, such as real-time applications in path traversal and equipartitioning. Future explorations could involve further optimizations by dynamically refining initial guesses based on prior calculations."
+    "text": "Path Equipartitioning Using Newton’s Method\n\nProblem Statement\nReplace the Bisection Method in Step 2 with Newton’s Method, and repeat Steps 2 and 3. What is the derivative needed? What is a good choice for the initial guess? Is computation time decreased by this replacement?\n\n\nObjective and Approach\n\nObjective: Use Newton’s Method to locate each partition point t_i along the path, ensuring equal arc-length segments for a specified number of partitions n. Newton’s Method is expected to offer faster convergence than the Bisection Method, especially when starting with a good initial guess.\nRequired Derivative: Newton’s Method requires the derivative of the arc length function with respect to t, which is simply the arc length integrand evaluated at t:\n\nf'(t) = \\sqrt{\\left( \\frac{dx}{dt} \\right)^2 + \\left( \\frac{dy}{dt} \\right)^2}\n\nInitial Guess: A reasonable initial guess for each t_i is t_i = \\frac{i}{n}, which provides a uniformly spaced initial estimate along t, aiding the convergence of Newton’s Method.\nPerformance Comparison: To evaluate if Newton’s Method reduces computation time, we will measure the time taken by both the Bisection and Newton’s methods to achieve the same accuracy.\n\n\nWhy t_i = \\frac{i}{n} is a Good Initial Guess\n\nUniform Parameter Distribution: The parameter t varies between 0 and 1 (or the specified range of t), and \\frac{i}{n} provides evenly spaced points within this interval. This ensures that the initial guess is distributed consistently across the parameter space.\nProximity to the True Solution: For smooth and “well-behaved” curves, the true t_i values for equal arc-length segments are often near \\frac{i}{n}. This proximity ensures that Newton’s Method starts “in the ballpark” of the correct value.\nSimplicity and Efficiency: Computing \\frac{i}{n} is computationally trivial and requires no extra effort. This simplicity makes it a practical choice compared to complex initialization schemes.\nImproved Convergence: Starting close to the actual solution allows Newton’s Method to converge quadratically, reducing the number of iterations needed to achieve the desired accuracy.\n\n\n\n\nSolution Code\nThe following Python code implements Newton’s Method to find partition points and compares its performance with the Bisection Method.\n\nimport time\n\n# Newton's Method to find t for a target arc length\ndef newton_find_t(target_length, initial_guess, tol=1e-8, max_iter=100):\n    t = initial_guess\n    for _ in range(max_iter):\n        f_t = compute_arc_length(t) - target_length\n        f_prime_t = integrand(t)\n        if abs(f_t) &lt; tol:\n            return t\n        t -= f_t / f_prime_t  # Update t\n    return t\n\n# Compare performance of Bisection and Newton's methods\ndef compare_performance(target_length):\n    start_time_bisection = time.time()\n    bisection_result = bisection_find_t(target_length)\n    bisection_time = time.time() - start_time_bisection\n\n    start_time_newton = time.time()\n    newton_result = newton_find_t(target_length, initial_guess=0.5)\n    newton_time = time.time() - start_time_newton\n\n    print(f\"Bisection Method Result: {bisection_result:.9f} Time: {bisection_time:.9f} seconds\")\n    print(f\"Newton's Method Result: {newton_result:.9f} Time: {newton_time:.9f} seconds\")\n\n# Example target length (e.g., half the arc length)\ntotal_length = compute_arc_length(1)\ncompare_performance(total_length / 2)\n\nBisection Method Result: 0.800593771 Time: 0.012233019 seconds\nNewton's Method Result: 0.800593767 Time: 0.001000643 seconds\n\n\n\n\nExplanation of Solution Components\n\nNewton’s Method Implementation: The newton_find_t function applies Newton’s Method to locate the parameter t for a given arc length. It iteratively refines t by calculating f(t) and f'(t), adjusting t based on the result.\nPerformance Comparison: The compare_performance function compares the time taken by Bisection and Newton’s methods to find the target t-value. This illustrates the efficiency difference between the two methods.\n\n\n\nResults and Observations\n\nPerformance Gain: Newton’s Method generally converges faster than the Bisection Method due to its quadratic convergence rate.\nAccuracy: With an appropriately chosen initial guess, Newton’s Method efficiently reaches an accurate solution within fewer iterations.\n\n\n\nConclusion\nNewton’s Method provides a more efficient approach for finding the partition points, particularly when an initial guess is available. This reduction in computation time makes it suitable for tasks requiring high precision and quick convergence, such as real-time applications in path traversal and equipartitioning. Future explorations could involve further optimizations by dynamically refining initial guesses based on prior calculations."
   },
   {
     "objectID": "mathematics/numerical-analysis/projects/rc05/rc05.html#path-animation-at-original-and-constant-speed",
@@ -1379,116 +1379,487 @@
     "text": "Conclusion\nThe key to understanding the Fourier matrix and DFT lies in the properties of \\omega, the primitive root of unity. The matrix formulation provides a systematic way to compute the DFT, while the powers of \\omega determine the contributions of different frequencies in the signal. By breaking the time-domain signal into its frequency components, the DFT reveals hidden patterns and structures in the data."
   },
   {
-    "objectID": "mathematics/differential-equations/stability-of-origin-2x2.html",
-    "href": "mathematics/differential-equations/stability-of-origin-2x2.html",
-    "title": "Stability of the Origin in 2x2 Systems of Differential Equations",
+    "objectID": "mathematics/index.html",
+    "href": "mathematics/index.html",
+    "title": "MATHEMATICS",
     "section": "",
-    "text": "In a system of differential equations defined by \\mathbf{x}' = A \\mathbf{x}, understanding the stability of the origin (the point \\mathbf{x} = 0) is essential. The stability depends on the eigenvalues of the 2 \\times 2 matrix A. Different configurations of eigenvalues lead to distinct types of stability, affecting how trajectories in the phase plane behave near the origin."
+    "text": "Linear Algebra\nDiscrete Mathematics\nCalculus\nDifferential Equations\nNumerical Analysis"
   },
   {
-    "objectID": "mathematics/differential-equations/stability-of-origin-2x2.html#overview",
-    "href": "mathematics/differential-equations/stability-of-origin-2x2.html#overview",
-    "title": "Stability of the Origin in 2x2 Systems of Differential Equations",
+    "objectID": "mathematics/differential-equations/tests-for-series.html",
+    "href": "mathematics/differential-equations/tests-for-series.html",
+    "title": "Summary of Tests for Series",
     "section": "",
-    "text": "In a system of differential equations defined by \\mathbf{x}' = A \\mathbf{x}, understanding the stability of the origin (the point \\mathbf{x} = 0) is essential. The stability depends on the eigenvalues of the 2 \\times 2 matrix A. Different configurations of eigenvalues lead to distinct types of stability, affecting how trajectories in the phase plane behave near the origin."
+    "text": "Test\n\n\nSeries\n\n\nConverges\n\n\nDiverges\n\n\nComment\n\n\n\n\n\n\nnth-Term\n\n\n\\sum_{n=1}^{\\infty} a_n\n\n\n\\lim_{n\\to\\infty} a_n \\neq 0\n\n\nThis test cannot be used to show convergence.\n\n\n\n\n\n\nGeometric Series\n\n\n\\sum_{n=0}^{\\infty} ar^n\n\n\nr &lt; 1\n\n\nr \\geq 1\n\n\nSum: S = \\frac{a}{1 - r}\n\n\n\n\nTelescoping Series\n\n\n\\sum_{n=1}^{\\infty} (b_n - b_{n+1})\n\n\n\\lim_{n\\to\\infty} b_n = L\n\n\nSum: S = b_1 - L\n\n\n\n\n\n\np-Series\n\n\n\\sum_{n=1}^{\\infty} \\frac{1}{n^p}\n\n\np &gt; 1\n\n\np \\leq 1\n\n\n\n\n\n\nAlternating Series\n\n\n\\sum_{n=1}^{\\infty} (-1)^{n-1}a_n\n\n\n0 &lt; a_{n+1} \\leq a_n and \\lim_{n\\to\\infty} a_n = 0\n\n\nRemainder: R_N \\leq a_{N+1}\n\n\n\n\n\n\nIntegral\n\n\n\\sum_{n=1}^{\\infty} a_n, \\quad a_n = f(n) \\geq 0\n\n\n\\int f(x) \\, dx converges\n\n\n\\int f(x) \\, dx diverges\n\n\nRemainder: 0 &lt; R_N &lt; \\int_{N}^{\\infty} f(x) \\, dx\n\n\n\n\nRoot\n\n\n\\sum_{n=1}^{\\infty} a_n\n\n\n\\lim_{n\\to\\infty} \\sqrt[n]{a_n} &lt; 1\n\n\n\\lim_{n\\to\\infty} \\sqrt[n]{a_n} &gt; 1\n\n\nTest is inconclusive if \\lim_{n\\to\\infty} \\sqrt[n]{a_n} = 1\n\n\n\n\nRatio\n\n\n\\sum_{n=1}^{\\infty} a_n\n\n\n\\lim_{n\\to\\infty} \\frac{a_{n+1}}{a_n} &lt; 1\n\n\n\\lim_{n\\to\\infty} \\frac{a_{n+1}}{a_n} \\geq 1\n\n\nTest is inconclusive if \\lim_{n\\to\\infty} \\frac{a_{n+1}}{a_n} = 1\n\n\n\n\nDirect Comparison  (a_n, b_n &gt; 0)\n\n\n\\sum_{n=1}^{\\infty} a_n\n\n\n0 &lt; a_n \\leq b_n and \\sum_{n=1}^{\\infty} b_n converges\n\n\n0 &lt; b_n \\leq a_n and \\sum_{n=1}^{\\infty} b_n diverges\n\n\n\n\n\n\nLimit Comparison  (a_n, b_n &gt; 0)\n\n\n\\sum_{n=1}^{\\infty} a_n\n\n\n\\lim_{n\\to\\infty} \\frac{a_n}{b_n} = L &gt; 0 and \\sum_{n=1}^{\\infty} b_n converges\n\n\n\\lim_{n\\to\\infty} \\frac{a_n}{b_n} = L &gt; 0 and \\sum_{n=1}^{\\infty} b_n diverges"
   },
   {
-    "objectID": "mathematics/differential-equations/stability-of-origin-2x2.html#types-of-stability",
-    "href": "mathematics/differential-equations/stability-of-origin-2x2.html#types-of-stability",
-    "title": "Stability of the Origin in 2x2 Systems of Differential Equations",
-    "section": "Types of Stability",
-    "text": "Types of Stability\n\nRepelling Node (Unstable)\n\nEigenvalues: 0 &lt; \\lambda_1 \\leq \\lambda_2 (both positive real numbers).\nDescription: The origin is unstable. Trajectories move away from the origin in all directions. This configuration is known as a repelling node.\n\n\n\nShow Code\n# Define the system of ODEs for a repelling node\ndef dx_dt(X, t):\n    x1, x2 = X\n    dx1 = 3 * x1 + 1 * x2\n    dx2 = 1 * x1 + 3 * x2\n    return [dx1, dx2]\n\n# Generate grid for direction field\nx1_vals = np.linspace(-5, 5, 35)\nx2_vals = np.linspace(-5, 5, 35)\nX1, X2 = np.meshgrid(x1_vals, x2_vals)\n\n# Calculate slopes for direction field\nU = 3 * X1 + 1 * X2\nV = 1 * X1 + 3 * X2\n\n# Normalize the direction field arrows\nspeed = np.sqrt(U**2 + V**2)\nepsilon = 1e-10  # Small value to prevent division by zero\nU_norm = U / (speed + epsilon)\nV_norm = V / (speed + epsilon)\n\n# Plot the direction field\nplt.figure(figsize=(8, 8))\nplt.quiver(X1, X2, U_norm, V_norm, angles=\"xy\", color=\"black\", scale=40, alpha=0.4, width=0.0035)\n\n# Straight-line solutions (eigenvectors)\nx = np.linspace(-5, 5, 200)\nplt.plot(x, x, 'r', linewidth=3, label=r'Unstable direction, $\\lambda=3$')\nplt.plot(x, -x, 'b', linewidth=3, label=r'Unstable direction, $\\lambda=4$')\n\n\n# Set plot limits and labels\nplt.xlim(-5, 5)\nplt.ylim(-5, 5)\nplt.xlabel(\"$x_1$\", fontsize=14)\nplt.ylabel(\"$x_2$\", fontsize=14)\nplt.title(\"Repelling Node (Unstable)\", fontsize=18)\n\n# Add grid and legend\nplt.grid(True, linestyle='--', alpha=0.5)\nplt.legend(loc=\"best\", fontsize=12, framealpha=1.0, frameon=True)\n\n# Display the plot\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\nSaddle (Unstable)\n\nEigenvalues: \\lambda_1 &lt; 0 &lt; \\lambda_2 (one positive and one negative real number).\nDescription: The origin is unstable, with trajectories approaching along one direction and moving away along another. This configuration creates a “saddle” shape in the phase plane, and is called a saddle point.\n\n\n\nShow Code\n# Define the system of ODEs for a saddle point\ndef dx_dt(X, t):\n    x1, x2 = X\n    dx1 = 1 * x1 + 2 * x2\n    dx2 = 2 * x1 - 1 * x2\n    return [dx1, dx2]\n\n# Plot the direction field\nplt.figure(figsize=(8, 8))\nplt.quiver(X1, X2, U_norm, V_norm, angles=\"xy\", color=\"black\", scale=40, alpha=0.4, width=0.0035)\n\n# Straight-line solutions\nplt.plot(x, x, 'r', linewidth=3, label=r'Unstable direction, $\\lambda=1$')\nplt.plot(x, -x, 'b', linewidth=3, label=r'Stable direction, $\\lambda=-1$')\n\n\n# Labels and title\nplt.xlim(-5, 5)\nplt.ylim(-5, 5)\nplt.xlabel(\"$x_1$\", fontsize=14)\nplt.ylabel(\"$x_2$\", fontsize=14)\nplt.title(\"Saddle Point (Unstable)\", fontsize=18)\n\nplt.grid(True, linestyle='--', alpha=0.5)\nplt.legend(loc=\"best\", fontsize=12, framealpha=1.0, frameon=True)\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\nAttracting Node (Stable)\n\nEigenvalues: \\lambda_1 \\leq \\lambda_2 &lt; 0 (both negative real numbers).\nDescription: The origin is stable, and all trajectories are attracted toward it. This setup is called an attracting node, as trajectories converge to the origin from all directions.\n\n\n\nShow Code\n# Define the system of ODEs\ndef dx_dt(X, t):\n    x1, x2 = X\n    dx1 = -3 * x1 + 2 * x2\n    dx2 = 2 * x1 - 3 * x2\n    return [dx1, dx2]\n\n# Generate grid for direction field\nx1_vals = np.linspace(-5, 5, 35)\nx2_vals = np.linspace(-5, 5, 35)\nX1, X2 = np.meshgrid(x1_vals, x2_vals)\n\n# Calculate slopes for direction field\nU = -3 * X1 + 2 * X2\nV = 2 * X1 - 3 * X2\n\n# Normalize the direction field arrows\nspeed = np.sqrt(U**2 + V**2)\nepsilon = 1e-10  # Small value to prevent division by zero\nU_norm = U / (speed + epsilon)\nV_norm = V / (speed + epsilon)\n\n# Plot the direction field\nplt.figure(figsize=(8, 8))\nplt.quiver(X1, X2, U_norm, V_norm, angles=\"xy\", color=\"black\", scale=40, alpha=0.4, width=0.0035)\n\n# Plot the straight-line solutions (eigenvectors)\nx = np.linspace(-5, 5, 200)\nplt.plot(x, x, 'r', linewidth=3, label=r'Stable direction, $\\lambda=-1$')\nplt.plot(x, -x, 'b', linewidth=3, label=r'Stable direction, $\\lambda=-5$')\n\n\n# Set plot limits and labels\nplt.xlim(-5, 5)\nplt.ylim(-5, 5)\nplt.xlabel(\"$x_1$\", fontsize=14)\nplt.ylabel(\"$x_2$\", fontsize=14)\nplt.title(\"Attracting Node (Stable)\", fontsize=18)\n\n# Add grid and legend\nplt.grid(True, linestyle='--', alpha=0.5)\nplt.legend(loc=\"best\", fontsize=12, framealpha=1.0, frameon=True)\n\n# Display the plot\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\nSpiral Source (Unstable)\n\nEigenvalues: \\lambda = a \\pm bi with a &gt; 0 (complex eigenvalues with a positive real part).\nDescription: The origin is unstable. Trajectories spiral outward away from the origin, creating a spiral source.\n\n\n\nShow Code\n# Define the system of ODEs for a spiral source (unstable)\ndef dx_dt(X, t):\n    x1, x2 = X\n    dx1 = 1 * x1 - 2 * x2\n    dx2 = 2 * x1 + 1 * x2\n    return [dx1, dx2]\n\n# Generate grid for direction field\nx1_vals = np.linspace(-5, 5, 35)\nx2_vals = np.linspace(-5, 5, 35)\nX1, X2 = np.meshgrid(x1_vals, x2_vals)\n\n# Calculate slopes for direction field\nU = 1 * X1 - 2 * X2\nV = 2 * X1 + 1 * X2\n\n# Normalize the direction field arrows\nspeed = np.sqrt(U**2 + V**2)\nepsilon = 1e-10  # Small value to prevent division by zero\nU_norm = U / (speed + epsilon)\nV_norm = V / (speed + epsilon)\n\n# Plot the direction field\nplt.figure(figsize=(8, 8))\nplt.quiver(X1, X2, U_norm, V_norm, angles=\"xy\", color=\"black\", scale=40, alpha=0.4, width=0.0035)\n\n# Additional trajectories to show the outward spiral behavior\ninitial_conditions = [\n    [0, .1],\n    [0, -.1],\n    [.1, 0],\n    [-.1, 0],\n]\n\nt_values = np.linspace(0, 5, 500)\nfor ic in initial_conditions:\n    sol = odeint(dx_dt, ic, t_values)\n    plt.plot(sol[:, 0], sol[:, 1], 'green', linestyle='-', linewidth=2)\n\n# Set plot limits and labels\nplt.xlim(-5, 5)\nplt.ylim(-5, 5)\nplt.xlabel(\"$x_1$\", fontsize=14)\nplt.ylabel(\"$x_2$\", fontsize=14)\nplt.title(\"Spiral Source (Unstable)\", fontsize=18)\n\n# Add grid\nplt.grid(True, linestyle='--', alpha=0.5)\n\n# Display the plot\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\nCenter (Stable)\n\nEigenvalues: \\lambda = a \\pm bi with a = 0 (purely imaginary eigenvalues).\nDescription: The origin neither attracts nor repels trajectories. Instead, they form closed orbits around the origin, resulting in a behavior called a center. This indicates neutral stability.\n\n\n\nShow Code\n# Define the system of ODEs for a center (neutral stability)\ndef dx_dt(X, t):\n    x1, x2 = X\n    dx1 = -1 * x2\n    dx2 = 1 * x1\n    return [dx1, dx2]\n\n# Generate grid for direction field\nx1_vals = np.linspace(-5, 5, 35)\nx2_vals = np.linspace(-5, 5, 35)\nX1, X2 = np.meshgrid(x1_vals, x2_vals)\n\n# Calculate slopes for direction field\nU = -1 * X2\nV = 1 * X1\n\n# Normalize the direction field arrows\nspeed = np.sqrt(U**2 + V**2)\nepsilon = 1e-10  # Small value to prevent division by zero\nU_norm = U / (speed + epsilon)\nV_norm = V / (speed + epsilon)\n\n# Plot the direction field\nplt.figure(figsize=(8, 8))\nplt.quiver(X1, X2, U_norm, V_norm, angles=\"xy\", color=\"black\", scale=40, alpha=0.4, width=0.0035)\n\n# Additional trajectories to show the circular motion\ninitial_conditions = [\n    [5, 0],\n    [0, 3],\n    [1, 0]\n\n]\n\nt_values = np.linspace(0, 20, 500)\nfor ic in initial_conditions:\n    sol = odeint(dx_dt, ic, t_values)\n    plt.plot(sol[:, 0], sol[:, 1], 'green', linestyle='-', linewidth=2)\n\n# Set plot limits and labels\nplt.xlim(-5, 5)\nplt.ylim(-5, 5)\nplt.xlabel(\"$x_1$\", fontsize=14)\nplt.ylabel(\"$x_2$\", fontsize=14)\nplt.title(\"Center (Neutral Stability)\", fontsize=18)\n\n# Add grid\nplt.grid(True, linestyle='--', alpha=0.5)\n\n# Display the plot\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\nSpiral Sink (Stable)\n\nEigenvalues: \\lambda = a \\pm bi with a &lt; 0 (complex eigenvalues with a negative real part).\nDescription: The origin is stable, and trajectories spiral inward toward it, forming a spiral sink.\n\n\n\nShow Code\n# Define the system of ODEs for a spiral sink (stable)\ndef dx_dt(X, t):\n    x1, x2 = X\n    dx1 = -1 * x1 - 2 * x2\n    dx2 = 2 * x1 - 1 * x2\n    return [dx1, dx2]\n\n# Generate grid for direction field\nx1_vals = np.linspace(-5, 5, 35)\nx2_vals = np.linspace(-5, 5, 35)\nX1, X2 = np.meshgrid(x1_vals, x2_vals)\n\n# Calculate slopes for direction field\nU = -1 * X1 - 2 * X2\nV = 2 * X1 - 1 * X2\n\n# Normalize the direction field arrows\nspeed = np.sqrt(U**2 + V**2)\nepsilon = 1e-10  # Small value to prevent division by zero\nU_norm = U / (speed + epsilon)\nV_norm = V / (speed + epsilon)\n\n# Plot the direction field\nplt.figure(figsize=(8, 8))\nplt.quiver(X1, X2, U_norm, V_norm, angles=\"xy\", color=\"black\", scale=40, alpha=0.4, width=0.0035)\n\n# Additional trajectories to show the spiral inward behavior\ninitial_conditions = [\n    [5, 0],\n    [0, 5],\n    [-5, 0],\n    [0, -5],\n]\n\nt_values = np.linspace(0, 10, 500)\nfor ic in initial_conditions:\n    sol = odeint(dx_dt, ic, t_values)\n    plt.plot(sol[:, 0], sol[:, 1], 'green', linestyle='-', linewidth=2)\n\n# Set plot limits and labels\nplt.xlim(-5, 5)\nplt.ylim(-5, 5)\nplt.xlabel(\"$x_1$\", fontsize=14)\nplt.ylabel(\"$x_2$\", fontsize=14)\nplt.title(\"Spiral Sink (Stable)\", fontsize=18)\n\n# Add grid and legend\nplt.grid(True, linestyle='--', alpha=0.5)\n\n\n# Display the plot\nplt.tight_layout()\nplt.show()"
-  },
-  {
-    "objectID": "mathematics/differential-equations/stability-of-origin-2x2.html#summary",
-    "href": "mathematics/differential-equations/stability-of-origin-2x2.html#summary",
-    "title": "Stability of the Origin in 2x2 Systems of Differential Equations",
-    "section": "Summary",
-    "text": "Summary\nThe stability of the origin in a 2 \\times 2 system of differential equations depends on the real and imaginary parts of the eigenvalues of matrix A:\n\nReal positive eigenvalues lead to a repelling node (unstable).\nMixed positive and negative real eigenvalues create a saddle point (unstable).\nReal negative eigenvalues result in an attracting node (stable).\nComplex eigenvalues with a positive real part indicate a spiral source (unstable).\nPurely imaginary eigenvalues create a center (neutral stability).\nComplex eigenvalues with a negative real part lead to a spiral sink (stable).\n\nBy determining the eigenvalues, we can classify the type of stability at the origin and predict the behavior of trajectories in the phase plane."
-  },
-  {
-    "objectID": "mathematics/differential-equations/power-series/power-series-exponential-function.html",
-    "href": "mathematics/differential-equations/power-series/power-series-exponential-function.html",
-    "title": "Power Series Expansion for e^x",
+    "objectID": "mathematics/differential-equations/power-series/power-series-sine-function.html",
+    "href": "mathematics/differential-equations/power-series/power-series-sine-function.html",
+    "title": "Power Series Expansion for Sine Function",
     "section": "",
-    "text": "The power series expansion for the exponential function e^x is one of the most widely used series in mathematics, physics, and engineering. Derived from the Taylor series at x = 0, this expansion provides an exact representation of e^x as an infinite sum."
+    "text": "The power series expansion for the sine function is another important result in calculus and analysis. Derived from the Taylor series at x = 0, it provides an exact representation of \\sin(x) as an infinite sum, allowing for precise approximations of its values."
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-exponential-function.html#overview",
-    "href": "mathematics/differential-equations/power-series/power-series-exponential-function.html#overview",
-    "title": "Power Series Expansion for e^x",
+    "objectID": "mathematics/differential-equations/power-series/power-series-sine-function.html#overview",
+    "href": "mathematics/differential-equations/power-series/power-series-sine-function.html#overview",
+    "title": "Power Series Expansion for Sine Function",
     "section": "",
-    "text": "The power series expansion for the exponential function e^x is one of the most widely used series in mathematics, physics, and engineering. Derived from the Taylor series at x = 0, this expansion provides an exact representation of e^x as an infinite sum."
+    "text": "The power series expansion for the sine function is another important result in calculus and analysis. Derived from the Taylor series at x = 0, it provides an exact representation of \\sin(x) as an infinite sum, allowing for precise approximations of its values."
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-exponential-function.html#power-series-for-ex",
-    "href": "mathematics/differential-equations/power-series/power-series-exponential-function.html#power-series-for-ex",
-    "title": "Power Series Expansion for e^x",
-    "section": "Power Series for e^x",
-    "text": "Power Series for e^x\nThe exponential function e^x can be expressed as:\n\ne^x = \\sum_{n=0}^\\infty \\frac{x^n}{n!}\n\nThis series converges for all real x. The first four terms of the series are:\n\ne^x \\approx 1 + x + \\frac{x^2}{2!} + \\frac{x^3}{3!}\n\nwhich simplifies to:\n\ne^x \\approx 1 + x + \\frac{x^2}{2} + \\frac{x^3}{6}"
+    "objectID": "mathematics/differential-equations/power-series/power-series-sine-function.html#power-series-for-sine",
+    "href": "mathematics/differential-equations/power-series/power-series-sine-function.html#power-series-for-sine",
+    "title": "Power Series Expansion for Sine Function",
+    "section": "Power Series for Sine",
+    "text": "Power Series for Sine\nThe sine function can be expressed as:\n\n\\sin(x) = \\sum_{n=0}^\\infty \\frac{(-1)^n}{(2n+1)!} x^{2n+1}\n\nThis series converges to the true value of \\sin(x) for all x. The first four terms of the series are:\n\n\\sin(x) \\approx x - \\frac{x^3}{3!} + \\frac{x^5}{5!} - \\frac{x^7}{7!}\n\nwhich simplifies to:\n\n\\sin(x) \\approx x - \\frac{x^3}{6} + \\frac{x^5}{120} - \\frac{x^7}{5040}"
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-exponential-function.html#explanation",
-    "href": "mathematics/differential-equations/power-series/power-series-exponential-function.html#explanation",
-    "title": "Power Series Expansion for e^x",
+    "objectID": "mathematics/differential-equations/power-series/power-series-sine-function.html#explanation",
+    "href": "mathematics/differential-equations/power-series/power-series-sine-function.html#explanation",
+    "title": "Power Series Expansion for Sine Function",
     "section": "Explanation",
-    "text": "Explanation\n\n1. Taylor Series\nThe power series for e^x is derived from the Taylor series centered at x = 0:\n\nf(x) = f(0) + f'(0)x + \\frac{f''(0)}{2!}x^2 + \\frac{f^{(3)}(0)}{3!}x^3 + \\cdots\n\nFor e^x, all derivatives are e^x, and at x = 0:\n\nf(0) = e^0 = 1, \\quad f'(0) = e^0 = 1, \\quad f''(0) = e^0 = 1, \\ldots-\n\nThus, the coefficients of the Taylor series are 1/n!.\n\n\n2. General Term\nThe general term of the series is:\n\n\\frac{x^n}{n!}\n\nwhere n is a non-negative integer.\n\n\nKey Property\nThe series converges absolutely and uniformly for all x, making it highly reliable for approximations."
+    "text": "Explanation\n\n1. Taylor Series\nThe power series for \\sin(x) comes from the Taylor series expansion about x = 0:\n\nf(x) = f(0) + f'(0)x + \\frac{f''(0)}{2!}x^2 + \\frac{f^{(3)}(0)}{3!}x^3 + \\cdots\n\nFor \\sin(x), the derivatives follow a cyclic pattern:\n\n\\sin(x)\n\\cos(x)\n-\\sin(x)\n-\\cos(x)\n\nEvaluating these derivatives at x = 0:\n\n\\sin(0) = 0\n\\cos(0) = 1\n-\\sin(0) = 0\n-\\cos(0) = -1\n\nOnly the odd derivatives contribute to the series.\n\n\n2. General Term\nThe general term of the series is:\n\n\\frac{(-1)^n}{(2n+1)!} x^{2n+1}\n\nwhere n is a non-negative integer. This results in a series with only odd powers of x, alternating in sign."
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-exponential-function.html#examples",
-    "href": "mathematics/differential-equations/power-series/power-series-exponential-function.html#examples",
-    "title": "Power Series Expansion for e^x",
+    "objectID": "mathematics/differential-equations/power-series/power-series-sine-function.html#examples",
+    "href": "mathematics/differential-equations/power-series/power-series-sine-function.html#examples",
+    "title": "Power Series Expansion for Sine Function",
     "section": "Examples",
-    "text": "Examples\n\nSmall x:\nFor x = 0.1, using the first four terms:\n\ne^{0.1} \\approx 1 + 0.1 + \\frac{(0.1)^2}{2} + \\frac{(0.1)^3}{6}\n\nThis provides a close approximation to e^{0.1}.\nLarger x:\nFor x = 1, the first four terms give:\n\ne^1 \\approx 1 + 1 + \\frac{1^2}{2} + \\frac{1^3}{6} = 1 + 1 + 0.5 + 0.1667 \\approx 2.6667\n\nAdding more terms improves the accuracy."
+    "text": "Examples\n\nSmall x:\nFor x = 0.1, using the first four terms:\n\n\\sin(0.1) \\approx 0.1 - \\frac{(0.1)^3}{6} + \\frac{(0.1)^5}{120} - \\frac{(0.1)^7}{5040}\n\nThis gives a close approximation to the true value of \\sin(0.1).\nError Reduction:\nAdding more terms improves the approximation by reducing the truncation error."
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-exponential-function.html#summary",
-    "href": "mathematics/differential-equations/power-series/power-series-exponential-function.html#summary",
-    "title": "Power Series Expansion for e^x",
+    "objectID": "mathematics/differential-equations/power-series/power-series-sine-function.html#summary",
+    "href": "mathematics/differential-equations/power-series/power-series-sine-function.html#summary",
+    "title": "Power Series Expansion for Sine Function",
     "section": "Summary",
-    "text": "Summary\nThe power series expansion for e^x is a cornerstone in mathematics and science:\n\nExact Representation: The infinite series converges to e^x for all real x.\nApproximation: Truncated series provide practical approximations.\nApplications: Used in numerical analysis, differential equations, and growth modeling.\n\nThe first four terms, 1 + x + \\frac{x^2}{2} + \\frac{x^3}{6}, are often sufficient for small x. This series illustrates the utility of infinite sums in representing functions accurately and elegantly."
+    "text": "Summary\nThe power series expansion for \\sin(x) is a cornerstone in mathematics:\n\nExact Representation: The infinite series converges to \\sin(x) for all real x.\nApproximation: Truncated series provide practical approximations.\nApplications: Used in numerical analysis, physics, and solving differential equations.\n\nThe first four terms, x - \\frac{x^3}{6} + \\frac{x^5}{120} - \\frac{x^7}{5040}, often provide sufficient accuracy for small x. This series highlights the utility and elegance of representing functions as infinite sums."
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html",
-    "href": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html",
-    "title": "Power Series Expansion for \\frac{1}{1-x}",
+    "objectID": "mathematics/differential-equations/power-series/power-series-cosine-function.html",
+    "href": "mathematics/differential-equations/power-series/power-series-cosine-function.html",
+    "title": "Power Series Expansion for Cosine Function",
     "section": "",
-    "text": "The power series expansion for \\frac{1}{1-x} is a classic example of a geometric series. It provides a representation of the function as an infinite sum of powers of x, valid for |x| &lt; 1. This series is particularly useful in algebra and calculus."
+    "text": "The power series expansion is a fundamental tool for representing functions as infinite sums. For the cosine function, this expansion provides an exact representation and a practical way to approximate \\cos(x) for any real value of x. The series is derived using the Taylor series centered at x = 0."
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#overview",
-    "href": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#overview",
-    "title": "Power Series Expansion for \\frac{1}{1-x}",
+    "objectID": "mathematics/differential-equations/power-series/power-series-cosine-function.html#overview",
+    "href": "mathematics/differential-equations/power-series/power-series-cosine-function.html#overview",
+    "title": "Power Series Expansion for Cosine Function",
     "section": "",
-    "text": "The power series expansion for \\frac{1}{1-x} is a classic example of a geometric series. It provides a representation of the function as an infinite sum of powers of x, valid for |x| &lt; 1. This series is particularly useful in algebra and calculus."
+    "text": "The power series expansion is a fundamental tool for representing functions as infinite sums. For the cosine function, this expansion provides an exact representation and a practical way to approximate \\cos(x) for any real value of x. The series is derived using the Taylor series centered at x = 0."
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#power-series-for-frac11-x",
-    "href": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#power-series-for-frac11-x",
-    "title": "Power Series Expansion for \\frac{1}{1-x}",
-    "section": "Power Series for \\frac{1}{1-x}",
-    "text": "Power Series for \\frac{1}{1-x}\nThe function \\frac{1}{1-x} can be expressed as:\n\n\\frac{1}{1-x} = \\sum_{n=0}^\\infty x^n\n\nThis series converges for |x| &lt; 1. The first four terms of the series are:\n\n\\frac{1}{1-x} \\approx 1 + x + x^2 + x^3"
+    "objectID": "mathematics/differential-equations/power-series/power-series-cosine-function.html#power-series-for-cosine",
+    "href": "mathematics/differential-equations/power-series/power-series-cosine-function.html#power-series-for-cosine",
+    "title": "Power Series Expansion for Cosine Function",
+    "section": "Power Series for Cosine",
+    "text": "Power Series for Cosine\nThe cosine function can be expressed as:\n\n\\cos(x) = \\sum_{n=0}^\\infty \\frac{(-1)^n}{(2n)!} x^{2n}\n\nThis series converges to the true value of \\cos(x) for all x. The first four terms of the series are:\n\n\\cos(x) \\approx 1 - \\frac{x^2}{2!} + \\frac{x^4}{4!} - \\frac{x^6}{6!}\n\nwhich simplifies to:\n\n\\cos(x) \\approx 1 - \\frac{x^2}{2} + \\frac{x^4}{24} - \\frac{x^6}{720}"
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#explanation",
-    "href": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#explanation",
-    "title": "Power Series Expansion for \\frac{1}{1-x}",
+    "objectID": "mathematics/differential-equations/power-series/power-series-cosine-function.html#explanation",
+    "href": "mathematics/differential-equations/power-series/power-series-cosine-function.html#explanation",
+    "title": "Power Series Expansion for Cosine Function",
     "section": "Explanation",
-    "text": "Explanation\n\n1. Geometric Series\nThe series arises from the infinite geometric series:\n\n\\sum_{n=0}^\\infty r^n = \\frac{1}{1-r}, \\quad \\text{for } |r| &lt; 1\n\nIn this case, substituting r = x, we get:\n\n\\frac{1}{1-x} = \\sum_{n=0}^\\infty x^n\n\n\n\n2. General Term\nThe general term of the series is:\n\nx^n\n\nwhere n is a non-negative integer. This leads to a simple and elegant representation.\n\n\n3. Radius of Convergence\nThe series converges only for |x| &lt; 1, as the geometric series formula is valid within this interval. For |x| \\geq 1, the series does not converge."
+    "text": "Explanation\n\n1. Taylor Series\nThe power series for \\cos(x) is a special case of the Taylor series expansion about x = 0:\n\nf(x) = f(0) + f'(0)x + \\frac{f''(0)}{2!}x^2 + \\frac{f^{(3)}(0)}{3!}x^3 + \\cdots\n\nFor \\cos(x), the derivatives follow a cyclic pattern:\n\n\\cos(x)\n-\\sin(x)\n-\\cos(x)\n\\sin(x)\n\nEvaluating these derivatives at x = 0:\n\n\\cos(0) = 1\n-\\sin(0) = 0\n-\\cos(0) = -1\n\\sin(0) = 0\n\nOnly the even derivatives contribute to the series.\n\n\n2. General Term\nThe general term of the series is:\n\n\\frac{(-1)^n}{(2n)!} x^{2n}\n\nwhere n is a non-negative integer. This results in a series with only even powers of x, alternating in sign."
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#examples",
-    "href": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#examples",
-    "title": "Power Series Expansion for \\frac{1}{1-x}",
+    "objectID": "mathematics/differential-equations/power-series/power-series-cosine-function.html#examples",
+    "href": "mathematics/differential-equations/power-series/power-series-cosine-function.html#examples",
+    "title": "Power Series Expansion for Cosine Function",
     "section": "Examples",
-    "text": "Examples\n\nSmall x:\nFor x = 0.1, using the first four terms:\n\n\\frac{1}{1-0.1} \\approx 1 + 0.1 + (0.1)^2 + (0.1)^3 = 1 + 0.1 + 0.01 + 0.001 = 1.111\n\nThis is close to the exact value \\frac{1}{0.9} = 1.111\\ldots.\nLarger x:\nFor x = 0.5, the first four terms give:\n\n\\frac{1}{1-0.5} \\approx 1 + 0.5 + (0.5)^2 + (0.5)^3 = 1 + 0.5 + 0.25 + 0.125 = 1.875\n\nAdding more terms increases the accuracy."
+    "text": "Examples\n\nSmall x:\nFor x = 0.1, using the first four terms:\n\n\\cos(0.1) \\approx 1 - \\frac{(0.1)^2}{2} + \\frac{(0.1)^4}{24} - \\frac{(0.1)^6}{720}\n\nThis gives a close approximation to the true value of \\cos(0.1).\nError Reduction:\nAdding more terms improves the approximation by reducing the truncation error."
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#summary",
-    "href": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#summary",
-    "title": "Power Series Expansion for \\frac{1}{1-x}",
+    "objectID": "mathematics/differential-equations/power-series/power-series-cosine-function.html#summary",
+    "href": "mathematics/differential-equations/power-series/power-series-cosine-function.html#summary",
+    "title": "Power Series Expansion for Cosine Function",
     "section": "Summary",
-    "text": "Summary\nThe power series expansion for \\frac{1}{1-x} is a simple yet powerful tool in analysis:\n\nExact Representation: The infinite series converges to \\frac{1}{1-x} for |x| &lt; 1.\nApproximation: Truncated series provide practical approximations for |x| &lt; 1.\nApplications: Used in algebra, calculus, and as the foundation for many other series expansions.\n\nThe first four terms, 1 + x + x^2 + x^3, offer a quick approximation for small x. This series demonstrates the elegance of geometric progressions in representing functions."
+    "text": "Summary\nThe power series expansion for \\cos(x) is an essential concept in calculus:\n\nExact Representation: The series converges to \\cos(x) for all real x.\nApproximation: Truncated series provide practical approximations.\nApplications: Used in numerical analysis, signal processing, and physics.\n\nThe first four terms, 1 - \\frac{x^2}{2} + \\frac{x^4}{24} - \\frac{x^6}{720}, often provide sufficient accuracy for small x. This compact yet precise representation highlights the elegance and utility of the power series."
+  },
+  {
+    "objectID": "mathematics/differential-equations/power-series/index.html",
+    "href": "mathematics/differential-equations/power-series/index.html",
+    "title": "POWER SERIES",
+    "section": "",
+    "text": "Quick Reference: Important Power Series Expansions\nPower Series Expansion for Cosine Function\nPower Series Expansion for Sine Function\nPower Series Expansion for e^x\nPower Series Expansion for \\frac{1}{1-x}"
+  },
+  {
+    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html",
+    "href": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html",
+    "title": "Nonhomogeneous Systems: Variation of Parameters",
+    "section": "",
+    "text": "When solving nonhomogeneous systems of differential equations, we use variation of parameters to find a particular solution to the system. This approach is especially useful when dealing with systems where a simple guess for the particular solution is not possible due to the nature of the nonhomogeneous term."
+  },
+  {
+    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#overview",
+    "href": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#overview",
+    "title": "Nonhomogeneous Systems: Variation of Parameters",
+    "section": "",
+    "text": "When solving nonhomogeneous systems of differential equations, we use variation of parameters to find a particular solution to the system. This approach is especially useful when dealing with systems where a simple guess for the particular solution is not possible due to the nature of the nonhomogeneous term."
+  },
+  {
+    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#variation-of-parameters",
+    "href": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#variation-of-parameters",
+    "title": "Nonhomogeneous Systems: Variation of Parameters",
+    "section": "Variation of Parameters",
+    "text": "Variation of Parameters\nGiven a matrix A of size n \\times n with constant entries, let \\Phi(t) be the fundamental solution matrix of the homogeneous system:\n\n\\mathbf{x}' = A \\mathbf{x}\n\nwhere \\mathbf{b}(t) is a continuous vector function. A particular solution \\mathbf{x}_p to the nonhomogeneous system:\n\n\\mathbf{x}' = A \\mathbf{x} + \\mathbf{b}(t)\n\nis given by:\n\n\\mathbf{x}_p(t) = \\Phi(t) \\int \\Phi^{-1}(t) \\mathbf{b}(t) \\, dt\n\nThis result is an application of the method of variation of parameters for nonhomogeneous systems of differential equations."
+  },
+  {
+    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#explanation",
+    "href": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#explanation",
+    "title": "Nonhomogeneous Systems: Variation of Parameters",
+    "section": "Explanation",
+    "text": "Explanation\n\nFundamental Solution Matrix \\Phi(t): A matrix whose columns are linearly independent solutions to the homogeneous system \\mathbf{x}' = A \\mathbf{x}.\nNonhomogeneous Term \\mathbf{b}(t): This is the vector function that adds a nonhomogeneous component to the system.\nParticular Solution \\mathbf{x}_p(t): This is the specific solution to the nonhomogeneous system, calculated using the formula above."
+  },
+  {
+    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#formula-components",
+    "href": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#formula-components",
+    "title": "Nonhomogeneous Systems: Variation of Parameters",
+    "section": "Formula Components",
+    "text": "Formula Components\n\n\\Phi(t): Fundamental solution matrix of the homogeneous system.\n\\Phi^{-1}(t): Inverse of the fundamental solution matrix.\n\\mathbf{b}(t): Nonhomogeneous term.\nIntegral \\int \\Phi^{-1}(t) \\mathbf{b}(t) \\, dt: Computes the effect of the nonhomogeneous term over time, transformed by the inverse of \\Phi(t).\n\nThis approach allows us to find a particular solution \\mathbf{x}_p(t) by integrating the transformed nonhomogeneous term. The total solution to the system is the sum of the general solution to the homogeneous system and this particular solution."
+  },
+  {
+    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#summary",
+    "href": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#summary",
+    "title": "Nonhomogeneous Systems: Variation of Parameters",
+    "section": "Summary",
+    "text": "Summary\nThe method of variation of parameters provides a systematic way to find a particular solution to nonhomogeneous systems of differential equations. By incorporating the fundamental solution matrix \\Phi(t), it enables us to account for the effects of the nonhomogeneous term \\mathbf{b}(t) and obtain a complete solution to the system."
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transforms.html",
+    "href": "mathematics/differential-equations/laplace-transforms.html",
+    "title": "Laplace Transforms",
+    "section": "",
+    "text": "The Laplace Transform is a powerful mathematical tool used to simplify problems involving differential equations, especially in engineering and physics. It converts a function of time f(t) (defined for t \\geq 0) into a function of a complex variable s. This transformation makes it easier to analyze systems in the frequency domain and solve problems involving linear differential equations.\nIn simple terms:\n\nThe Laplace Transform takes a function from the time domain and transforms it into a new function in the s-domain.\nIt simplifies operations like differentiation and integration into algebraic manipulations."
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transforms.html#overview",
+    "href": "mathematics/differential-equations/laplace-transforms.html#overview",
+    "title": "Laplace Transforms",
+    "section": "",
+    "text": "The Laplace Transform is a powerful mathematical tool used to simplify problems involving differential equations, especially in engineering and physics. It converts a function of time f(t) (defined for t \\geq 0) into a function of a complex variable s. This transformation makes it easier to analyze systems in the frequency domain and solve problems involving linear differential equations.\nIn simple terms:\n\nThe Laplace Transform takes a function from the time domain and transforms it into a new function in the s-domain.\nIt simplifies operations like differentiation and integration into algebraic manipulations."
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transforms.html#definition",
+    "href": "mathematics/differential-equations/laplace-transforms.html#definition",
+    "title": "Laplace Transforms",
+    "section": "Definition",
+    "text": "Definition\nThe Laplace Transform of a function f(t) is defined as:\n\n\\mathcal{L}\\{f(t)\\}(s) = F(s) = \\int_0^\\infty e^{-st} f(t) \\, dt\n\nwhere:\n\nt: Time variable (t \\geq 0).\ns: Complex frequency variable.\ne^{-st}: Exponential decay term.\n\n\nKey Requirements:\n\nf(t) must be piecewise continuous on [0, \\infty).\nf(t) must be of exponential order (i.e., |f(t)| \\leq M e^{\\alpha t} for some M, \\alpha &gt; 0)."
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transforms.html#example-1-transform-of-ft-1",
+    "href": "mathematics/differential-equations/laplace-transforms.html#example-1-transform-of-ft-1",
+    "title": "Laplace Transforms",
+    "section": "Example 1: Transform of f(t) = 1",
+    "text": "Example 1: Transform of f(t) = 1\nThe Laplace Transform of the constant function f(t) = 1 is:\n\n\\mathcal{L}\\{1\\}(s) = \\int_0^\\infty e^{-st} \\cdot 1 \\, dt\n\n\nSolution:\n\n\\mathcal{L}\\{1\\}(s) = \\int_0^\\infty e^{-st} \\, dt = \\left[ \\frac{-1}{s} e^{-st} \\right]_0^\\infty\n\nAt t = \\infty, e^{-st} \\to 0 (for s &gt; 0), and at t = 0, e^{-st} = 1. Therefore:\n\n\\mathcal{L}\\{1\\}(s) = \\frac{1}{s}, \\quad s &gt; 0"
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transforms.html#example-2-transform-of-ft-eat",
+    "href": "mathematics/differential-equations/laplace-transforms.html#example-2-transform-of-ft-eat",
+    "title": "Laplace Transforms",
+    "section": "Example 2: Transform of f(t) = e^{at}",
+    "text": "Example 2: Transform of f(t) = e^{at}\nThe Laplace Transform of f(t) = e^{at} is:\n\n\\mathcal{L}\\{e^{at}\\}(s) = \\int_0^\\infty e^{-st} e^{at} \\, dt = \\int_0^\\infty e^{-(s-a)t} \\, dt\n\n\nSolution:\nUsing the same steps as before:\n\n\\mathcal{L}\\{e^{at}\\}(s) = \\left[ \\frac{-1}{s-a} e^{-(s-a)t} \\right]_0^\\infty.\n\nAt t = \\infty, e^{-(s-a)t} \\to 0 if s &gt; a, and at t = 0, e^{-(s-a)t} = 1. Therefore:\n\n\\mathcal{L}\\{e^{at}\\}(s) = \\frac{1}{s - a}, \\quad s &gt; a"
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transforms.html#applications-of-the-laplace-transform",
+    "href": "mathematics/differential-equations/laplace-transforms.html#applications-of-the-laplace-transform",
+    "title": "Laplace Transforms",
+    "section": "Applications of the Laplace Transform",
+    "text": "Applications of the Laplace Transform\n\nSolving Differential Equations: The Laplace Transform converts differential equations into algebraic equations, which are easier to solve. Once solved, the inverse Laplace Transform is used to return to the time domain.\nControl Systems: It is widely used in engineering to analyze the stability and performance of systems in the frequency domain.\nSignal Processing: The Laplace Transform is used to study signals and their frequency components.\nCircuit Analysis: It simplifies the analysis of electrical circuits with resistors, capacitors, and inductors by converting time-domain functions to the s-domain."
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transforms.html#summary",
+    "href": "mathematics/differential-equations/laplace-transforms.html#summary",
+    "title": "Laplace Transforms",
+    "section": "Summary",
+    "text": "Summary\nThe Laplace Transform is a fundamental tool for solving problems in engineering and physics, particularly those involving differential equations. Its key features are:\n\nTransforming functions from the time domain to the s-domain.\nSimplifying operations like differentiation and integration.\nMaking it possible to analyze systems in the frequency domain.\n\n\nCommon Transforms Recap:\n\n\n\nFunction f(t)\nLaplace Transform F(s)\nConditions\n\n\n\n\n1\n\\frac{1}{s}\ns &gt; 0\n\n\nt^n\n\\frac{n!}{s^{n+1}}\ns &gt; 0\n\n\ne^{at}\n\\frac{1}{s - a}\ns &gt; a\n\n\n\\sin(bt)\n\\frac{b}{s^2 + b^2}\ns &gt; 0\n\n\n\\cos(bt)\n\\frac{s}{s^2 + b^2}\ns &gt; 0\n\n\ne^{at} \\sin(bt)\n\\frac{b}{(s-a)^2 + b^2}\ns &gt; a\n\n\ne^{at} \\cos(bt)\n\\frac{s-a}{(s-a)^2 + b^2}\ns &gt; a"
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/index.html",
+    "href": "mathematics/differential-equations/laplace-transform-properties/index.html",
+    "title": "PROPERTIES OF THE LAPLACE TRANSFORM",
+    "section": "",
+    "text": "Multiplication by t Property (Theorem 5.3.2)\nFirst Derivative Property (Theorem 5.3.4)\nFirst Shifting Property (Theorem 5.3.6)"
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html",
+    "href": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html",
+    "title": "Laplace Transform - First Derivative Property",
+    "section": "",
+    "text": "The First Derivative Property of the Laplace Transform relates the Laplace transform of a derivative f'(t) to the transform of f(t) and its initial value. The property states:\n\n\\mathcal{L}[f'(t)] = s\\mathcal{L}[f(t)] - f(0)\n\nThis theorem is widely used in solving differential equations with given initial conditions."
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html#overview",
+    "href": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html#overview",
+    "title": "Laplace Transform - First Derivative Property",
+    "section": "",
+    "text": "The First Derivative Property of the Laplace Transform relates the Laplace transform of a derivative f'(t) to the transform of f(t) and its initial value. The property states:\n\n\\mathcal{L}[f'(t)] = s\\mathcal{L}[f(t)] - f(0)\n\nThis theorem is widely used in solving differential equations with given initial conditions."
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html#proof",
+    "href": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html#proof",
+    "title": "Laplace Transform - First Derivative Property",
+    "section": "Proof",
+    "text": "Proof\n\nWrite the Laplace Transform of the Derivative\nBy definition, the Laplace transform of f'(t) is:\n\n\\mathcal{L}[f'(t)] = \\int_0^\\infty f'(t) e^{-st} \\, dt\n\n\n\nApply Integration by Parts\nThe integration by parts formula is given by:\n\n\\int u \\, dv = uv - \\int v \\, du\n\nLet:\n\nu = e^{-st} and dv = f'(t) dt,\nThen du = -s e^{-st} dt and v = f(t).\n\nUsing this formula:\n\n\\int_0^\\infty f'(t) e^{-st} \\, dt = \\left[ f(t) e^{-st} \\right]_0^\\infty - \\int_0^\\infty f(t)(-s e^{-st}) \\, dt\n\n\n\nEvaluate the Boundary Terms\n\nAt t = \\infty, f(t) e^{-st} \\to 0, assuming f(t) grows no faster than an exponential function.\nAt t = 0, f(t) e^{-s(0)} = f(0).\n\nThus, the boundary term becomes:\n\n\\left[ f(t) e^{-st} \\right]_0^\\infty = -f(0)\n\n\n\nSimplify the Remaining Integral\nThe remaining integral is:\n\n\\int_0^\\infty s f(t) e^{-st} \\, dt = s \\int_0^\\infty f(t) e^{-st} \\, dt\n\nBy definition, this is:\n\ns \\mathcal{L}[f(t)]\n\n\n\nCombine Results\nSubstituting the results back into the equation:\n\n\\mathcal{L}[f'(t)] = -f(0) + s \\mathcal{L}[f(t)]\n\nRearranging:\n\n\\mathcal{L}[f'(t)] = s\\mathcal{L}[f(t)] - f(0)\n\n\n\nConclusion\nThe proof demonstrates that:\n\n\\mathcal{L}[f'(t)] = s\\mathcal{L}[f(t)] - f(0)"
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html#corollary-laplace-transform-of-gt-ft",
+    "href": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html#corollary-laplace-transform-of-gt-ft",
+    "title": "Laplace Transform - First Derivative Property",
+    "section": "Corollary: Laplace Transform of g'(t) = f''(t)",
+    "text": "Corollary: Laplace Transform of g'(t) = f''(t)\nTo extend the property to g'(t) = f''(t):\n\nDefine g(t) = f'(t). Then the Laplace transform of g'(t) = f''(t) is:\n\n\\mathcal{L}[f''(t)] = \\mathcal{L}[g'(t)]\n\nUsing the First Derivative Property for g(t):\n\n\\mathcal{L}[g'(t)] = s\\mathcal{L}[g(t)] - g(0)\n\nSubstituting g(t) = f'(t) and g(0) = f'(0):\n\n\\mathcal{L}[f''(t)] = s\\mathcal{L}[f'(t)] - f'(0)\n\nSubstitute the First Derivative Property for f'(t):\n\n\\mathcal{L}[f'(t)] = s\\mathcal{L}[f(t)] - f(0)\n\nSubstituting into the equation:\n\n\\mathcal{L}[f''(t)] = s \\big(s\\mathcal{L}[f(t)] - f(0)\\big) - f'(0)\n\nSimplify the expression:\n\n\\mathcal{L}[f''(t)] = s^2\\mathcal{L}[f(t)] - sf(0) - f'(0)\n\n\n\nExample Application\nFor f(t) = t^2, with f'(t) = 2t, f''(t) = 2, and f(0) = 0, f'(0) = 0:\n\nCompute \\mathcal{L}[f(t)] = \\frac{2}{s^3}.\nUsing the corollary:\n\n\\mathcal{L}[f''(t)] = s^2 \\cdot \\frac{2}{s^3} - s \\cdot 0 - 0\n\nSimplify:\n\n\\mathcal{L}[f''(t)] = \\frac{2s^2}{s^3} = \\frac{2}{s}"
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html#summary",
+    "href": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html#summary",
+    "title": "Laplace Transform - First Derivative Property",
+    "section": "Summary",
+    "text": "Summary\nThe First Derivative Property establishes a relationship between the Laplace transform of f'(t) and the transform of f(t). The corollary extends this result to include the second derivative, f''(t) = g'(t), where g(t) = f'(t). These properties are essential for solving second-order differential equations with specified initial conditions."
+  },
+  {
+    "objectID": "mathematics/differential-equations/generalized-eigenvectors-DE.html",
+    "href": "mathematics/differential-equations/generalized-eigenvectors-DE.html",
+    "title": "Generalized Eigenvectors in Differential Equations",
+    "section": "",
+    "text": "When solving systems of differential equations, we use eigenvectors to understand how the system evolves over time. Sometimes, however, we encounter a repeated eigenvalue but don’t have enough unique eigenvectors to fully describe the solution. This is where generalized eigenvectors come into play."
+  },
+  {
+    "objectID": "mathematics/differential-equations/generalized-eigenvectors-DE.html#overview",
+    "href": "mathematics/differential-equations/generalized-eigenvectors-DE.html#overview",
+    "title": "Generalized Eigenvectors in Differential Equations",
+    "section": "",
+    "text": "When solving systems of differential equations, we use eigenvectors to understand how the system evolves over time. Sometimes, however, we encounter a repeated eigenvalue but don’t have enough unique eigenvectors to fully describe the solution. This is where generalized eigenvectors come into play."
+  },
+  {
+    "objectID": "mathematics/differential-equations/generalized-eigenvectors-DE.html#why-generalized-eigenvectors-are-needed",
+    "href": "mathematics/differential-equations/generalized-eigenvectors-DE.html#why-generalized-eigenvectors-are-needed",
+    "title": "Generalized Eigenvectors in Differential Equations",
+    "section": "Why Generalized Eigenvectors Are Needed",
+    "text": "Why Generalized Eigenvectors Are Needed\n\nEigenvectors and Eigenvalues Recap:\n\nFor a matrix A, an eigenvalue \\lambda represents a rate of growth or decay in the system.\nAn eigenvector \\mathbf{v} associated with \\lambda is a direction in which the system evolves according to e^{\\lambda t} \\mathbf{v}.\n\nThe Problem with Repeated Eigenvalues:\n\nWhen an eigenvalue is repeated (e.g., \\lambda = 4 with multiplicity 2), we typically need two linearly independent eigenvectors to capture all directions in the solution space.\nIf there’s only one eigenvector for a repeated eigenvalue, we can’t span the entire space. This is where we turn to generalized eigenvectors.\n\nWhat a Generalized Eigenvector Does:\n\nA generalized eigenvector \\mathbf{v}_g helps fill in the missing direction when there’s only one regular eigenvector.\nTogether, the eigenvector \\mathbf{v} and generalized eigenvector \\mathbf{v}_g create a complete solution by introducing an extra component to the motion, such as t e^{\\lambda t} \\mathbf{v}_g.\nThis additional term allows the solution to “expand” over time, rather than being confined to a single line along \\mathbf{v}."
+  },
+  {
+    "objectID": "mathematics/differential-equations/generalized-eigenvectors-DE.html#how-generalized-eigenvectors-affect-the-solution",
+    "href": "mathematics/differential-equations/generalized-eigenvectors-DE.html#how-generalized-eigenvectors-affect-the-solution",
+    "title": "Generalized Eigenvectors in Differential Equations",
+    "section": "How Generalized Eigenvectors Affect the Solution",
+    "text": "How Generalized Eigenvectors Affect the Solution\nWith a regular eigenvector \\mathbf{v} and generalized eigenvector \\mathbf{v}_g:\n\nThe solution takes the form:\n\n\\mathbf{x}(t) = c_1 e^{\\lambda t} \\mathbf{v} + c_2 t e^{\\lambda t} \\mathbf{v}_g\n\nHere:\n\ne^{\\lambda t} \\mathbf{v}: Moves along the direction of \\mathbf{v}.\nt e^{\\lambda t} \\mathbf{v}_g: Adds a “twist” or “shearing” motion that broadens the path, allowing the solution to explore the full space over time."
+  },
+  {
+    "objectID": "mathematics/differential-equations/generalized-eigenvectors-DE.html#visual-intuition",
+    "href": "mathematics/differential-equations/generalized-eigenvectors-DE.html#visual-intuition",
+    "title": "Generalized Eigenvectors in Differential Equations",
+    "section": "Visual Intuition",
+    "text": "Visual Intuition\n\nEigenvector Only:\n\nImagine the solution tracing a single line in the direction of \\mathbf{v}, say along the x-axis. Without more directions, the solution can’t expand in other directions.\n\nWith Generalized Eigenvector:\n\nThe term t e^{\\lambda t} \\mathbf{v}_g introduces growth along a new direction, allowing the solution to move out of a single line. This gives a richer motion, often creating a “shearing” or “sweeping” effect in the plane."
+  },
+  {
+    "objectID": "mathematics/differential-equations/generalized-eigenvectors-DE.html#summary",
+    "href": "mathematics/differential-equations/generalized-eigenvectors-DE.html#summary",
+    "title": "Generalized Eigenvectors in Differential Equations",
+    "section": "Summary",
+    "text": "Summary\nGeneralized eigenvectors allow us to fully capture the behavior of systems with repeated eigenvalues. They provide additional directions for the solution to evolve, ensuring it spans all necessary dimensions and doesn’t collapse onto a single line."
+  },
+  {
+    "objectID": "mathematics/differential-equations/exponential-order.html",
+    "href": "mathematics/differential-equations/exponential-order.html",
+    "title": "Exponential Order: Definition and Examples",
+    "section": "",
+    "text": "A function f(t) is said to be of exponential order if its growth is controlled by an exponential function e^{\\alpha t} as t becomes large. This concept is crucial for ensuring the applicability of certain mathematical operations, such as the Laplace Transform, and for understanding the long-term behavior of functions.\nIn simpler terms:\n\nExponential Order: f(t) does not grow too quickly.\n“Too Fast”: The growth of f(t) is slower than or comparable to e^{\\alpha t} for some fixed \\alpha."
+  },
+  {
+    "objectID": "mathematics/differential-equations/exponential-order.html#overview",
+    "href": "mathematics/differential-equations/exponential-order.html#overview",
+    "title": "Exponential Order: Definition and Examples",
+    "section": "",
+    "text": "A function f(t) is said to be of exponential order if its growth is controlled by an exponential function e^{\\alpha t} as t becomes large. This concept is crucial for ensuring the applicability of certain mathematical operations, such as the Laplace Transform, and for understanding the long-term behavior of functions.\nIn simpler terms:\n\nExponential Order: f(t) does not grow too quickly.\n“Too Fast”: The growth of f(t) is slower than or comparable to e^{\\alpha t} for some fixed \\alpha."
+  },
+  {
+    "objectID": "mathematics/differential-equations/exponential-order.html#definition",
+    "href": "mathematics/differential-equations/exponential-order.html#definition",
+    "title": "Exponential Order: Definition and Examples",
+    "section": "Definition",
+    "text": "Definition\nFormally, a function f(t) is of exponential order \\alpha if there exist constants M &gt; 0 and t_0 \\geq 0 such that:\n\n|f(t)| \\leq M e^{\\alpha t}, \\quad \\text{for all } t \\geq t_0\n\n\nKey Components:\n\nBounded Growth: For t \\geq t_0, the magnitude of f(t) does not exceed M e^{\\alpha t}.\nConstants:\n\nM: A positive constant that bounds f(t).\n\\alpha: The exponential growth rate that controls the bound.\nt_0: The threshold after which the bound holds.\n\n\nThis definition ensures that f(t) does not grow faster than e^{\\alpha t} for sufficiently large t."
+  },
+  {
+    "objectID": "mathematics/differential-equations/exponential-order.html#understanding-too-fast-growth",
+    "href": "mathematics/differential-equations/exponential-order.html#understanding-too-fast-growth",
+    "title": "Exponential Order: Definition and Examples",
+    "section": "Understanding “Too Fast” Growth",
+    "text": "Understanding “Too Fast” Growth\nWhen we describe a function as growing “too fast” to be of exponential order, we mean that it outpaces the growth of any exponential function e^{\\alpha t}, regardless of how large \\alpha is chosen. For instance, functions like e^{t^2} grow so rapidly that no exponential bound e^{\\alpha t} can contain them for all large t.\n\nIntuition:\n\nExponential Functions: e^{\\alpha t} grow rapidly, but many functions (e.g., polynomials) grow slower or at a similar rate for large t.\nSuper-Exponential Functions: Functions like e^{t^2} grow faster than any e^{\\alpha t} because the exponent itself grows faster (e.g., t^2 vs. \\alpha t).\n\nIf a function grows faster than e^{\\alpha t}, it cannot be bounded by any exponential function, and thus, it is not of exponential order.\n\n\nExample: Comparing e^{t^2} and e^{\\alpha t}\nConsider f(t) = e^{t^2} and g(t) = e^{\\alpha t} with \\alpha = 2.\n\nAt t = 1:\n\ne^{t^2} = e^1 \\approx 2.718, \\quad e^{\\alpha t} = e^2 \\approx 7.389\n\nHere, e^{t^2} &lt; e^{\\alpha t}.\nAt t = 2:\n\ne^{t^2} = e^4 \\approx 54.598, \\quad e^{\\alpha t} = e^4 \\approx 54.598\n\nNow, e^{t^2} = e^{\\alpha t}.\nAt t = 3: \ne^{t^2} = e^9 \\approx 8103, \\quad e^{\\alpha t} = e^6 \\approx 403\n Here, e^{t^2} &gt; e^{\\alpha t}.\n\nAs t \\to \\infty, e^{t^2} grows much faster than e^{\\alpha t}, no matter how large \\alpha is. This demonstrates that f(t) = e^{t^2} is not of exponential order."
+  },
+  {
+    "objectID": "mathematics/differential-equations/exponential-order.html#example-1-polynomial-function-ft-t2",
+    "href": "mathematics/differential-equations/exponential-order.html#example-1-polynomial-function-ft-t2",
+    "title": "Exponential Order: Definition and Examples",
+    "section": "Example 1: Polynomial Function f(t) = t^2",
+    "text": "Example 1: Polynomial Function f(t) = t^2\nLet’s determine if f(t) = t^2 is of exponential order.\n\nStep 1: Analyze the Growth of f(t)\nThe function f(t) = t^2 grows quadratically as t \\to \\infty. In contrast, an exponential function like e^{\\alpha t} grows much faster for large t. This suggests that t^2 might be bounded by e^{\\alpha t} for some \\alpha &gt; 0.\n\n\nStep 2: Choose \\alpha and M\n\nSelect \\alpha = 1: A reasonable starting point for the exponential growth rate.\nDetermine M: We aim to find M such that t^2 \\leq M e^t for all t \\geq t_0.\n\n\n\nStep 3: Verify the Bound\n\nAt t = 3:\n\nt^2 = 9, \\quad e^t \\approx 20.09\n\nClearly, t^2 \\leq e^t.\nAs t increases: e^t grows significantly faster than t^2, ensuring that t^2 \\leq M e^t for some M &gt; 0.\n\nConclusion: For t \\geq t_0 = 3, we can choose M = 1 and \\alpha = 1 to satisfy:\n\n|f(t)| \\leq M e^{\\alpha t}\n\nTherefore, f(t) = t^2 is of exponential order with \\alpha = 1."
+  },
+  {
+    "objectID": "mathematics/differential-equations/exponential-order.html#example-2-exponential-function-ft-et2",
+    "href": "mathematics/differential-equations/exponential-order.html#example-2-exponential-function-ft-et2",
+    "title": "Exponential Order: Definition and Examples",
+    "section": "Example 2: Exponential Function f(t) = e^{t^2}",
+    "text": "Example 2: Exponential Function f(t) = e^{t^2}\nNow, let’s examine whether f(t) = e^{t^2} is of exponential order.\n\nStep 1: Analyze the Growth of f(t)\nThe function f(t) = e^{t^2} grows much faster than any exponential function e^{\\alpha t} as t \\to \\infty.\n\n\nStep 2: Attempt to Establish the Bound\nAssume, for contradiction, that e^{t^2} \\leq M e^{\\alpha t}. Taking the natural logarithm of both sides:\n\nt^2 \\leq \\ln(M) + \\alpha t\n\nFor large t, the left side (t^2) grows faster than the right side (\\ln(M) + \\alpha t), making the inequality impossible to satisfy.\n\n\nConclusion\nNo constants M &gt; 0 and \\alpha &gt; 0 can ensure |f(t)| \\leq M e^{\\alpha t} for all sufficiently large t. Therefore, f(t) = e^{t^2} is not of exponential order."
+  },
+  {
+    "objectID": "mathematics/differential-equations/exponential-order.html#why-use-exponential-bounds",
+    "href": "mathematics/differential-equations/exponential-order.html#why-use-exponential-bounds",
+    "title": "Exponential Order: Definition and Examples",
+    "section": "Why Use Exponential Bounds?",
+    "text": "Why Use Exponential Bounds?\nExponential functions e^{\\alpha t} serve as a benchmark for measuring the rate of growth of other functions:\n\nControlled Growth: If a function grows slower than or at the same rate as e^{\\alpha t}, its growth is considered manageable, making it suitable for operations like the Laplace Transform.\nUncontrolled Growth: If a function grows faster than e^{\\alpha t}, its growth becomes unmanageable, rendering it unsuitable for certain mathematical techniques.\n\n\nSummary:\n\nFunctions Growing “Too Fast”: These outpace exponential functions e^{\\alpha t} and are not of exponential order.\nFunctions of Exponential Order: These grow slower than or similarly to e^{\\alpha t}, ensuring their growth is under control.\n\nUnderstanding whether a function is of exponential order is essential for determining the applicability of various mathematical tools and for analyzing the function’s long-term behavior."
+  },
+  {
+    "objectID": "mathematics/differential-equations/index.html",
+    "href": "mathematics/differential-equations/index.html",
+    "title": "DIFFERENTIAL EQUATIONS",
+    "section": "",
+    "text": "Generalized Eigenvectors in Differential Equations\nStability of the Origin in 2x2 Systems of Differential Equations"
+  },
+  {
+    "objectID": "mathematics/differential-equations/index.html#week-08",
+    "href": "mathematics/differential-equations/index.html#week-08",
+    "title": "DIFFERENTIAL EQUATIONS",
+    "section": "WEEK 08",
+    "text": "WEEK 08\n\nNonhomogeneous Systems: Undetermined Coefficients\nNonhomogeneous Systems: Variation of Parameters"
+  },
+  {
+    "objectID": "mathematics/differential-equations/index.html#week-09",
+    "href": "mathematics/differential-equations/index.html#week-09",
+    "title": "DIFFERENTIAL EQUATIONS",
+    "section": "WEEK 09",
+    "text": "WEEK 09\n\nExponential Order\nLaplace Transforms\nProperties of the Laplace Transform"
+  },
+  {
+    "objectID": "mathematics/differential-equations/index.html#week-10",
+    "href": "mathematics/differential-equations/index.html#week-10",
+    "title": "DIFFERENTIAL EQUATIONS",
+    "section": "WEEK 10",
+    "text": "WEEK 10\n\nSummary of Tests for Series\nPower Series"
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html",
+    "href": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html",
+    "title": "Laplace Transform - First Shifting Property",
+    "section": "",
+    "text": "The First Shifting Property of the Laplace Transform relates the Laplace transform of the product e^{at} f(t) to the transform of f(t). The property states:\n\n\\mathcal{L}[e^{at} f(t)] = F(s - a)\n\nwhere F(s) = \\mathcal{L}[f(t)] and a is any real number. This property is useful for analyzing systems involving exponential growth or decay."
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#overview",
+    "href": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#overview",
+    "title": "Laplace Transform - First Shifting Property",
+    "section": "",
+    "text": "The First Shifting Property of the Laplace Transform relates the Laplace transform of the product e^{at} f(t) to the transform of f(t). The property states:\n\n\\mathcal{L}[e^{at} f(t)] = F(s - a)\n\nwhere F(s) = \\mathcal{L}[f(t)] and a is any real number. This property is useful for analyzing systems involving exponential growth or decay."
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#statement-of-the-theorem",
+    "href": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#statement-of-the-theorem",
+    "title": "Laplace Transform - First Shifting Property",
+    "section": "Statement of the Theorem",
+    "text": "Statement of the Theorem\nLet f(t) be an acceptable function such that \\mathcal{L}[f(t)] = F(s). Then for any real value a:\n\n\\mathcal{L}[e^{at} f(t)] = F(s - a)"
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#proof",
+    "href": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#proof",
+    "title": "Laplace Transform - First Shifting Property",
+    "section": "Proof",
+    "text": "Proof\n\nWrite the Laplace Transform of e^{at} f(t)\nBy definition of the Laplace transform:\n\n\\mathcal{L}[e^{at} f(t)] = \\int_0^\\infty e^{at} f(t) e^{-st} \\, dt\n\n\n\nCombine Exponentials\nCombine the exponential terms e^{at} and e^{-st}:\n\ne^{at} e^{-st} = e^{-(s - a)t}\n\nSubstituting into the integral:\n\n\\mathcal{L}[e^{at} f(t)] = \\int_0^\\infty f(t) e^{-(s - a)t} \\, dt\n\n\n\nRecognize the Laplace Transform\nThe integral \\int_0^\\infty f(t) e^{-(s - a)t} \\, dt is the definition of the Laplace transform of f(t), evaluated at s - a. Therefore:\n\n\\mathcal{L}[e^{at} f(t)] = F(s - a)\n\n\n\nConclusion\nThis demonstrates that:\n\n\\mathcal{L}[e^{at} f(t)] = F(s - a)"
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#example",
+    "href": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#example",
+    "title": "Laplace Transform - First Shifting Property",
+    "section": "Example",
+    "text": "Example\nTo illustrate, let f(t) = t, for which \\mathcal{L}[f(t)] = \\frac{1}{s^2}. Using the First Shifting Property:\n\nCompute \\mathcal{L}[e^{3t} t]:\n\nSubstitute a = 3 and F(s) = \\frac{1}{s^2}.\n\n\n\\mathcal{L}[e^{3t} t] = F(s - 3) = \\frac{1}{(s - 3)^2}\n\nResult:\n\nThe Laplace transform of e^{3t} t is \\frac{1}{(s - 3)^2}."
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#summary",
+    "href": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#summary",
+    "title": "Laplace Transform - First Shifting Property",
+    "section": "Summary",
+    "text": "Summary\nThe First Shifting Property of the Laplace Transform provides a direct relationship between the transform of e^{at} f(t) and the transform of f(t). By shifting s in F(s) by a, this property simplifies the analysis of functions involving exponential factors."
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html",
+    "href": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html",
+    "title": "Laplace Transform - Multiplication by t Property",
+    "section": "",
+    "text": "The Multiplication by t Property of the Laplace Transform relates the Laplace transform of tf(t) to the derivative of the transform F(s) = \\mathcal{L}[f(t)]. The property states:\n\n\\mathcal{L}[tf(t)] = -\\frac{d}{ds}F(s)\n\nThis property is useful for analyzing systems in the Laplace domain that involve multiplication by t."
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#overview",
+    "href": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#overview",
+    "title": "Laplace Transform - Multiplication by t Property",
+    "section": "",
+    "text": "The Multiplication by t Property of the Laplace Transform relates the Laplace transform of tf(t) to the derivative of the transform F(s) = \\mathcal{L}[f(t)]. The property states:\n\n\\mathcal{L}[tf(t)] = -\\frac{d}{ds}F(s)\n\nThis property is useful for analyzing systems in the Laplace domain that involve multiplication by t."
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#leibnizs-rule",
+    "href": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#leibnizs-rule",
+    "title": "Laplace Transform - Multiplication by t Property",
+    "section": "Leibniz’s Rule",
+    "text": "Leibniz’s Rule\nLeibniz’s rule allows differentiation under the integral sign. For a function K(s, t), under reasonable hypotheses, Leibniz’s rule states:\n\n\\frac{d}{ds} \\int_{t=a}^{t=b} K(s, t) \\, dt = \\int_{t=a}^{t=b} \\frac{\\partial}{\\partial s} [K(s, t)] \\, dt\n\nLeibniz’s rule is essential for justifying the steps in the proof."
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#proof",
+    "href": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#proof",
+    "title": "Laplace Transform - Multiplication by t Property",
+    "section": "Proof",
+    "text": "Proof\n\nWrite the Laplace Transform\nThe Laplace transform of f(t) is defined as:\n\nF(s) = \\mathcal{L}[f(t)] = \\int_0^\\infty f(t) e^{-st} \\, dt\n\nThe goal is to compute \\mathcal{L}[tf(t)], given by:\n\n\\mathcal{L}[tf(t)] = \\int_0^\\infty t f(t) e^{-st} \\, dt\n\n\n\nApply Leibniz’s Rule\nLet K(s, t) = f(t) e^{-st}. Using Leibniz’s rule, the derivative of F(s) with respect to s is:\n\n\\frac{d}{ds} F(s) = \\frac{d}{ds} \\int_0^\\infty f(t) e^{-st} \\, dt = \\int_0^\\infty \\frac{\\partial}{\\partial s} \\big[f(t) e^{-st}\\big] \\, dt\n\n\n\nDifferentiate Inside the Integral\nThe partial derivative of f(t) e^{-st} with respect to s is:\n\n\\frac{\\partial}{\\partial s} \\big[f(t) e^{-st}\\big] = -t f(t) e^{-st}\n\nSubstituting this into the integral gives:\n\n\\frac{d}{ds} F(s) = \\int_0^\\infty -t f(t) e^{-st} \\, dt\n\n\n\nRecognize the Laplace Transform\nThe integral on the right-hand side is the definition of \\mathcal{L}[tf(t)]. Therefore:\n\n\\frac{d}{ds} F(s) = -\\mathcal{L}[tf(t)]\n\nRearranging:\n\n\\mathcal{L}[tf(t)] = -\\frac{d}{ds} F(s)\n\n\n\nConclusion\nThe proof demonstrates that:\n\n\\mathcal{L}[tf(t)] = -\\frac{d}{ds} \\mathcal{L}[f(t)]"
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#corollary-laplace-transform-of-tn-ft",
+    "href": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#corollary-laplace-transform-of-tn-ft",
+    "title": "Laplace Transform - Multiplication by t Property",
+    "section": "Corollary: Laplace Transform of t^n f(t)",
+    "text": "Corollary: Laplace Transform of t^n f(t)\nBuilding on Theorem 5.3.2, the Laplace transform of t^n f(t) can be expressed as:\n\n\\mathcal{L}[t^n f(t)] = (-1)^n F^{(n)}(s)\n\nwhere F^{(n)}(s) is the n-th derivative of F(s). This property generalizes the Multiplication by t Property to higher powers of t.\n\nDemonstration\nTo demonstrate the corollary for n = 2, consider t^2 f(t):\n\nApply Theorem 5.3.2 for tf(t):\n\n\\mathcal{L}[tf(t)] = -\\frac{d}{ds}F(s)\n\nApply Theorem 5.3.2 again for t^2 f(t) = t \\cdot (tf(t)):\n\n\\mathcal{L}[t^2 f(t)] = -\\frac{d}{ds} \\big( \\mathcal{L}[tf(t)] \\big) = -\\frac{d}{ds} \\big( -\\frac{d}{ds} F(s) \\big)\n\nSimplify the expression:\n\n\\mathcal{L}[t^2 f(t)] = \\frac{d^2}{ds^2} F(s) = F^{(2)}(s)\n\nIncorporate the factor (-1)^2 for consistency with the corollary:\n\n\\mathcal{L}[t^2 f(t)] = F^{(2)}(s) = (-1)^2 F^{(2)}(s)\n\n\n\n\nGeneral Case\nThe process can be repeated for any positive integer n to show that:\n\n\\mathcal{L}[t^n f(t)] = (-1)^n F^{(n)}(s)"
+  },
+  {
+    "objectID": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#summary",
+    "href": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#summary",
+    "title": "Laplace Transform - Multiplication by t Property",
+    "section": "Summary",
+    "text": "Summary\nThe Multiplication by t Property provides a foundation for analyzing functions scaled by t or higher powers of t. The corollary extends the result to t^n f(t), relating it to the n-th derivative of the Laplace transform of f(t). This result is critical in applications requiring repeated differentiation in the s-domain."
+  },
+  {
+    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html",
+    "href": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html",
+    "title": "Nonhomogeneous Systems: Undetermined Coefficients",
+    "section": "",
+    "text": "When solving nonhomogeneous systems of differential equations, one common method to find a particular solution is undetermined coefficients. This approach works well when the nonhomogeneous term is of a specific form, such as polynomials, exponentials, sines, or cosines."
+  },
+  {
+    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#overview",
+    "href": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#overview",
+    "title": "Nonhomogeneous Systems: Undetermined Coefficients",
+    "section": "",
+    "text": "When solving nonhomogeneous systems of differential equations, one common method to find a particular solution is undetermined coefficients. This approach works well when the nonhomogeneous term is of a specific form, such as polynomials, exponentials, sines, or cosines."
+  },
+  {
+    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#method-of-undetermined-coefficients",
+    "href": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#method-of-undetermined-coefficients",
+    "title": "Nonhomogeneous Systems: Undetermined Coefficients",
+    "section": "Method of Undetermined Coefficients",
+    "text": "Method of Undetermined Coefficients\nConsider a system of differential equations given by:\n\n\\mathbf{x}' = A \\mathbf{x} + \\mathbf{b}(t)\n\nwhere A is an n \\times n matrix with constant entries, and \\mathbf{b}(t) is a nonhomogeneous term with a form that allows us to apply the method of undetermined coefficients.\nThe method involves guessing a form for the particular solution \\mathbf{x}_p(t) based on the form of \\mathbf{b}(t) and then determining the coefficients by substituting \\mathbf{x}_p(t) back into the differential equation."
+  },
+  {
+    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#steps-for-applying-undetermined-coefficients",
+    "href": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#steps-for-applying-undetermined-coefficients",
+    "title": "Nonhomogeneous Systems: Undetermined Coefficients",
+    "section": "Steps for Applying Undetermined Coefficients",
+    "text": "Steps for Applying Undetermined Coefficients\n\nIdentify the Form of \\mathbf{b}(t): Determine the type of functions in the nonhomogeneous term \\mathbf{b}(t). Typical forms include:\n\nPolynomials: \\mathbf{b}(t) = t^n \\mathbf{c}\nExponentials: \\mathbf{b}(t) = e^{rt} \\mathbf{c}\nSines and Cosines: \\mathbf{b}(t) = \\sin(\\theta t) \\mathbf{c} or \\cos(\\theta t) \\mathbf{c}\n\nUse the Table to Choose a Guess for \\mathbf{x}_p(t): Based on the form of \\mathbf{b}(t), select a guess for \\mathbf{x}_p(t) using the table below. If the guess overlaps with solutions to the homogeneous system, multiply by t as needed to create a new linearly independent solution.\n\n\n\n\n\nForm of \\mathbf{b}(t)\n\n\nGuess for \\mathbf{x}_p(t)\n\n\nAdditional Guess (if overlaps with homogeneous solution)\n\n\n\n\n\\mathbf{b}(t) = \\mathbf{c}\n\n\n\\mathbf{x}_p = \\mathbf{a}\n\n\n\\mathbf{x}_p = t \\mathbf{a}\n\n\n\n\n\\mathbf{b}(t) = t \\mathbf{c}\n\n\n\\mathbf{x}_p = \\mathbf{a}_1 t + \\mathbf{a}_0\n\n\n\\mathbf{x}_p = t^2 \\mathbf{a}_1 + t \\mathbf{a}_0\n\n\n\n\n\\mathbf{b}(t) = t^n \\mathbf{c}\n\n\n\\mathbf{x}_p = \\mathbf{a}_n t^n + \\dots + \\mathbf{a}_0\n\n\n\\mathbf{x}_p = t^{n+1} \\mathbf{a}_n + \\dots + t \\mathbf{a}_0\n\n\n\n\n\\mathbf{b}(t) = e^{rt} \\mathbf{c}\n\n\n\\mathbf{x}_p = e^{rt} \\mathbf{a}\n\n\n\\mathbf{x}_p = t e^{rt} \\mathbf{a}\n\n\n\n\n\\mathbf{b}(t) = t^n e^{rt} \\mathbf{c}\n\n\n\\mathbf{x}_p = e^{rt} (\\mathbf{a}_n t^n + \\dots + \\mathbf{a}_0)\n\n\n\\mathbf{x}_p = t^{n+1} e^{rt} (\\mathbf{a}_n t^n + \\dots + \\mathbf{a}_0)\n\n\n\n\n\\mathbf{b}(t) = \\cos(\\theta t) \\mathbf{c}\n\n\n\\mathbf{x}_p = \\mathbf{a}_1 \\cos(\\theta t) + \\mathbf{a}_2 \\sin(\\theta t)\n\n\n\\mathbf{x}_p = t (\\mathbf{a}_1 \\cos(\\theta t) + \\mathbf{a}_2 \\sin(\\theta t))\n\n\n\n\n\\mathbf{b}(t) = \\sin(\\theta t) \\mathbf{c}\n\n\n\\mathbf{x}_p = \\mathbf{a}_1 \\cos(\\theta t) + \\mathbf{a}_2 \\sin(\\theta t)\n\n\n\\mathbf{x}_p = t (\\mathbf{a}_1 \\cos(\\theta t) + \\mathbf{a}_2 \\sin(\\theta t))\n\n\n\n\n\\mathbf{b}(t) = t^n \\cos(\\theta t) \\mathbf{c}\n\n\n\\mathbf{x}_p = ( \\mathbf{a}_n t^n + \\dots + \\mathbf{a}_0 ) \\cos(\\theta t)  + ( \\mathbf{a}_{n+1} t^n + \\dots + \\mathbf{a}_1 ) \\sin(\\theta t)\n\n\n\\mathbf{x}_p = t^{n+1} \\big[ ( \\mathbf{a}_n t^n + \\dots + \\mathbf{a}_0 ) \\cos(\\theta t)  + ( \\mathbf{a}_{n+1} t^n + \\dots + \\mathbf{a}_1 ) \\sin(\\theta t) \\big]\n\n\n\n\n\\mathbf{b}(t) = t^n \\sin(\\theta t) \\mathbf{c}\n\n\n\\mathbf{x}_p = ( \\mathbf{a}_n t^n + \\dots + \\mathbf{a}_0 ) \\cos(\\theta t)  + ( \\mathbf{a}_{n+1} t^n + \\dots + \\mathbf{a}_1 ) \\sin(\\theta t)\n\n\n\\mathbf{x}_p = t^{n+1} \\big[ ( \\mathbf{a}_n t^n + \\dots + \\mathbf{a}_0 ) \\cos(\\theta t)  + ( \\mathbf{a}_{n+1} t^n + \\dots + \\mathbf{a}_1 ) \\sin(\\theta t) \\big]\n\n\n\n\nSubstitute and Solve for Coefficients: Substitute \\mathbf{x}_p(t) into the differential equation and solve for the unknown coefficients to ensure that the equation is satisfied."
+  },
+  {
+    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#example",
+    "href": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#example",
+    "title": "Nonhomogeneous Systems: Undetermined Coefficients",
+    "section": "Example",
+    "text": "Example\nFor a system:\n\n\\mathbf{x}' = A \\mathbf{x} + e^{rt} \\mathbf{c}\n\nwe might guess:\n\n\\mathbf{x}_p(t) = e^{rt} \\mathbf{a}\n\nIf this guess overlaps with the homogeneous solution, we would use \\mathbf{x}_p(t) = t e^{rt} \\mathbf{a} instead. Substituting \\mathbf{x}_p(t) into the system, we determine \\mathbf{a} by equating terms."
+  },
+  {
+    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#summary",
+    "href": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#summary",
+    "title": "Nonhomogeneous Systems: Undetermined Coefficients",
+    "section": "Summary",
+    "text": "Summary\nThe method of undetermined coefficients provides a straightforward way to find a particular solution to nonhomogeneous systems when \\mathbf{b}(t) has certain forms. By using the table to make an educated guess for \\mathbf{x}_p(t) and solving for unknown coefficients, we can construct a particular solution to complete the system’s solution."
   },
   {
     "objectID": "mathematics/differential-equations/power-series/important-power-series-expansions.html",
@@ -1554,487 +1925,116 @@
     "text": "This collection of power series expansions provides a quick reference for commonly used functions:\n\nUniversal: e^x, \\sin(x), \\cos(x) converge for all x.\nRestricted Radius: \\frac{1}{1-x}, \\ln(1+x), \\arctan(x), (1+x)^k converge only for |x| &lt; 1 or specific conditions.\n\nThese expansions are critical tools in analysis, numerical computation, and approximations."
   },
   {
-    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html",
-    "href": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html",
-    "title": "Nonhomogeneous Systems: Undetermined Coefficients",
+    "objectID": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html",
+    "href": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html",
+    "title": "Power Series Expansion for \\frac{1}{1-x}",
     "section": "",
-    "text": "When solving nonhomogeneous systems of differential equations, one common method to find a particular solution is undetermined coefficients. This approach works well when the nonhomogeneous term is of a specific form, such as polynomials, exponentials, sines, or cosines."
+    "text": "The power series expansion for \\frac{1}{1-x} is a classic example of a geometric series. It provides a representation of the function as an infinite sum of powers of x, valid for |x| &lt; 1. This series is particularly useful in algebra and calculus."
   },
   {
-    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#overview",
-    "href": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#overview",
-    "title": "Nonhomogeneous Systems: Undetermined Coefficients",
+    "objectID": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#overview",
+    "href": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#overview",
+    "title": "Power Series Expansion for \\frac{1}{1-x}",
     "section": "",
-    "text": "When solving nonhomogeneous systems of differential equations, one common method to find a particular solution is undetermined coefficients. This approach works well when the nonhomogeneous term is of a specific form, such as polynomials, exponentials, sines, or cosines."
+    "text": "The power series expansion for \\frac{1}{1-x} is a classic example of a geometric series. It provides a representation of the function as an infinite sum of powers of x, valid for |x| &lt; 1. This series is particularly useful in algebra and calculus."
   },
   {
-    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#method-of-undetermined-coefficients",
-    "href": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#method-of-undetermined-coefficients",
-    "title": "Nonhomogeneous Systems: Undetermined Coefficients",
-    "section": "Method of Undetermined Coefficients",
-    "text": "Method of Undetermined Coefficients\nConsider a system of differential equations given by:\n\n\\mathbf{x}' = A \\mathbf{x} + \\mathbf{b}(t)\n\nwhere A is an n \\times n matrix with constant entries, and \\mathbf{b}(t) is a nonhomogeneous term with a form that allows us to apply the method of undetermined coefficients.\nThe method involves guessing a form for the particular solution \\mathbf{x}_p(t) based on the form of \\mathbf{b}(t) and then determining the coefficients by substituting \\mathbf{x}_p(t) back into the differential equation."
+    "objectID": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#power-series-for-frac11-x",
+    "href": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#power-series-for-frac11-x",
+    "title": "Power Series Expansion for \\frac{1}{1-x}",
+    "section": "Power Series for \\frac{1}{1-x}",
+    "text": "Power Series for \\frac{1}{1-x}\nThe function \\frac{1}{1-x} can be expressed as:\n\n\\frac{1}{1-x} = \\sum_{n=0}^\\infty x^n\n\nThis series converges for |x| &lt; 1. The first four terms of the series are:\n\n\\frac{1}{1-x} \\approx 1 + x + x^2 + x^3"
   },
   {
-    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#steps-for-applying-undetermined-coefficients",
-    "href": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#steps-for-applying-undetermined-coefficients",
-    "title": "Nonhomogeneous Systems: Undetermined Coefficients",
-    "section": "Steps for Applying Undetermined Coefficients",
-    "text": "Steps for Applying Undetermined Coefficients\n\nIdentify the Form of \\mathbf{b}(t): Determine the type of functions in the nonhomogeneous term \\mathbf{b}(t). Typical forms include:\n\nPolynomials: \\mathbf{b}(t) = t^n \\mathbf{c}\nExponentials: \\mathbf{b}(t) = e^{rt} \\mathbf{c}\nSines and Cosines: \\mathbf{b}(t) = \\sin(\\theta t) \\mathbf{c} or \\cos(\\theta t) \\mathbf{c}\n\nUse the Table to Choose a Guess for \\mathbf{x}_p(t): Based on the form of \\mathbf{b}(t), select a guess for \\mathbf{x}_p(t) using the table below. If the guess overlaps with solutions to the homogeneous system, multiply by t as needed to create a new linearly independent solution.\n\n\n\n\n\nForm of \\mathbf{b}(t)\n\n\nGuess for \\mathbf{x}_p(t)\n\n\nAdditional Guess (if overlaps with homogeneous solution)\n\n\n\n\n\\mathbf{b}(t) = \\mathbf{c}\n\n\n\\mathbf{x}_p = \\mathbf{a}\n\n\n\\mathbf{x}_p = t \\mathbf{a}\n\n\n\n\n\\mathbf{b}(t) = t \\mathbf{c}\n\n\n\\mathbf{x}_p = \\mathbf{a}_1 t + \\mathbf{a}_0\n\n\n\\mathbf{x}_p = t^2 \\mathbf{a}_1 + t \\mathbf{a}_0\n\n\n\n\n\\mathbf{b}(t) = t^n \\mathbf{c}\n\n\n\\mathbf{x}_p = \\mathbf{a}_n t^n + \\dots + \\mathbf{a}_0\n\n\n\\mathbf{x}_p = t^{n+1} \\mathbf{a}_n + \\dots + t \\mathbf{a}_0\n\n\n\n\n\\mathbf{b}(t) = e^{rt} \\mathbf{c}\n\n\n\\mathbf{x}_p = e^{rt} \\mathbf{a}\n\n\n\\mathbf{x}_p = t e^{rt} \\mathbf{a}\n\n\n\n\n\\mathbf{b}(t) = t^n e^{rt} \\mathbf{c}\n\n\n\\mathbf{x}_p = e^{rt} (\\mathbf{a}_n t^n + \\dots + \\mathbf{a}_0)\n\n\n\\mathbf{x}_p = t^{n+1} e^{rt} (\\mathbf{a}_n t^n + \\dots + \\mathbf{a}_0)\n\n\n\n\n\\mathbf{b}(t) = \\cos(\\theta t) \\mathbf{c}\n\n\n\\mathbf{x}_p = \\mathbf{a}_1 \\cos(\\theta t) + \\mathbf{a}_2 \\sin(\\theta t)\n\n\n\\mathbf{x}_p = t (\\mathbf{a}_1 \\cos(\\theta t) + \\mathbf{a}_2 \\sin(\\theta t))\n\n\n\n\n\\mathbf{b}(t) = \\sin(\\theta t) \\mathbf{c}\n\n\n\\mathbf{x}_p = \\mathbf{a}_1 \\cos(\\theta t) + \\mathbf{a}_2 \\sin(\\theta t)\n\n\n\\mathbf{x}_p = t (\\mathbf{a}_1 \\cos(\\theta t) + \\mathbf{a}_2 \\sin(\\theta t))\n\n\n\n\n\\mathbf{b}(t) = t^n \\cos(\\theta t) \\mathbf{c}\n\n\n\\mathbf{x}_p = ( \\mathbf{a}_n t^n + \\dots + \\mathbf{a}_0 ) \\cos(\\theta t)  + ( \\mathbf{a}_{n+1} t^n + \\dots + \\mathbf{a}_1 ) \\sin(\\theta t)\n\n\n\\mathbf{x}_p = t^{n+1} \\big[ ( \\mathbf{a}_n t^n + \\dots + \\mathbf{a}_0 ) \\cos(\\theta t)  + ( \\mathbf{a}_{n+1} t^n + \\dots + \\mathbf{a}_1 ) \\sin(\\theta t) \\big]\n\n\n\n\n\\mathbf{b}(t) = t^n \\sin(\\theta t) \\mathbf{c}\n\n\n\\mathbf{x}_p = ( \\mathbf{a}_n t^n + \\dots + \\mathbf{a}_0 ) \\cos(\\theta t)  + ( \\mathbf{a}_{n+1} t^n + \\dots + \\mathbf{a}_1 ) \\sin(\\theta t)\n\n\n\\mathbf{x}_p = t^{n+1} \\big[ ( \\mathbf{a}_n t^n + \\dots + \\mathbf{a}_0 ) \\cos(\\theta t)  + ( \\mathbf{a}_{n+1} t^n + \\dots + \\mathbf{a}_1 ) \\sin(\\theta t) \\big]\n\n\n\n\nSubstitute and Solve for Coefficients: Substitute \\mathbf{x}_p(t) into the differential equation and solve for the unknown coefficients to ensure that the equation is satisfied."
-  },
-  {
-    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#example",
-    "href": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#example",
-    "title": "Nonhomogeneous Systems: Undetermined Coefficients",
-    "section": "Example",
-    "text": "Example\nFor a system:\n\n\\mathbf{x}' = A \\mathbf{x} + e^{rt} \\mathbf{c}\n\nwe might guess:\n\n\\mathbf{x}_p(t) = e^{rt} \\mathbf{a}\n\nIf this guess overlaps with the homogeneous solution, we would use \\mathbf{x}_p(t) = t e^{rt} \\mathbf{a} instead. Substituting \\mathbf{x}_p(t) into the system, we determine \\mathbf{a} by equating terms."
-  },
-  {
-    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#summary",
-    "href": "mathematics/differential-equations/nonhomogeneous-systems-undetermined-coefficients.html#summary",
-    "title": "Nonhomogeneous Systems: Undetermined Coefficients",
-    "section": "Summary",
-    "text": "Summary\nThe method of undetermined coefficients provides a straightforward way to find a particular solution to nonhomogeneous systems when \\mathbf{b}(t) has certain forms. By using the table to make an educated guess for \\mathbf{x}_p(t) and solving for unknown coefficients, we can construct a particular solution to complete the system’s solution."
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html",
-    "href": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html",
-    "title": "Laplace Transform - Multiplication by t Property",
-    "section": "",
-    "text": "The Multiplication by t Property of the Laplace Transform relates the Laplace transform of tf(t) to the derivative of the transform F(s) = \\mathcal{L}[f(t)]. The property states:\n\n\\mathcal{L}[tf(t)] = -\\frac{d}{ds}F(s)\n\nThis property is useful for analyzing systems in the Laplace domain that involve multiplication by t."
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#overview",
-    "href": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#overview",
-    "title": "Laplace Transform - Multiplication by t Property",
-    "section": "",
-    "text": "The Multiplication by t Property of the Laplace Transform relates the Laplace transform of tf(t) to the derivative of the transform F(s) = \\mathcal{L}[f(t)]. The property states:\n\n\\mathcal{L}[tf(t)] = -\\frac{d}{ds}F(s)\n\nThis property is useful for analyzing systems in the Laplace domain that involve multiplication by t."
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#leibnizs-rule",
-    "href": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#leibnizs-rule",
-    "title": "Laplace Transform - Multiplication by t Property",
-    "section": "Leibniz’s Rule",
-    "text": "Leibniz’s Rule\nLeibniz’s rule allows differentiation under the integral sign. For a function K(s, t), under reasonable hypotheses, Leibniz’s rule states:\n\n\\frac{d}{ds} \\int_{t=a}^{t=b} K(s, t) \\, dt = \\int_{t=a}^{t=b} \\frac{\\partial}{\\partial s} [K(s, t)] \\, dt\n\nLeibniz’s rule is essential for justifying the steps in the proof."
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#proof",
-    "href": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#proof",
-    "title": "Laplace Transform - Multiplication by t Property",
-    "section": "Proof",
-    "text": "Proof\n\nWrite the Laplace Transform\nThe Laplace transform of f(t) is defined as:\n\nF(s) = \\mathcal{L}[f(t)] = \\int_0^\\infty f(t) e^{-st} \\, dt\n\nThe goal is to compute \\mathcal{L}[tf(t)], given by:\n\n\\mathcal{L}[tf(t)] = \\int_0^\\infty t f(t) e^{-st} \\, dt\n\n\n\nApply Leibniz’s Rule\nLet K(s, t) = f(t) e^{-st}. Using Leibniz’s rule, the derivative of F(s) with respect to s is:\n\n\\frac{d}{ds} F(s) = \\frac{d}{ds} \\int_0^\\infty f(t) e^{-st} \\, dt = \\int_0^\\infty \\frac{\\partial}{\\partial s} \\big[f(t) e^{-st}\\big] \\, dt\n\n\n\nDifferentiate Inside the Integral\nThe partial derivative of f(t) e^{-st} with respect to s is:\n\n\\frac{\\partial}{\\partial s} \\big[f(t) e^{-st}\\big] = -t f(t) e^{-st}\n\nSubstituting this into the integral gives:\n\n\\frac{d}{ds} F(s) = \\int_0^\\infty -t f(t) e^{-st} \\, dt\n\n\n\nRecognize the Laplace Transform\nThe integral on the right-hand side is the definition of \\mathcal{L}[tf(t)]. Therefore:\n\n\\frac{d}{ds} F(s) = -\\mathcal{L}[tf(t)]\n\nRearranging:\n\n\\mathcal{L}[tf(t)] = -\\frac{d}{ds} F(s)\n\n\n\nConclusion\nThe proof demonstrates that:\n\n\\mathcal{L}[tf(t)] = -\\frac{d}{ds} \\mathcal{L}[f(t)]"
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#corollary-laplace-transform-of-tn-ft",
-    "href": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#corollary-laplace-transform-of-tn-ft",
-    "title": "Laplace Transform - Multiplication by t Property",
-    "section": "Corollary: Laplace Transform of t^n f(t)",
-    "text": "Corollary: Laplace Transform of t^n f(t)\nBuilding on Theorem 5.3.2, the Laplace transform of t^n f(t) can be expressed as:\n\n\\mathcal{L}[t^n f(t)] = (-1)^n F^{(n)}(s)\n\nwhere F^{(n)}(s) is the n-th derivative of F(s). This property generalizes the Multiplication by t Property to higher powers of t.\n\nDemonstration\nTo demonstrate the corollary for n = 2, consider t^2 f(t):\n\nApply Theorem 5.3.2 for tf(t):\n\n\\mathcal{L}[tf(t)] = -\\frac{d}{ds}F(s)\n\nApply Theorem 5.3.2 again for t^2 f(t) = t \\cdot (tf(t)):\n\n\\mathcal{L}[t^2 f(t)] = -\\frac{d}{ds} \\big( \\mathcal{L}[tf(t)] \\big) = -\\frac{d}{ds} \\big( -\\frac{d}{ds} F(s) \\big)\n\nSimplify the expression:\n\n\\mathcal{L}[t^2 f(t)] = \\frac{d^2}{ds^2} F(s) = F^{(2)}(s)\n\nIncorporate the factor (-1)^2 for consistency with the corollary:\n\n\\mathcal{L}[t^2 f(t)] = F^{(2)}(s) = (-1)^2 F^{(2)}(s)\n\n\n\n\nGeneral Case\nThe process can be repeated for any positive integer n to show that:\n\n\\mathcal{L}[t^n f(t)] = (-1)^n F^{(n)}(s)"
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#summary",
-    "href": "mathematics/differential-equations/laplace-transform-properties/multiplication-by-t-property.html#summary",
-    "title": "Laplace Transform - Multiplication by t Property",
-    "section": "Summary",
-    "text": "Summary\nThe Multiplication by t Property provides a foundation for analyzing functions scaled by t or higher powers of t. The corollary extends the result to t^n f(t), relating it to the n-th derivative of the Laplace transform of f(t). This result is critical in applications requiring repeated differentiation in the s-domain."
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html",
-    "href": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html",
-    "title": "Laplace Transform - First Shifting Property",
-    "section": "",
-    "text": "The First Shifting Property of the Laplace Transform relates the Laplace transform of the product e^{at} f(t) to the transform of f(t). The property states:\n\n\\mathcal{L}[e^{at} f(t)] = F(s - a)\n\nwhere F(s) = \\mathcal{L}[f(t)] and a is any real number. This property is useful for analyzing systems involving exponential growth or decay."
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#overview",
-    "href": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#overview",
-    "title": "Laplace Transform - First Shifting Property",
-    "section": "",
-    "text": "The First Shifting Property of the Laplace Transform relates the Laplace transform of the product e^{at} f(t) to the transform of f(t). The property states:\n\n\\mathcal{L}[e^{at} f(t)] = F(s - a)\n\nwhere F(s) = \\mathcal{L}[f(t)] and a is any real number. This property is useful for analyzing systems involving exponential growth or decay."
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#statement-of-the-theorem",
-    "href": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#statement-of-the-theorem",
-    "title": "Laplace Transform - First Shifting Property",
-    "section": "Statement of the Theorem",
-    "text": "Statement of the Theorem\nLet f(t) be an acceptable function such that \\mathcal{L}[f(t)] = F(s). Then for any real value a:\n\n\\mathcal{L}[e^{at} f(t)] = F(s - a)"
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#proof",
-    "href": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#proof",
-    "title": "Laplace Transform - First Shifting Property",
-    "section": "Proof",
-    "text": "Proof\n\nWrite the Laplace Transform of e^{at} f(t)\nBy definition of the Laplace transform:\n\n\\mathcal{L}[e^{at} f(t)] = \\int_0^\\infty e^{at} f(t) e^{-st} \\, dt\n\n\n\nCombine Exponentials\nCombine the exponential terms e^{at} and e^{-st}:\n\ne^{at} e^{-st} = e^{-(s - a)t}\n\nSubstituting into the integral:\n\n\\mathcal{L}[e^{at} f(t)] = \\int_0^\\infty f(t) e^{-(s - a)t} \\, dt\n\n\n\nRecognize the Laplace Transform\nThe integral \\int_0^\\infty f(t) e^{-(s - a)t} \\, dt is the definition of the Laplace transform of f(t), evaluated at s - a. Therefore:\n\n\\mathcal{L}[e^{at} f(t)] = F(s - a)\n\n\n\nConclusion\nThis demonstrates that:\n\n\\mathcal{L}[e^{at} f(t)] = F(s - a)"
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#example",
-    "href": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#example",
-    "title": "Laplace Transform - First Shifting Property",
-    "section": "Example",
-    "text": "Example\nTo illustrate, let f(t) = t, for which \\mathcal{L}[f(t)] = \\frac{1}{s^2}. Using the First Shifting Property:\n\nCompute \\mathcal{L}[e^{3t} t]:\n\nSubstitute a = 3 and F(s) = \\frac{1}{s^2}.\n\n\n\\mathcal{L}[e^{3t} t] = F(s - 3) = \\frac{1}{(s - 3)^2}\n\nResult:\n\nThe Laplace transform of e^{3t} t is \\frac{1}{(s - 3)^2}."
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#summary",
-    "href": "mathematics/differential-equations/laplace-transform-properties/first-shifting-property.html#summary",
-    "title": "Laplace Transform - First Shifting Property",
-    "section": "Summary",
-    "text": "Summary\nThe First Shifting Property of the Laplace Transform provides a direct relationship between the transform of e^{at} f(t) and the transform of f(t). By shifting s in F(s) by a, this property simplifies the analysis of functions involving exponential factors."
-  },
-  {
-    "objectID": "mathematics/differential-equations/index.html",
-    "href": "mathematics/differential-equations/index.html",
-    "title": "DIFFERENTIAL EQUATIONS",
-    "section": "",
-    "text": "Generalized Eigenvectors in Differential Equations\nStability of the Origin in 2x2 Systems of Differential Equations"
-  },
-  {
-    "objectID": "mathematics/differential-equations/index.html#week-08",
-    "href": "mathematics/differential-equations/index.html#week-08",
-    "title": "DIFFERENTIAL EQUATIONS",
-    "section": "WEEK 08",
-    "text": "WEEK 08\n\nNonhomogeneous Systems: Undetermined Coefficients\nNonhomogeneous Systems: Variation of Parameters"
-  },
-  {
-    "objectID": "mathematics/differential-equations/index.html#week-09",
-    "href": "mathematics/differential-equations/index.html#week-09",
-    "title": "DIFFERENTIAL EQUATIONS",
-    "section": "WEEK 09",
-    "text": "WEEK 09\n\nExponential Order\nLaplace Transforms\nProperties of the Laplace Transform"
-  },
-  {
-    "objectID": "mathematics/differential-equations/index.html#week-10",
-    "href": "mathematics/differential-equations/index.html#week-10",
-    "title": "DIFFERENTIAL EQUATIONS",
-    "section": "WEEK 10",
-    "text": "WEEK 10\n\nSummary of Tests for Series\nPower Series"
-  },
-  {
-    "objectID": "mathematics/differential-equations/exponential-order.html",
-    "href": "mathematics/differential-equations/exponential-order.html",
-    "title": "Exponential Order: Definition and Examples",
-    "section": "",
-    "text": "A function f(t) is said to be of exponential order if its growth is controlled by an exponential function e^{\\alpha t} as t becomes large. This concept is crucial for ensuring the applicability of certain mathematical operations, such as the Laplace Transform, and for understanding the long-term behavior of functions.\nIn simpler terms:\n\nExponential Order: f(t) does not grow too quickly.\n“Too Fast”: The growth of f(t) is slower than or comparable to e^{\\alpha t} for some fixed \\alpha."
-  },
-  {
-    "objectID": "mathematics/differential-equations/exponential-order.html#overview",
-    "href": "mathematics/differential-equations/exponential-order.html#overview",
-    "title": "Exponential Order: Definition and Examples",
-    "section": "",
-    "text": "A function f(t) is said to be of exponential order if its growth is controlled by an exponential function e^{\\alpha t} as t becomes large. This concept is crucial for ensuring the applicability of certain mathematical operations, such as the Laplace Transform, and for understanding the long-term behavior of functions.\nIn simpler terms:\n\nExponential Order: f(t) does not grow too quickly.\n“Too Fast”: The growth of f(t) is slower than or comparable to e^{\\alpha t} for some fixed \\alpha."
-  },
-  {
-    "objectID": "mathematics/differential-equations/exponential-order.html#definition",
-    "href": "mathematics/differential-equations/exponential-order.html#definition",
-    "title": "Exponential Order: Definition and Examples",
-    "section": "Definition",
-    "text": "Definition\nFormally, a function f(t) is of exponential order \\alpha if there exist constants M &gt; 0 and t_0 \\geq 0 such that:\n\n|f(t)| \\leq M e^{\\alpha t}, \\quad \\text{for all } t \\geq t_0\n\n\nKey Components:\n\nBounded Growth: For t \\geq t_0, the magnitude of f(t) does not exceed M e^{\\alpha t}.\nConstants:\n\nM: A positive constant that bounds f(t).\n\\alpha: The exponential growth rate that controls the bound.\nt_0: The threshold after which the bound holds.\n\n\nThis definition ensures that f(t) does not grow faster than e^{\\alpha t} for sufficiently large t."
-  },
-  {
-    "objectID": "mathematics/differential-equations/exponential-order.html#understanding-too-fast-growth",
-    "href": "mathematics/differential-equations/exponential-order.html#understanding-too-fast-growth",
-    "title": "Exponential Order: Definition and Examples",
-    "section": "Understanding “Too Fast” Growth",
-    "text": "Understanding “Too Fast” Growth\nWhen we describe a function as growing “too fast” to be of exponential order, we mean that it outpaces the growth of any exponential function e^{\\alpha t}, regardless of how large \\alpha is chosen. For instance, functions like e^{t^2} grow so rapidly that no exponential bound e^{\\alpha t} can contain them for all large t.\n\nIntuition:\n\nExponential Functions: e^{\\alpha t} grow rapidly, but many functions (e.g., polynomials) grow slower or at a similar rate for large t.\nSuper-Exponential Functions: Functions like e^{t^2} grow faster than any e^{\\alpha t} because the exponent itself grows faster (e.g., t^2 vs. \\alpha t).\n\nIf a function grows faster than e^{\\alpha t}, it cannot be bounded by any exponential function, and thus, it is not of exponential order.\n\n\nExample: Comparing e^{t^2} and e^{\\alpha t}\nConsider f(t) = e^{t^2} and g(t) = e^{\\alpha t} with \\alpha = 2.\n\nAt t = 1:\n\ne^{t^2} = e^1 \\approx 2.718, \\quad e^{\\alpha t} = e^2 \\approx 7.389\n\nHere, e^{t^2} &lt; e^{\\alpha t}.\nAt t = 2:\n\ne^{t^2} = e^4 \\approx 54.598, \\quad e^{\\alpha t} = e^4 \\approx 54.598\n\nNow, e^{t^2} = e^{\\alpha t}.\nAt t = 3: \ne^{t^2} = e^9 \\approx 8103, \\quad e^{\\alpha t} = e^6 \\approx 403\n Here, e^{t^2} &gt; e^{\\alpha t}.\n\nAs t \\to \\infty, e^{t^2} grows much faster than e^{\\alpha t}, no matter how large \\alpha is. This demonstrates that f(t) = e^{t^2} is not of exponential order."
-  },
-  {
-    "objectID": "mathematics/differential-equations/exponential-order.html#example-1-polynomial-function-ft-t2",
-    "href": "mathematics/differential-equations/exponential-order.html#example-1-polynomial-function-ft-t2",
-    "title": "Exponential Order: Definition and Examples",
-    "section": "Example 1: Polynomial Function f(t) = t^2",
-    "text": "Example 1: Polynomial Function f(t) = t^2\nLet’s determine if f(t) = t^2 is of exponential order.\n\nStep 1: Analyze the Growth of f(t)\nThe function f(t) = t^2 grows quadratically as t \\to \\infty. In contrast, an exponential function like e^{\\alpha t} grows much faster for large t. This suggests that t^2 might be bounded by e^{\\alpha t} for some \\alpha &gt; 0.\n\n\nStep 2: Choose \\alpha and M\n\nSelect \\alpha = 1: A reasonable starting point for the exponential growth rate.\nDetermine M: We aim to find M such that t^2 \\leq M e^t for all t \\geq t_0.\n\n\n\nStep 3: Verify the Bound\n\nAt t = 3:\n\nt^2 = 9, \\quad e^t \\approx 20.09\n\nClearly, t^2 \\leq e^t.\nAs t increases: e^t grows significantly faster than t^2, ensuring that t^2 \\leq M e^t for some M &gt; 0.\n\nConclusion: For t \\geq t_0 = 3, we can choose M = 1 and \\alpha = 1 to satisfy:\n\n|f(t)| \\leq M e^{\\alpha t}\n\nTherefore, f(t) = t^2 is of exponential order with \\alpha = 1."
-  },
-  {
-    "objectID": "mathematics/differential-equations/exponential-order.html#example-2-exponential-function-ft-et2",
-    "href": "mathematics/differential-equations/exponential-order.html#example-2-exponential-function-ft-et2",
-    "title": "Exponential Order: Definition and Examples",
-    "section": "Example 2: Exponential Function f(t) = e^{t^2}",
-    "text": "Example 2: Exponential Function f(t) = e^{t^2}\nNow, let’s examine whether f(t) = e^{t^2} is of exponential order.\n\nStep 1: Analyze the Growth of f(t)\nThe function f(t) = e^{t^2} grows much faster than any exponential function e^{\\alpha t} as t \\to \\infty.\n\n\nStep 2: Attempt to Establish the Bound\nAssume, for contradiction, that e^{t^2} \\leq M e^{\\alpha t}. Taking the natural logarithm of both sides:\n\nt^2 \\leq \\ln(M) + \\alpha t\n\nFor large t, the left side (t^2) grows faster than the right side (\\ln(M) + \\alpha t), making the inequality impossible to satisfy.\n\n\nConclusion\nNo constants M &gt; 0 and \\alpha &gt; 0 can ensure |f(t)| \\leq M e^{\\alpha t} for all sufficiently large t. Therefore, f(t) = e^{t^2} is not of exponential order."
-  },
-  {
-    "objectID": "mathematics/differential-equations/exponential-order.html#why-use-exponential-bounds",
-    "href": "mathematics/differential-equations/exponential-order.html#why-use-exponential-bounds",
-    "title": "Exponential Order: Definition and Examples",
-    "section": "Why Use Exponential Bounds?",
-    "text": "Why Use Exponential Bounds?\nExponential functions e^{\\alpha t} serve as a benchmark for measuring the rate of growth of other functions:\n\nControlled Growth: If a function grows slower than or at the same rate as e^{\\alpha t}, its growth is considered manageable, making it suitable for operations like the Laplace Transform.\nUncontrolled Growth: If a function grows faster than e^{\\alpha t}, its growth becomes unmanageable, rendering it unsuitable for certain mathematical techniques.\n\n\nSummary:\n\nFunctions Growing “Too Fast”: These outpace exponential functions e^{\\alpha t} and are not of exponential order.\nFunctions of Exponential Order: These grow slower than or similarly to e^{\\alpha t}, ensuring their growth is under control.\n\nUnderstanding whether a function is of exponential order is essential for determining the applicability of various mathematical tools and for analyzing the function’s long-term behavior."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "notes",
-    "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
-  },
-  {
-    "objectID": "mathematics/differential-equations/generalized-eigenvectors-DE.html",
-    "href": "mathematics/differential-equations/generalized-eigenvectors-DE.html",
-    "title": "Generalized Eigenvectors in Differential Equations",
-    "section": "",
-    "text": "When solving systems of differential equations, we use eigenvectors to understand how the system evolves over time. Sometimes, however, we encounter a repeated eigenvalue but don’t have enough unique eigenvectors to fully describe the solution. This is where generalized eigenvectors come into play."
-  },
-  {
-    "objectID": "mathematics/differential-equations/generalized-eigenvectors-DE.html#overview",
-    "href": "mathematics/differential-equations/generalized-eigenvectors-DE.html#overview",
-    "title": "Generalized Eigenvectors in Differential Equations",
-    "section": "",
-    "text": "When solving systems of differential equations, we use eigenvectors to understand how the system evolves over time. Sometimes, however, we encounter a repeated eigenvalue but don’t have enough unique eigenvectors to fully describe the solution. This is where generalized eigenvectors come into play."
-  },
-  {
-    "objectID": "mathematics/differential-equations/generalized-eigenvectors-DE.html#why-generalized-eigenvectors-are-needed",
-    "href": "mathematics/differential-equations/generalized-eigenvectors-DE.html#why-generalized-eigenvectors-are-needed",
-    "title": "Generalized Eigenvectors in Differential Equations",
-    "section": "Why Generalized Eigenvectors Are Needed",
-    "text": "Why Generalized Eigenvectors Are Needed\n\nEigenvectors and Eigenvalues Recap:\n\nFor a matrix A, an eigenvalue \\lambda represents a rate of growth or decay in the system.\nAn eigenvector \\mathbf{v} associated with \\lambda is a direction in which the system evolves according to e^{\\lambda t} \\mathbf{v}.\n\nThe Problem with Repeated Eigenvalues:\n\nWhen an eigenvalue is repeated (e.g., \\lambda = 4 with multiplicity 2), we typically need two linearly independent eigenvectors to capture all directions in the solution space.\nIf there’s only one eigenvector for a repeated eigenvalue, we can’t span the entire space. This is where we turn to generalized eigenvectors.\n\nWhat a Generalized Eigenvector Does:\n\nA generalized eigenvector \\mathbf{v}_g helps fill in the missing direction when there’s only one regular eigenvector.\nTogether, the eigenvector \\mathbf{v} and generalized eigenvector \\mathbf{v}_g create a complete solution by introducing an extra component to the motion, such as t e^{\\lambda t} \\mathbf{v}_g.\nThis additional term allows the solution to “expand” over time, rather than being confined to a single line along \\mathbf{v}."
-  },
-  {
-    "objectID": "mathematics/differential-equations/generalized-eigenvectors-DE.html#how-generalized-eigenvectors-affect-the-solution",
-    "href": "mathematics/differential-equations/generalized-eigenvectors-DE.html#how-generalized-eigenvectors-affect-the-solution",
-    "title": "Generalized Eigenvectors in Differential Equations",
-    "section": "How Generalized Eigenvectors Affect the Solution",
-    "text": "How Generalized Eigenvectors Affect the Solution\nWith a regular eigenvector \\mathbf{v} and generalized eigenvector \\mathbf{v}_g:\n\nThe solution takes the form:\n\n\\mathbf{x}(t) = c_1 e^{\\lambda t} \\mathbf{v} + c_2 t e^{\\lambda t} \\mathbf{v}_g\n\nHere:\n\ne^{\\lambda t} \\mathbf{v}: Moves along the direction of \\mathbf{v}.\nt e^{\\lambda t} \\mathbf{v}_g: Adds a “twist” or “shearing” motion that broadens the path, allowing the solution to explore the full space over time."
-  },
-  {
-    "objectID": "mathematics/differential-equations/generalized-eigenvectors-DE.html#visual-intuition",
-    "href": "mathematics/differential-equations/generalized-eigenvectors-DE.html#visual-intuition",
-    "title": "Generalized Eigenvectors in Differential Equations",
-    "section": "Visual Intuition",
-    "text": "Visual Intuition\n\nEigenvector Only:\n\nImagine the solution tracing a single line in the direction of \\mathbf{v}, say along the x-axis. Without more directions, the solution can’t expand in other directions.\n\nWith Generalized Eigenvector:\n\nThe term t e^{\\lambda t} \\mathbf{v}_g introduces growth along a new direction, allowing the solution to move out of a single line. This gives a richer motion, often creating a “shearing” or “sweeping” effect in the plane."
-  },
-  {
-    "objectID": "mathematics/differential-equations/generalized-eigenvectors-DE.html#summary",
-    "href": "mathematics/differential-equations/generalized-eigenvectors-DE.html#summary",
-    "title": "Generalized Eigenvectors in Differential Equations",
-    "section": "Summary",
-    "text": "Summary\nGeneralized eigenvectors allow us to fully capture the behavior of systems with repeated eigenvalues. They provide additional directions for the solution to evolve, ensuring it spans all necessary dimensions and doesn’t collapse onto a single line."
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html",
-    "href": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html",
-    "title": "Laplace Transform - First Derivative Property",
-    "section": "",
-    "text": "The First Derivative Property of the Laplace Transform relates the Laplace transform of a derivative f'(t) to the transform of f(t) and its initial value. The property states:\n\n\\mathcal{L}[f'(t)] = s\\mathcal{L}[f(t)] - f(0)\n\nThis theorem is widely used in solving differential equations with given initial conditions."
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html#overview",
-    "href": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html#overview",
-    "title": "Laplace Transform - First Derivative Property",
-    "section": "",
-    "text": "The First Derivative Property of the Laplace Transform relates the Laplace transform of a derivative f'(t) to the transform of f(t) and its initial value. The property states:\n\n\\mathcal{L}[f'(t)] = s\\mathcal{L}[f(t)] - f(0)\n\nThis theorem is widely used in solving differential equations with given initial conditions."
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html#proof",
-    "href": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html#proof",
-    "title": "Laplace Transform - First Derivative Property",
-    "section": "Proof",
-    "text": "Proof\n\nWrite the Laplace Transform of the Derivative\nBy definition, the Laplace transform of f'(t) is:\n\n\\mathcal{L}[f'(t)] = \\int_0^\\infty f'(t) e^{-st} \\, dt\n\n\n\nApply Integration by Parts\nThe integration by parts formula is given by:\n\n\\int u \\, dv = uv - \\int v \\, du\n\nLet:\n\nu = e^{-st} and dv = f'(t) dt,\nThen du = -s e^{-st} dt and v = f(t).\n\nUsing this formula:\n\n\\int_0^\\infty f'(t) e^{-st} \\, dt = \\left[ f(t) e^{-st} \\right]_0^\\infty - \\int_0^\\infty f(t)(-s e^{-st}) \\, dt\n\n\n\nEvaluate the Boundary Terms\n\nAt t = \\infty, f(t) e^{-st} \\to 0, assuming f(t) grows no faster than an exponential function.\nAt t = 0, f(t) e^{-s(0)} = f(0).\n\nThus, the boundary term becomes:\n\n\\left[ f(t) e^{-st} \\right]_0^\\infty = -f(0)\n\n\n\nSimplify the Remaining Integral\nThe remaining integral is:\n\n\\int_0^\\infty s f(t) e^{-st} \\, dt = s \\int_0^\\infty f(t) e^{-st} \\, dt\n\nBy definition, this is:\n\ns \\mathcal{L}[f(t)]\n\n\n\nCombine Results\nSubstituting the results back into the equation:\n\n\\mathcal{L}[f'(t)] = -f(0) + s \\mathcal{L}[f(t)]\n\nRearranging:\n\n\\mathcal{L}[f'(t)] = s\\mathcal{L}[f(t)] - f(0)\n\n\n\nConclusion\nThe proof demonstrates that:\n\n\\mathcal{L}[f'(t)] = s\\mathcal{L}[f(t)] - f(0)"
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html#corollary-laplace-transform-of-gt-ft",
-    "href": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html#corollary-laplace-transform-of-gt-ft",
-    "title": "Laplace Transform - First Derivative Property",
-    "section": "Corollary: Laplace Transform of g'(t) = f''(t)",
-    "text": "Corollary: Laplace Transform of g'(t) = f''(t)\nTo extend the property to g'(t) = f''(t):\n\nDefine g(t) = f'(t). Then the Laplace transform of g'(t) = f''(t) is:\n\n\\mathcal{L}[f''(t)] = \\mathcal{L}[g'(t)]\n\nUsing the First Derivative Property for g(t):\n\n\\mathcal{L}[g'(t)] = s\\mathcal{L}[g(t)] - g(0)\n\nSubstituting g(t) = f'(t) and g(0) = f'(0):\n\n\\mathcal{L}[f''(t)] = s\\mathcal{L}[f'(t)] - f'(0)\n\nSubstitute the First Derivative Property for f'(t):\n\n\\mathcal{L}[f'(t)] = s\\mathcal{L}[f(t)] - f(0)\n\nSubstituting into the equation:\n\n\\mathcal{L}[f''(t)] = s \\big(s\\mathcal{L}[f(t)] - f(0)\\big) - f'(0)\n\nSimplify the expression:\n\n\\mathcal{L}[f''(t)] = s^2\\mathcal{L}[f(t)] - sf(0) - f'(0)\n\n\n\nExample Application\nFor f(t) = t^2, with f'(t) = 2t, f''(t) = 2, and f(0) = 0, f'(0) = 0:\n\nCompute \\mathcal{L}[f(t)] = \\frac{2}{s^3}.\nUsing the corollary:\n\n\\mathcal{L}[f''(t)] = s^2 \\cdot \\frac{2}{s^3} - s \\cdot 0 - 0\n\nSimplify:\n\n\\mathcal{L}[f''(t)] = \\frac{2s^2}{s^3} = \\frac{2}{s}"
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html#summary",
-    "href": "mathematics/differential-equations/laplace-transform-properties/first-derivative-property.html#summary",
-    "title": "Laplace Transform - First Derivative Property",
-    "section": "Summary",
-    "text": "Summary\nThe First Derivative Property establishes a relationship between the Laplace transform of f'(t) and the transform of f(t). The corollary extends this result to include the second derivative, f''(t) = g'(t), where g(t) = f'(t). These properties are essential for solving second-order differential equations with specified initial conditions."
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transform-properties/index.html",
-    "href": "mathematics/differential-equations/laplace-transform-properties/index.html",
-    "title": "PROPERTIES OF THE LAPLACE TRANSFORM",
-    "section": "",
-    "text": "Multiplication by t Property (Theorem 5.3.2)\nFirst Derivative Property (Theorem 5.3.4)\nFirst Shifting Property (Theorem 5.3.6)"
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transforms.html",
-    "href": "mathematics/differential-equations/laplace-transforms.html",
-    "title": "Laplace Transforms",
-    "section": "",
-    "text": "The Laplace Transform is a powerful mathematical tool used to simplify problems involving differential equations, especially in engineering and physics. It converts a function of time f(t) (defined for t \\geq 0) into a function of a complex variable s. This transformation makes it easier to analyze systems in the frequency domain and solve problems involving linear differential equations.\nIn simple terms:\n\nThe Laplace Transform takes a function from the time domain and transforms it into a new function in the s-domain.\nIt simplifies operations like differentiation and integration into algebraic manipulations."
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transforms.html#overview",
-    "href": "mathematics/differential-equations/laplace-transforms.html#overview",
-    "title": "Laplace Transforms",
-    "section": "",
-    "text": "The Laplace Transform is a powerful mathematical tool used to simplify problems involving differential equations, especially in engineering and physics. It converts a function of time f(t) (defined for t \\geq 0) into a function of a complex variable s. This transformation makes it easier to analyze systems in the frequency domain and solve problems involving linear differential equations.\nIn simple terms:\n\nThe Laplace Transform takes a function from the time domain and transforms it into a new function in the s-domain.\nIt simplifies operations like differentiation and integration into algebraic manipulations."
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transforms.html#definition",
-    "href": "mathematics/differential-equations/laplace-transforms.html#definition",
-    "title": "Laplace Transforms",
-    "section": "Definition",
-    "text": "Definition\nThe Laplace Transform of a function f(t) is defined as:\n\n\\mathcal{L}\\{f(t)\\}(s) = F(s) = \\int_0^\\infty e^{-st} f(t) \\, dt\n\nwhere:\n\nt: Time variable (t \\geq 0).\ns: Complex frequency variable.\ne^{-st}: Exponential decay term.\n\n\nKey Requirements:\n\nf(t) must be piecewise continuous on [0, \\infty).\nf(t) must be of exponential order (i.e., |f(t)| \\leq M e^{\\alpha t} for some M, \\alpha &gt; 0)."
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transforms.html#example-1-transform-of-ft-1",
-    "href": "mathematics/differential-equations/laplace-transforms.html#example-1-transform-of-ft-1",
-    "title": "Laplace Transforms",
-    "section": "Example 1: Transform of f(t) = 1",
-    "text": "Example 1: Transform of f(t) = 1\nThe Laplace Transform of the constant function f(t) = 1 is:\n\n\\mathcal{L}\\{1\\}(s) = \\int_0^\\infty e^{-st} \\cdot 1 \\, dt\n\n\nSolution:\n\n\\mathcal{L}\\{1\\}(s) = \\int_0^\\infty e^{-st} \\, dt = \\left[ \\frac{-1}{s} e^{-st} \\right]_0^\\infty\n\nAt t = \\infty, e^{-st} \\to 0 (for s &gt; 0), and at t = 0, e^{-st} = 1. Therefore:\n\n\\mathcal{L}\\{1\\}(s) = \\frac{1}{s}, \\quad s &gt; 0"
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transforms.html#example-2-transform-of-ft-eat",
-    "href": "mathematics/differential-equations/laplace-transforms.html#example-2-transform-of-ft-eat",
-    "title": "Laplace Transforms",
-    "section": "Example 2: Transform of f(t) = e^{at}",
-    "text": "Example 2: Transform of f(t) = e^{at}\nThe Laplace Transform of f(t) = e^{at} is:\n\n\\mathcal{L}\\{e^{at}\\}(s) = \\int_0^\\infty e^{-st} e^{at} \\, dt = \\int_0^\\infty e^{-(s-a)t} \\, dt\n\n\nSolution:\nUsing the same steps as before:\n\n\\mathcal{L}\\{e^{at}\\}(s) = \\left[ \\frac{-1}{s-a} e^{-(s-a)t} \\right]_0^\\infty.\n\nAt t = \\infty, e^{-(s-a)t} \\to 0 if s &gt; a, and at t = 0, e^{-(s-a)t} = 1. Therefore:\n\n\\mathcal{L}\\{e^{at}\\}(s) = \\frac{1}{s - a}, \\quad s &gt; a"
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transforms.html#applications-of-the-laplace-transform",
-    "href": "mathematics/differential-equations/laplace-transforms.html#applications-of-the-laplace-transform",
-    "title": "Laplace Transforms",
-    "section": "Applications of the Laplace Transform",
-    "text": "Applications of the Laplace Transform\n\nSolving Differential Equations: The Laplace Transform converts differential equations into algebraic equations, which are easier to solve. Once solved, the inverse Laplace Transform is used to return to the time domain.\nControl Systems: It is widely used in engineering to analyze the stability and performance of systems in the frequency domain.\nSignal Processing: The Laplace Transform is used to study signals and their frequency components.\nCircuit Analysis: It simplifies the analysis of electrical circuits with resistors, capacitors, and inductors by converting time-domain functions to the s-domain."
-  },
-  {
-    "objectID": "mathematics/differential-equations/laplace-transforms.html#summary",
-    "href": "mathematics/differential-equations/laplace-transforms.html#summary",
-    "title": "Laplace Transforms",
-    "section": "Summary",
-    "text": "Summary\nThe Laplace Transform is a fundamental tool for solving problems in engineering and physics, particularly those involving differential equations. Its key features are:\n\nTransforming functions from the time domain to the s-domain.\nSimplifying operations like differentiation and integration.\nMaking it possible to analyze systems in the frequency domain.\n\n\nCommon Transforms Recap:\n\n\n\nFunction f(t)\nLaplace Transform F(s)\nConditions\n\n\n\n\n1\n\\frac{1}{s}\ns &gt; 0\n\n\nt^n\n\\frac{n!}{s^{n+1}}\ns &gt; 0\n\n\ne^{at}\n\\frac{1}{s - a}\ns &gt; a\n\n\n\\sin(bt)\n\\frac{b}{s^2 + b^2}\ns &gt; 0\n\n\n\\cos(bt)\n\\frac{s}{s^2 + b^2}\ns &gt; 0\n\n\ne^{at} \\sin(bt)\n\\frac{b}{(s-a)^2 + b^2}\ns &gt; a\n\n\ne^{at} \\cos(bt)\n\\frac{s-a}{(s-a)^2 + b^2}\ns &gt; a"
-  },
-  {
-    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html",
-    "href": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html",
-    "title": "Nonhomogeneous Systems: Variation of Parameters",
-    "section": "",
-    "text": "When solving nonhomogeneous systems of differential equations, we use variation of parameters to find a particular solution to the system. This approach is especially useful when dealing with systems where a simple guess for the particular solution is not possible due to the nature of the nonhomogeneous term."
-  },
-  {
-    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#overview",
-    "href": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#overview",
-    "title": "Nonhomogeneous Systems: Variation of Parameters",
-    "section": "",
-    "text": "When solving nonhomogeneous systems of differential equations, we use variation of parameters to find a particular solution to the system. This approach is especially useful when dealing with systems where a simple guess for the particular solution is not possible due to the nature of the nonhomogeneous term."
-  },
-  {
-    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#variation-of-parameters",
-    "href": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#variation-of-parameters",
-    "title": "Nonhomogeneous Systems: Variation of Parameters",
-    "section": "Variation of Parameters",
-    "text": "Variation of Parameters\nGiven a matrix A of size n \\times n with constant entries, let \\Phi(t) be the fundamental solution matrix of the homogeneous system:\n\n\\mathbf{x}' = A \\mathbf{x}\n\nwhere \\mathbf{b}(t) is a continuous vector function. A particular solution \\mathbf{x}_p to the nonhomogeneous system:\n\n\\mathbf{x}' = A \\mathbf{x} + \\mathbf{b}(t)\n\nis given by:\n\n\\mathbf{x}_p(t) = \\Phi(t) \\int \\Phi^{-1}(t) \\mathbf{b}(t) \\, dt\n\nThis result is an application of the method of variation of parameters for nonhomogeneous systems of differential equations."
-  },
-  {
-    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#explanation",
-    "href": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#explanation",
-    "title": "Nonhomogeneous Systems: Variation of Parameters",
+    "objectID": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#explanation",
+    "href": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#explanation",
+    "title": "Power Series Expansion for \\frac{1}{1-x}",
     "section": "Explanation",
-    "text": "Explanation\n\nFundamental Solution Matrix \\Phi(t): A matrix whose columns are linearly independent solutions to the homogeneous system \\mathbf{x}' = A \\mathbf{x}.\nNonhomogeneous Term \\mathbf{b}(t): This is the vector function that adds a nonhomogeneous component to the system.\nParticular Solution \\mathbf{x}_p(t): This is the specific solution to the nonhomogeneous system, calculated using the formula above."
+    "text": "Explanation\n\n1. Geometric Series\nThe series arises from the infinite geometric series:\n\n\\sum_{n=0}^\\infty r^n = \\frac{1}{1-r}, \\quad \\text{for } |r| &lt; 1\n\nIn this case, substituting r = x, we get:\n\n\\frac{1}{1-x} = \\sum_{n=0}^\\infty x^n\n\n\n\n2. General Term\nThe general term of the series is:\n\nx^n\n\nwhere n is a non-negative integer. This leads to a simple and elegant representation.\n\n\n3. Radius of Convergence\nThe series converges only for |x| &lt; 1, as the geometric series formula is valid within this interval. For |x| \\geq 1, the series does not converge."
   },
   {
-    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#formula-components",
-    "href": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#formula-components",
-    "title": "Nonhomogeneous Systems: Variation of Parameters",
-    "section": "Formula Components",
-    "text": "Formula Components\n\n\\Phi(t): Fundamental solution matrix of the homogeneous system.\n\\Phi^{-1}(t): Inverse of the fundamental solution matrix.\n\\mathbf{b}(t): Nonhomogeneous term.\nIntegral \\int \\Phi^{-1}(t) \\mathbf{b}(t) \\, dt: Computes the effect of the nonhomogeneous term over time, transformed by the inverse of \\Phi(t).\n\nThis approach allows us to find a particular solution \\mathbf{x}_p(t) by integrating the transformed nonhomogeneous term. The total solution to the system is the sum of the general solution to the homogeneous system and this particular solution."
-  },
-  {
-    "objectID": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#summary",
-    "href": "mathematics/differential-equations/nonhomogeneous-systems-variation-of-parameters.html#summary",
-    "title": "Nonhomogeneous Systems: Variation of Parameters",
-    "section": "Summary",
-    "text": "Summary\nThe method of variation of parameters provides a systematic way to find a particular solution to nonhomogeneous systems of differential equations. By incorporating the fundamental solution matrix \\Phi(t), it enables us to account for the effects of the nonhomogeneous term \\mathbf{b}(t) and obtain a complete solution to the system."
-  },
-  {
-    "objectID": "mathematics/differential-equations/power-series/index.html",
-    "href": "mathematics/differential-equations/power-series/index.html",
-    "title": "POWER SERIES",
-    "section": "",
-    "text": "Quick Reference: Important Power Series Expansions\nPower Series Expansion for Cosine Function\nPower Series Expansion for Sine Function\nPower Series Expansion for e^x\nPower Series Expansion for \\frac{1}{1-x}"
-  },
-  {
-    "objectID": "mathematics/differential-equations/power-series/power-series-cosine-function.html",
-    "href": "mathematics/differential-equations/power-series/power-series-cosine-function.html",
-    "title": "Power Series Expansion for Cosine Function",
-    "section": "",
-    "text": "The power series expansion is a fundamental tool for representing functions as infinite sums. For the cosine function, this expansion provides an exact representation and a practical way to approximate \\cos(x) for any real value of x. The series is derived using the Taylor series centered at x = 0."
-  },
-  {
-    "objectID": "mathematics/differential-equations/power-series/power-series-cosine-function.html#overview",
-    "href": "mathematics/differential-equations/power-series/power-series-cosine-function.html#overview",
-    "title": "Power Series Expansion for Cosine Function",
-    "section": "",
-    "text": "The power series expansion is a fundamental tool for representing functions as infinite sums. For the cosine function, this expansion provides an exact representation and a practical way to approximate \\cos(x) for any real value of x. The series is derived using the Taylor series centered at x = 0."
-  },
-  {
-    "objectID": "mathematics/differential-equations/power-series/power-series-cosine-function.html#power-series-for-cosine",
-    "href": "mathematics/differential-equations/power-series/power-series-cosine-function.html#power-series-for-cosine",
-    "title": "Power Series Expansion for Cosine Function",
-    "section": "Power Series for Cosine",
-    "text": "Power Series for Cosine\nThe cosine function can be expressed as:\n\n\\cos(x) = \\sum_{n=0}^\\infty \\frac{(-1)^n}{(2n)!} x^{2n}\n\nThis series converges to the true value of \\cos(x) for all x. The first four terms of the series are:\n\n\\cos(x) \\approx 1 - \\frac{x^2}{2!} + \\frac{x^4}{4!} - \\frac{x^6}{6!}\n\nwhich simplifies to:\n\n\\cos(x) \\approx 1 - \\frac{x^2}{2} + \\frac{x^4}{24} - \\frac{x^6}{720}"
-  },
-  {
-    "objectID": "mathematics/differential-equations/power-series/power-series-cosine-function.html#explanation",
-    "href": "mathematics/differential-equations/power-series/power-series-cosine-function.html#explanation",
-    "title": "Power Series Expansion for Cosine Function",
-    "section": "Explanation",
-    "text": "Explanation\n\n1. Taylor Series\nThe power series for \\cos(x) is a special case of the Taylor series expansion about x = 0:\n\nf(x) = f(0) + f'(0)x + \\frac{f''(0)}{2!}x^2 + \\frac{f^{(3)}(0)}{3!}x^3 + \\cdots\n\nFor \\cos(x), the derivatives follow a cyclic pattern:\n\n\\cos(x)\n-\\sin(x)\n-\\cos(x)\n\\sin(x)\n\nEvaluating these derivatives at x = 0:\n\n\\cos(0) = 1\n-\\sin(0) = 0\n-\\cos(0) = -1\n\\sin(0) = 0\n\nOnly the even derivatives contribute to the series.\n\n\n2. General Term\nThe general term of the series is:\n\n\\frac{(-1)^n}{(2n)!} x^{2n}\n\nwhere n is a non-negative integer. This results in a series with only even powers of x, alternating in sign."
-  },
-  {
-    "objectID": "mathematics/differential-equations/power-series/power-series-cosine-function.html#examples",
-    "href": "mathematics/differential-equations/power-series/power-series-cosine-function.html#examples",
-    "title": "Power Series Expansion for Cosine Function",
+    "objectID": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#examples",
+    "href": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#examples",
+    "title": "Power Series Expansion for \\frac{1}{1-x}",
     "section": "Examples",
-    "text": "Examples\n\nSmall x:\nFor x = 0.1, using the first four terms:\n\n\\cos(0.1) \\approx 1 - \\frac{(0.1)^2}{2} + \\frac{(0.1)^4}{24} - \\frac{(0.1)^6}{720}\n\nThis gives a close approximation to the true value of \\cos(0.1).\nError Reduction:\nAdding more terms improves the approximation by reducing the truncation error."
+    "text": "Examples\n\nSmall x:\nFor x = 0.1, using the first four terms:\n\n\\frac{1}{1-0.1} \\approx 1 + 0.1 + (0.1)^2 + (0.1)^3 = 1 + 0.1 + 0.01 + 0.001 = 1.111\n\nThis is close to the exact value \\frac{1}{0.9} = 1.111\\ldots.\nLarger x:\nFor x = 0.5, the first four terms give:\n\n\\frac{1}{1-0.5} \\approx 1 + 0.5 + (0.5)^2 + (0.5)^3 = 1 + 0.5 + 0.25 + 0.125 = 1.875\n\nAdding more terms increases the accuracy."
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-cosine-function.html#summary",
-    "href": "mathematics/differential-equations/power-series/power-series-cosine-function.html#summary",
-    "title": "Power Series Expansion for Cosine Function",
+    "objectID": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#summary",
+    "href": "mathematics/differential-equations/power-series/power-series-1-over-1-minus-x.html#summary",
+    "title": "Power Series Expansion for \\frac{1}{1-x}",
     "section": "Summary",
-    "text": "Summary\nThe power series expansion for \\cos(x) is an essential concept in calculus:\n\nExact Representation: The series converges to \\cos(x) for all real x.\nApproximation: Truncated series provide practical approximations.\nApplications: Used in numerical analysis, signal processing, and physics.\n\nThe first four terms, 1 - \\frac{x^2}{2} + \\frac{x^4}{24} - \\frac{x^6}{720}, often provide sufficient accuracy for small x. This compact yet precise representation highlights the elegance and utility of the power series."
+    "text": "Summary\nThe power series expansion for \\frac{1}{1-x} is a simple yet powerful tool in analysis:\n\nExact Representation: The infinite series converges to \\frac{1}{1-x} for |x| &lt; 1.\nApproximation: Truncated series provide practical approximations for |x| &lt; 1.\nApplications: Used in algebra, calculus, and as the foundation for many other series expansions.\n\nThe first four terms, 1 + x + x^2 + x^3, offer a quick approximation for small x. This series demonstrates the elegance of geometric progressions in representing functions."
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-sine-function.html",
-    "href": "mathematics/differential-equations/power-series/power-series-sine-function.html",
-    "title": "Power Series Expansion for Sine Function",
+    "objectID": "mathematics/differential-equations/power-series/power-series-exponential-function.html",
+    "href": "mathematics/differential-equations/power-series/power-series-exponential-function.html",
+    "title": "Power Series Expansion for e^x",
     "section": "",
-    "text": "The power series expansion for the sine function is another important result in calculus and analysis. Derived from the Taylor series at x = 0, it provides an exact representation of \\sin(x) as an infinite sum, allowing for precise approximations of its values."
+    "text": "The power series expansion for the exponential function e^x is one of the most widely used series in mathematics, physics, and engineering. Derived from the Taylor series at x = 0, this expansion provides an exact representation of e^x as an infinite sum."
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-sine-function.html#overview",
-    "href": "mathematics/differential-equations/power-series/power-series-sine-function.html#overview",
-    "title": "Power Series Expansion for Sine Function",
+    "objectID": "mathematics/differential-equations/power-series/power-series-exponential-function.html#overview",
+    "href": "mathematics/differential-equations/power-series/power-series-exponential-function.html#overview",
+    "title": "Power Series Expansion for e^x",
     "section": "",
-    "text": "The power series expansion for the sine function is another important result in calculus and analysis. Derived from the Taylor series at x = 0, it provides an exact representation of \\sin(x) as an infinite sum, allowing for precise approximations of its values."
+    "text": "The power series expansion for the exponential function e^x is one of the most widely used series in mathematics, physics, and engineering. Derived from the Taylor series at x = 0, this expansion provides an exact representation of e^x as an infinite sum."
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-sine-function.html#power-series-for-sine",
-    "href": "mathematics/differential-equations/power-series/power-series-sine-function.html#power-series-for-sine",
-    "title": "Power Series Expansion for Sine Function",
-    "section": "Power Series for Sine",
-    "text": "Power Series for Sine\nThe sine function can be expressed as:\n\n\\sin(x) = \\sum_{n=0}^\\infty \\frac{(-1)^n}{(2n+1)!} x^{2n+1}\n\nThis series converges to the true value of \\sin(x) for all x. The first four terms of the series are:\n\n\\sin(x) \\approx x - \\frac{x^3}{3!} + \\frac{x^5}{5!} - \\frac{x^7}{7!}\n\nwhich simplifies to:\n\n\\sin(x) \\approx x - \\frac{x^3}{6} + \\frac{x^5}{120} - \\frac{x^7}{5040}"
+    "objectID": "mathematics/differential-equations/power-series/power-series-exponential-function.html#power-series-for-ex",
+    "href": "mathematics/differential-equations/power-series/power-series-exponential-function.html#power-series-for-ex",
+    "title": "Power Series Expansion for e^x",
+    "section": "Power Series for e^x",
+    "text": "Power Series for e^x\nThe exponential function e^x can be expressed as:\n\ne^x = \\sum_{n=0}^\\infty \\frac{x^n}{n!}\n\nThis series converges for all real x. The first four terms of the series are:\n\ne^x \\approx 1 + x + \\frac{x^2}{2!} + \\frac{x^3}{3!}\n\nwhich simplifies to:\n\ne^x \\approx 1 + x + \\frac{x^2}{2} + \\frac{x^3}{6}"
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-sine-function.html#explanation",
-    "href": "mathematics/differential-equations/power-series/power-series-sine-function.html#explanation",
-    "title": "Power Series Expansion for Sine Function",
+    "objectID": "mathematics/differential-equations/power-series/power-series-exponential-function.html#explanation",
+    "href": "mathematics/differential-equations/power-series/power-series-exponential-function.html#explanation",
+    "title": "Power Series Expansion for e^x",
     "section": "Explanation",
-    "text": "Explanation\n\n1. Taylor Series\nThe power series for \\sin(x) comes from the Taylor series expansion about x = 0:\n\nf(x) = f(0) + f'(0)x + \\frac{f''(0)}{2!}x^2 + \\frac{f^{(3)}(0)}{3!}x^3 + \\cdots\n\nFor \\sin(x), the derivatives follow a cyclic pattern:\n\n\\sin(x)\n\\cos(x)\n-\\sin(x)\n-\\cos(x)\n\nEvaluating these derivatives at x = 0:\n\n\\sin(0) = 0\n\\cos(0) = 1\n-\\sin(0) = 0\n-\\cos(0) = -1\n\nOnly the odd derivatives contribute to the series.\n\n\n2. General Term\nThe general term of the series is:\n\n\\frac{(-1)^n}{(2n+1)!} x^{2n+1}\n\nwhere n is a non-negative integer. This results in a series with only odd powers of x, alternating in sign."
+    "text": "Explanation\n\n1. Taylor Series\nThe power series for e^x is derived from the Taylor series centered at x = 0:\n\nf(x) = f(0) + f'(0)x + \\frac{f''(0)}{2!}x^2 + \\frac{f^{(3)}(0)}{3!}x^3 + \\cdots\n\nFor e^x, all derivatives are e^x, and at x = 0:\n\nf(0) = e^0 = 1, \\quad f'(0) = e^0 = 1, \\quad f''(0) = e^0 = 1, \\ldots-\n\nThus, the coefficients of the Taylor series are 1/n!.\n\n\n2. General Term\nThe general term of the series is:\n\n\\frac{x^n}{n!}\n\nwhere n is a non-negative integer.\n\n\nKey Property\nThe series converges absolutely and uniformly for all x, making it highly reliable for approximations."
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-sine-function.html#examples",
-    "href": "mathematics/differential-equations/power-series/power-series-sine-function.html#examples",
-    "title": "Power Series Expansion for Sine Function",
+    "objectID": "mathematics/differential-equations/power-series/power-series-exponential-function.html#examples",
+    "href": "mathematics/differential-equations/power-series/power-series-exponential-function.html#examples",
+    "title": "Power Series Expansion for e^x",
     "section": "Examples",
-    "text": "Examples\n\nSmall x:\nFor x = 0.1, using the first four terms:\n\n\\sin(0.1) \\approx 0.1 - \\frac{(0.1)^3}{6} + \\frac{(0.1)^5}{120} - \\frac{(0.1)^7}{5040}\n\nThis gives a close approximation to the true value of \\sin(0.1).\nError Reduction:\nAdding more terms improves the approximation by reducing the truncation error."
+    "text": "Examples\n\nSmall x:\nFor x = 0.1, using the first four terms:\n\ne^{0.1} \\approx 1 + 0.1 + \\frac{(0.1)^2}{2} + \\frac{(0.1)^3}{6}\n\nThis provides a close approximation to e^{0.1}.\nLarger x:\nFor x = 1, the first four terms give:\n\ne^1 \\approx 1 + 1 + \\frac{1^2}{2} + \\frac{1^3}{6} = 1 + 1 + 0.5 + 0.1667 \\approx 2.6667\n\nAdding more terms improves the accuracy."
   },
   {
-    "objectID": "mathematics/differential-equations/power-series/power-series-sine-function.html#summary",
-    "href": "mathematics/differential-equations/power-series/power-series-sine-function.html#summary",
-    "title": "Power Series Expansion for Sine Function",
+    "objectID": "mathematics/differential-equations/power-series/power-series-exponential-function.html#summary",
+    "href": "mathematics/differential-equations/power-series/power-series-exponential-function.html#summary",
+    "title": "Power Series Expansion for e^x",
     "section": "Summary",
-    "text": "Summary\nThe power series expansion for \\sin(x) is a cornerstone in mathematics:\n\nExact Representation: The infinite series converges to \\sin(x) for all real x.\nApproximation: Truncated series provide practical approximations.\nApplications: Used in numerical analysis, physics, and solving differential equations.\n\nThe first four terms, x - \\frac{x^3}{6} + \\frac{x^5}{120} - \\frac{x^7}{5040}, often provide sufficient accuracy for small x. This series highlights the utility and elegance of representing functions as infinite sums."
+    "text": "Summary\nThe power series expansion for e^x is a cornerstone in mathematics and science:\n\nExact Representation: The infinite series converges to e^x for all real x.\nApproximation: Truncated series provide practical approximations.\nApplications: Used in numerical analysis, differential equations, and growth modeling.\n\nThe first four terms, 1 + x + \\frac{x^2}{2} + \\frac{x^3}{6}, are often sufficient for small x. This series illustrates the utility of infinite sums in representing functions accurately and elegantly."
   },
   {
-    "objectID": "mathematics/differential-equations/tests-for-series.html",
-    "href": "mathematics/differential-equations/tests-for-series.html",
-    "title": "Summary of Tests for Series",
+    "objectID": "mathematics/differential-equations/stability-of-origin-2x2.html",
+    "href": "mathematics/differential-equations/stability-of-origin-2x2.html",
+    "title": "Stability of the Origin in 2x2 Systems of Differential Equations",
     "section": "",
-    "text": "Test\n\n\nSeries\n\n\nConverges\n\n\nDiverges\n\n\nComment\n\n\n\n\n\n\nnth-Term\n\n\n\\sum_{n=1}^{\\infty} a_n\n\n\n\\lim_{n\\to\\infty} a_n \\neq 0\n\n\nThis test cannot be used to show convergence.\n\n\n\n\n\n\nGeometric Series\n\n\n\\sum_{n=0}^{\\infty} ar^n\n\n\nr &lt; 1\n\n\nr \\geq 1\n\n\nSum: S = \\frac{a}{1 - r}\n\n\n\n\nTelescoping Series\n\n\n\\sum_{n=1}^{\\infty} (b_n - b_{n+1})\n\n\n\\lim_{n\\to\\infty} b_n = L\n\n\nSum: S = b_1 - L\n\n\n\n\n\n\np-Series\n\n\n\\sum_{n=1}^{\\infty} \\frac{1}{n^p}\n\n\np &gt; 1\n\n\np \\leq 1\n\n\n\n\n\n\nAlternating Series\n\n\n\\sum_{n=1}^{\\infty} (-1)^{n-1}a_n\n\n\n0 &lt; a_{n+1} \\leq a_n and \\lim_{n\\to\\infty} a_n = 0\n\n\nRemainder: R_N \\leq a_{N+1}\n\n\n\n\n\n\nIntegral\n\n\n\\sum_{n=1}^{\\infty} a_n, \\quad a_n = f(n) \\geq 0\n\n\n\\int f(x) \\, dx converges\n\n\n\\int f(x) \\, dx diverges\n\n\nRemainder: 0 &lt; R_N &lt; \\int_{N}^{\\infty} f(x) \\, dx\n\n\n\n\nRoot\n\n\n\\sum_{n=1}^{\\infty} a_n\n\n\n\\lim_{n\\to\\infty} \\sqrt[n]{a_n} &lt; 1\n\n\n\\lim_{n\\to\\infty} \\sqrt[n]{a_n} &gt; 1\n\n\nTest is inconclusive if \\lim_{n\\to\\infty} \\sqrt[n]{a_n} = 1\n\n\n\n\nRatio\n\n\n\\sum_{n=1}^{\\infty} a_n\n\n\n\\lim_{n\\to\\infty} \\frac{a_{n+1}}{a_n} &lt; 1\n\n\n\\lim_{n\\to\\infty} \\frac{a_{n+1}}{a_n} \\geq 1\n\n\nTest is inconclusive if \\lim_{n\\to\\infty} \\frac{a_{n+1}}{a_n} = 1\n\n\n\n\nDirect Comparison  (a_n, b_n &gt; 0)\n\n\n\\sum_{n=1}^{\\infty} a_n\n\n\n0 &lt; a_n \\leq b_n and \\sum_{n=1}^{\\infty} b_n converges\n\n\n0 &lt; b_n \\leq a_n and \\sum_{n=1}^{\\infty} b_n diverges\n\n\n\n\n\n\nLimit Comparison  (a_n, b_n &gt; 0)\n\n\n\\sum_{n=1}^{\\infty} a_n\n\n\n\\lim_{n\\to\\infty} \\frac{a_n}{b_n} = L &gt; 0 and \\sum_{n=1}^{\\infty} b_n converges\n\n\n\\lim_{n\\to\\infty} \\frac{a_n}{b_n} = L &gt; 0 and \\sum_{n=1}^{\\infty} b_n diverges"
+    "text": "In a system of differential equations defined by \\mathbf{x}' = A \\mathbf{x}, understanding the stability of the origin (the point \\mathbf{x} = 0) is essential. The stability depends on the eigenvalues of the 2 \\times 2 matrix A. Different configurations of eigenvalues lead to distinct types of stability, affecting how trajectories in the phase plane behave near the origin."
+  },
+  {
+    "objectID": "mathematics/differential-equations/stability-of-origin-2x2.html#overview",
+    "href": "mathematics/differential-equations/stability-of-origin-2x2.html#overview",
+    "title": "Stability of the Origin in 2x2 Systems of Differential Equations",
+    "section": "",
+    "text": "In a system of differential equations defined by \\mathbf{x}' = A \\mathbf{x}, understanding the stability of the origin (the point \\mathbf{x} = 0) is essential. The stability depends on the eigenvalues of the 2 \\times 2 matrix A. Different configurations of eigenvalues lead to distinct types of stability, affecting how trajectories in the phase plane behave near the origin."
+  },
+  {
+    "objectID": "mathematics/differential-equations/stability-of-origin-2x2.html#types-of-stability",
+    "href": "mathematics/differential-equations/stability-of-origin-2x2.html#types-of-stability",
+    "title": "Stability of the Origin in 2x2 Systems of Differential Equations",
+    "section": "Types of Stability",
+    "text": "Types of Stability\n\nRepelling Node (Unstable)\n\nEigenvalues: 0 &lt; \\lambda_1 \\leq \\lambda_2 (both positive real numbers).\nDescription: The origin is unstable. Trajectories move away from the origin in all directions. This configuration is known as a repelling node.\n\n\n\nShow Code\n# Define the system of ODEs for a repelling node\ndef dx_dt(X, t):\n    x1, x2 = X\n    dx1 = 3 * x1 + 1 * x2\n    dx2 = 1 * x1 + 3 * x2\n    return [dx1, dx2]\n\n# Generate grid for direction field\nx1_vals = np.linspace(-5, 5, 35)\nx2_vals = np.linspace(-5, 5, 35)\nX1, X2 = np.meshgrid(x1_vals, x2_vals)\n\n# Calculate slopes for direction field\nU = 3 * X1 + 1 * X2\nV = 1 * X1 + 3 * X2\n\n# Normalize the direction field arrows\nspeed = np.sqrt(U**2 + V**2)\nepsilon = 1e-10  # Small value to prevent division by zero\nU_norm = U / (speed + epsilon)\nV_norm = V / (speed + epsilon)\n\n# Plot the direction field\nplt.figure(figsize=(8, 8))\nplt.quiver(X1, X2, U_norm, V_norm, angles=\"xy\", color=\"black\", scale=40, alpha=0.4, width=0.0035)\n\n# Straight-line solutions (eigenvectors)\nx = np.linspace(-5, 5, 200)\nplt.plot(x, x, 'r', linewidth=3, label=r'Unstable direction, $\\lambda=3$')\nplt.plot(x, -x, 'b', linewidth=3, label=r'Unstable direction, $\\lambda=4$')\n\n\n# Set plot limits and labels\nplt.xlim(-5, 5)\nplt.ylim(-5, 5)\nplt.xlabel(\"$x_1$\", fontsize=14)\nplt.ylabel(\"$x_2$\", fontsize=14)\nplt.title(\"Repelling Node (Unstable)\", fontsize=18)\n\n# Add grid and legend\nplt.grid(True, linestyle='--', alpha=0.5)\nplt.legend(loc=\"best\", fontsize=12, framealpha=1.0, frameon=True)\n\n# Display the plot\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\nSaddle (Unstable)\n\nEigenvalues: \\lambda_1 &lt; 0 &lt; \\lambda_2 (one positive and one negative real number).\nDescription: The origin is unstable, with trajectories approaching along one direction and moving away along another. This configuration creates a “saddle” shape in the phase plane, and is called a saddle point.\n\n\n\nShow Code\n# Define the system of ODEs for a saddle point\ndef dx_dt(X, t):\n    x1, x2 = X\n    dx1 = 1 * x1 + 2 * x2\n    dx2 = 2 * x1 - 1 * x2\n    return [dx1, dx2]\n\n# Plot the direction field\nplt.figure(figsize=(8, 8))\nplt.quiver(X1, X2, U_norm, V_norm, angles=\"xy\", color=\"black\", scale=40, alpha=0.4, width=0.0035)\n\n# Straight-line solutions\nplt.plot(x, x, 'r', linewidth=3, label=r'Unstable direction, $\\lambda=1$')\nplt.plot(x, -x, 'b', linewidth=3, label=r'Stable direction, $\\lambda=-1$')\n\n\n# Labels and title\nplt.xlim(-5, 5)\nplt.ylim(-5, 5)\nplt.xlabel(\"$x_1$\", fontsize=14)\nplt.ylabel(\"$x_2$\", fontsize=14)\nplt.title(\"Saddle Point (Unstable)\", fontsize=18)\n\nplt.grid(True, linestyle='--', alpha=0.5)\nplt.legend(loc=\"best\", fontsize=12, framealpha=1.0, frameon=True)\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\nAttracting Node (Stable)\n\nEigenvalues: \\lambda_1 \\leq \\lambda_2 &lt; 0 (both negative real numbers).\nDescription: The origin is stable, and all trajectories are attracted toward it. This setup is called an attracting node, as trajectories converge to the origin from all directions.\n\n\n\nShow Code\n# Define the system of ODEs\ndef dx_dt(X, t):\n    x1, x2 = X\n    dx1 = -3 * x1 + 2 * x2\n    dx2 = 2 * x1 - 3 * x2\n    return [dx1, dx2]\n\n# Generate grid for direction field\nx1_vals = np.linspace(-5, 5, 35)\nx2_vals = np.linspace(-5, 5, 35)\nX1, X2 = np.meshgrid(x1_vals, x2_vals)\n\n# Calculate slopes for direction field\nU = -3 * X1 + 2 * X2\nV = 2 * X1 - 3 * X2\n\n# Normalize the direction field arrows\nspeed = np.sqrt(U**2 + V**2)\nepsilon = 1e-10  # Small value to prevent division by zero\nU_norm = U / (speed + epsilon)\nV_norm = V / (speed + epsilon)\n\n# Plot the direction field\nplt.figure(figsize=(8, 8))\nplt.quiver(X1, X2, U_norm, V_norm, angles=\"xy\", color=\"black\", scale=40, alpha=0.4, width=0.0035)\n\n# Plot the straight-line solutions (eigenvectors)\nx = np.linspace(-5, 5, 200)\nplt.plot(x, x, 'r', linewidth=3, label=r'Stable direction, $\\lambda=-1$')\nplt.plot(x, -x, 'b', linewidth=3, label=r'Stable direction, $\\lambda=-5$')\n\n\n# Set plot limits and labels\nplt.xlim(-5, 5)\nplt.ylim(-5, 5)\nplt.xlabel(\"$x_1$\", fontsize=14)\nplt.ylabel(\"$x_2$\", fontsize=14)\nplt.title(\"Attracting Node (Stable)\", fontsize=18)\n\n# Add grid and legend\nplt.grid(True, linestyle='--', alpha=0.5)\nplt.legend(loc=\"best\", fontsize=12, framealpha=1.0, frameon=True)\n\n# Display the plot\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\nSpiral Source (Unstable)\n\nEigenvalues: \\lambda = a \\pm bi with a &gt; 0 (complex eigenvalues with a positive real part).\nDescription: The origin is unstable. Trajectories spiral outward away from the origin, creating a spiral source.\n\n\n\nShow Code\n# Define the system of ODEs for a spiral source (unstable)\ndef dx_dt(X, t):\n    x1, x2 = X\n    dx1 = 1 * x1 - 2 * x2\n    dx2 = 2 * x1 + 1 * x2\n    return [dx1, dx2]\n\n# Generate grid for direction field\nx1_vals = np.linspace(-5, 5, 35)\nx2_vals = np.linspace(-5, 5, 35)\nX1, X2 = np.meshgrid(x1_vals, x2_vals)\n\n# Calculate slopes for direction field\nU = 1 * X1 - 2 * X2\nV = 2 * X1 + 1 * X2\n\n# Normalize the direction field arrows\nspeed = np.sqrt(U**2 + V**2)\nepsilon = 1e-10  # Small value to prevent division by zero\nU_norm = U / (speed + epsilon)\nV_norm = V / (speed + epsilon)\n\n# Plot the direction field\nplt.figure(figsize=(8, 8))\nplt.quiver(X1, X2, U_norm, V_norm, angles=\"xy\", color=\"black\", scale=40, alpha=0.4, width=0.0035)\n\n# Additional trajectories to show the outward spiral behavior\ninitial_conditions = [\n    [0, .1],\n    [0, -.1],\n    [.1, 0],\n    [-.1, 0],\n]\n\nt_values = np.linspace(0, 5, 500)\nfor ic in initial_conditions:\n    sol = odeint(dx_dt, ic, t_values)\n    plt.plot(sol[:, 0], sol[:, 1], 'green', linestyle='-', linewidth=2)\n\n# Set plot limits and labels\nplt.xlim(-5, 5)\nplt.ylim(-5, 5)\nplt.xlabel(\"$x_1$\", fontsize=14)\nplt.ylabel(\"$x_2$\", fontsize=14)\nplt.title(\"Spiral Source (Unstable)\", fontsize=18)\n\n# Add grid\nplt.grid(True, linestyle='--', alpha=0.5)\n\n# Display the plot\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\nCenter (Stable)\n\nEigenvalues: \\lambda = a \\pm bi with a = 0 (purely imaginary eigenvalues).\nDescription: The origin neither attracts nor repels trajectories. Instead, they form closed orbits around the origin, resulting in a behavior called a center. This indicates neutral stability.\n\n\n\nShow Code\n# Define the system of ODEs for a center (neutral stability)\ndef dx_dt(X, t):\n    x1, x2 = X\n    dx1 = -1 * x2\n    dx2 = 1 * x1\n    return [dx1, dx2]\n\n# Generate grid for direction field\nx1_vals = np.linspace(-5, 5, 35)\nx2_vals = np.linspace(-5, 5, 35)\nX1, X2 = np.meshgrid(x1_vals, x2_vals)\n\n# Calculate slopes for direction field\nU = -1 * X2\nV = 1 * X1\n\n# Normalize the direction field arrows\nspeed = np.sqrt(U**2 + V**2)\nepsilon = 1e-10  # Small value to prevent division by zero\nU_norm = U / (speed + epsilon)\nV_norm = V / (speed + epsilon)\n\n# Plot the direction field\nplt.figure(figsize=(8, 8))\nplt.quiver(X1, X2, U_norm, V_norm, angles=\"xy\", color=\"black\", scale=40, alpha=0.4, width=0.0035)\n\n# Additional trajectories to show the circular motion\ninitial_conditions = [\n    [5, 0],\n    [0, 3],\n    [1, 0]\n\n]\n\nt_values = np.linspace(0, 20, 500)\nfor ic in initial_conditions:\n    sol = odeint(dx_dt, ic, t_values)\n    plt.plot(sol[:, 0], sol[:, 1], 'green', linestyle='-', linewidth=2)\n\n# Set plot limits and labels\nplt.xlim(-5, 5)\nplt.ylim(-5, 5)\nplt.xlabel(\"$x_1$\", fontsize=14)\nplt.ylabel(\"$x_2$\", fontsize=14)\nplt.title(\"Center (Neutral Stability)\", fontsize=18)\n\n# Add grid\nplt.grid(True, linestyle='--', alpha=0.5)\n\n# Display the plot\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\nSpiral Sink (Stable)\n\nEigenvalues: \\lambda = a \\pm bi with a &lt; 0 (complex eigenvalues with a negative real part).\nDescription: The origin is stable, and trajectories spiral inward toward it, forming a spiral sink.\n\n\n\nShow Code\n# Define the system of ODEs for a spiral sink (stable)\ndef dx_dt(X, t):\n    x1, x2 = X\n    dx1 = -1 * x1 - 2 * x2\n    dx2 = 2 * x1 - 1 * x2\n    return [dx1, dx2]\n\n# Generate grid for direction field\nx1_vals = np.linspace(-5, 5, 35)\nx2_vals = np.linspace(-5, 5, 35)\nX1, X2 = np.meshgrid(x1_vals, x2_vals)\n\n# Calculate slopes for direction field\nU = -1 * X1 - 2 * X2\nV = 2 * X1 - 1 * X2\n\n# Normalize the direction field arrows\nspeed = np.sqrt(U**2 + V**2)\nepsilon = 1e-10  # Small value to prevent division by zero\nU_norm = U / (speed + epsilon)\nV_norm = V / (speed + epsilon)\n\n# Plot the direction field\nplt.figure(figsize=(8, 8))\nplt.quiver(X1, X2, U_norm, V_norm, angles=\"xy\", color=\"black\", scale=40, alpha=0.4, width=0.0035)\n\n# Additional trajectories to show the spiral inward behavior\ninitial_conditions = [\n    [5, 0],\n    [0, 5],\n    [-5, 0],\n    [0, -5],\n]\n\nt_values = np.linspace(0, 10, 500)\nfor ic in initial_conditions:\n    sol = odeint(dx_dt, ic, t_values)\n    plt.plot(sol[:, 0], sol[:, 1], 'green', linestyle='-', linewidth=2)\n\n# Set plot limits and labels\nplt.xlim(-5, 5)\nplt.ylim(-5, 5)\nplt.xlabel(\"$x_1$\", fontsize=14)\nplt.ylabel(\"$x_2$\", fontsize=14)\nplt.title(\"Spiral Sink (Stable)\", fontsize=18)\n\n# Add grid and legend\nplt.grid(True, linestyle='--', alpha=0.5)\n\n\n# Display the plot\nplt.tight_layout()\nplt.show()"
+  },
+  {
+    "objectID": "mathematics/differential-equations/stability-of-origin-2x2.html#summary",
+    "href": "mathematics/differential-equations/stability-of-origin-2x2.html#summary",
+    "title": "Stability of the Origin in 2x2 Systems of Differential Equations",
+    "section": "Summary",
+    "text": "Summary\nThe stability of the origin in a 2 \\times 2 system of differential equations depends on the real and imaginary parts of the eigenvalues of matrix A:\n\nReal positive eigenvalues lead to a repelling node (unstable).\nMixed positive and negative real eigenvalues create a saddle point (unstable).\nReal negative eigenvalues result in an attracting node (stable).\nComplex eigenvalues with a positive real part indicate a spiral source (unstable).\nPurely imaginary eigenvalues create a center (neutral stability).\nComplex eigenvalues with a negative real part lead to a spiral sink (stable).\n\nBy determining the eigenvalues, we can classify the type of stability at the origin and predict the behavior of trajectories in the phase plane."
   },
   {
     "objectID": "mathematics/numerical-analysis/fast-fourier-transform/fast-fourier-transform.html",
@@ -2356,7 +2356,7 @@
     "href": "mathematics/numerical-analysis/index.html",
     "title": "NUMERICAL ANALYSIS",
     "section": "",
-    "text": "WEEK 01\n\nBisection Method\nFixed-Point Iteration\nNewtons’s Method\nSecant Method\n\n\n\nWEEK 02\n\nLagrange Interpolation\nNewton’s Divided Differences\n\n\n\nWEEK 03\n\nInterpolation Error Formula\nRunge Phenomenon\nChebyshev Interpolation\n\n\n\nWEEK 04\n\nTrapezoidal Rule\n\n\n\nWEEK 05\n\n\nWEEK 06\n\nLinear Systems: A\\mathbf{x} = \\mathbf{b}\nSpectral Radius\n\n\n\nWEEK 07\n\nLU Factorization\nIterative Methods for Solving Linear Systems\nChapter 2 Section 3 Notes\nNorms\nLinear System Error Analysis\n\n\n\nWEEK 08\n\nLeast Squares Solution for Inconsistent Systems\nGram-Schmidt Orthogonalization\nModified Gram-Schmidt Orthogonalization\n\n\n\nWEEK 09\n\n\nWEEK 10\n\n\nWEEK 11\n\n\nWEEK 12\n\nThe Fourier Transform\nRoots of Unity\nThe Discrete Fourier Transform (DFT)\nThe Fast Fourier Transform (FFT)"
+    "text": "WEEK 01\n\nBisection Method\nFixed-Point Iteration\nNewtons’s Method\nSecant Method\n\n\n\nWEEK 02\n\nLagrange Interpolation\nNewton’s Divided Differences\n\n\n\nWEEK 03\n\nInterpolation Error Formula\nRunge Phenomenon\nChebyshev Interpolation\n\n\n\nWEEK 04\n\nTrapezoidal Rule\n\n\n\nWEEK 05\n\n\nWEEK 06\n\nLinear Systems: A\\mathbf{x} = \\mathbf{b}\nSpectral Radius\n\n\n\nWEEK 07\n\nLU Factorization\nIterative Methods for Solving Linear Systems\nChapter 2 Section 3 Notes\nNorms\nLinear System Error Analysis\n\n\n\nWEEK 08\n\nLeast Squares Solution for Inconsistent Systems\nGram-Schmidt Orthogonalization\nModified Gram-Schmidt Orthogonalization\nThe Fourier Transform\nRoots of Unity\nThe Discrete Fourier Transform (DFT)\nThe Fast Fourier Transform (FFT)"
   },
   {
     "objectID": "mathematics/numerical-analysis/linear-systems/ax-b-iterative-methods/gauss-seidel-method.html",
@@ -2669,9 +2669,9 @@
   {
     "objectID": "mathematics/numerical-analysis/linear-systems/index.html",
     "href": "mathematics/numerical-analysis/linear-systems/index.html",
-    "title": "NUMERICAL ANALYSIS",
+    "title": "LINEAR SYSTEMS",
     "section": "",
-    "text": "WEEK 01\n\nBisection Method\nFixed-Point Iteration\nNewtons’s Method\nSecant Method\n\n\n\nWEEK 02\n\nLagrange Interpolation\nNewton’s Divided Differences\n\n\n\nWEEK 03\n\nInterpolation Error Formula\nRunge Phenomenon\nChebyshev Interpolation\n\n\n\nWEEK 04\n\nTrapezoidal Rule\n\n\n\nWEEK 05\n\n\nWEEK 06\n\nLinear Systems: A\\mathbf{x} = \\mathbf{b}\nSpectral Radius\n\n\n\nWEEK 07\n\nLU Factorization\nIterative Methods for Solving Linear Systems\nChapter 2 Section 3 Notes\nNorms\nLinear System Error Analysis\n\n\n\nWEEK 08\n\nLeast Squares Solution for Inconsistent Systems\nGram-Schmidt Orthogonalization\nModified Gram-Schmidt Orthogonalization\n\n\n\nWEEK 09\n\n\nWEEK 10\n\n\nWEEK 11\n\n\nWEEK 12\n\nThe Fourier Transform\nRoots of Unity\nThe Discrete Fourier Transform (DFT)\nThe Fast Fourier Transform (FFT)"
+    "text": "Linear Systems: A\\mathbf{x} = \\mathbf{b}\nSpectral Radius\nLU Factorization\nIterative Methods for Solving Linear Systems\nChapter 2 Section 3 Notes\nNorms\nLinear System Error Analysis\nLeast Squares Solution for Inconsistent Systems\nGram-Schmidt Orthogonalization\nModified Gram-Schmidt Orthogonalization"
   },
   {
     "objectID": "mathematics/numerical-analysis/linear-systems/linear-systems.html",
@@ -2720,7 +2720,7 @@
     "href": "mathematics/numerical-analysis/linear-systems/linear-systems.html#geometric-interpretation",
     "title": "Linear Systems: A\\mathbf{x} = \\mathbf{b}",
     "section": "Geometric Interpretation",
-    "text": "Geometric Interpretation\nVisualizing A\\mathbf{x} = \\mathbf{b} can enhance comprehension, especially in two dimensions.\n\nExample Visualization\nConsider the system:\n\n\\begin{cases}\n1x_1 + 2x_2 = 5 \\\\\n3x_1 + 4x_2 = 11 \\\\\n\\end{cases}\n\nGraphically, each equation represents a line in the x_1-x_2 plane.\n\nFirst Equation: 1x_1 + 2x_2 = 5\n\nSlope: -\\frac{1}{2}\nIntercepts: (5, 0) and (0, 2.5)\n\nSecond Equation: 3x_1 + 4x_2 = 11\n\nSlope: -\\frac{3}{4}\nIntercepts: (\\frac{11}{3}, 0) and (0, \\frac{11}{4})\n\n\nThe unique solution (1, 2) is the intersection point of these two lines.\n\n\nVisual Representation\n\n\nShow Code\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nx1 = np.linspace(-1, 4, 400)\n\nx2_eq1 = (5 - x1) / 2\n\nx2_eq2 = (11 - 3*x1) / 4\n\n# Create the plot\nplt.figure(figsize=(8, 6))\nplt.plot(x1, x2_eq1, label=r'$1x_1 + 2x_2 = 5$', color='blue')\nplt.plot(x1, x2_eq2, label=r'$3x_1 + 4x_2 = 11$', color='green')\n\nplt.plot(1, 2, 'ro', label=r'Solution $(1, 2)$')\n\nplt.xlim(-1, 4)\nplt.ylim(-1, 4)\n\nplt.grid(True, linestyle='--', alpha=0.7)\nplt.xlabel(r'$x_1$', fontsize=12)\nplt.ylabel(r'$x_2$', fontsize=12)\nplt.title('Geometric Interpretation of $A\\mathbf{x} = \\mathbf{b}$', fontsize=14)\nplt.legend()\nplt.axhline(0, color='black', linewidth=1)\nplt.axvline(0, color='black', linewidth=1)\nplt.show()\n\n\n&lt;&gt;:23: SyntaxWarning:\n\ninvalid escape sequence '\\m'\n\n&lt;&gt;:23: SyntaxWarning:\n\ninvalid escape sequence '\\m'\n\nC:\\Users\\nater\\AppData\\Local\\Temp\\ipykernel_18080\\905493902.py:23: SyntaxWarning:\n\ninvalid escape sequence '\\m'\n\n\n\n\n\n\n\n\n\n\n\n\nExplanation of the Visualization\n\nBlue Line: Represents the equation 1x_1 + 2x_2 = 5.\nGreen Line: Represents the equation 3x_1 + 4x_2 = 11.\nRed Dot: Marks the unique solution (1, 2), where the two lines intersect.\n\nThis visualization underscores how the inputs A and \\mathbf{b} define the system’s structure and determine the solution’s existence and uniqueness."
+    "text": "Geometric Interpretation\nVisualizing A\\mathbf{x} = \\mathbf{b} can enhance comprehension, especially in two dimensions.\n\nExample Visualization\nConsider the system:\n\n\\begin{cases}\n1x_1 + 2x_2 = 5 \\\\\n3x_1 + 4x_2 = 11 \\\\\n\\end{cases}\n\nGraphically, each equation represents a line in the x_1-x_2 plane.\n\nFirst Equation: 1x_1 + 2x_2 = 5\n\nSlope: -\\frac{1}{2}\nIntercepts: (5, 0) and (0, 2.5)\n\nSecond Equation: 3x_1 + 4x_2 = 11\n\nSlope: -\\frac{3}{4}\nIntercepts: (\\frac{11}{3}, 0) and (0, \\frac{11}{4})\n\n\nThe unique solution (1, 2) is the intersection point of these two lines.\n\n\nVisual Representation\n\n\nShow Code\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nx1 = np.linspace(-1, 4, 400)\n\nx2_eq1 = (5 - x1) / 2\n\nx2_eq2 = (11 - 3*x1) / 4\n\n# Create the plot\nplt.figure(figsize=(8, 6))\nplt.plot(x1, x2_eq1, label=r'$1x_1 + 2x_2 = 5$', color='blue')\nplt.plot(x1, x2_eq2, label=r'$3x_1 + 4x_2 = 11$', color='green')\n\nplt.plot(1, 2, 'ro', label=r'Solution $(1, 2)$')\n\nplt.xlim(-1, 4)\nplt.ylim(-1, 4)\n\nplt.grid(True, linestyle='--', alpha=0.7)\nplt.xlabel(r'$x_1$', fontsize=12)\nplt.ylabel(r'$x_2$', fontsize=12)\nplt.title('Geometric Interpretation of $A\\mathbf{x} = \\mathbf{b}$', fontsize=14)\nplt.legend()\nplt.axhline(0, color='black', linewidth=1)\nplt.axvline(0, color='black', linewidth=1)\nplt.show()\n\n\n&lt;&gt;:23: SyntaxWarning:\n\ninvalid escape sequence '\\m'\n\n&lt;&gt;:23: SyntaxWarning:\n\ninvalid escape sequence '\\m'\n\nC:\\Users\\nater\\AppData\\Local\\Temp\\ipykernel_9888\\905493902.py:23: SyntaxWarning:\n\ninvalid escape sequence '\\m'\n\n\n\n\n\n\n\n\n\n\n\n\nExplanation of the Visualization\n\nBlue Line: Represents the equation 1x_1 + 2x_2 = 5.\nGreen Line: Represents the equation 3x_1 + 4x_2 = 11.\nRed Dot: Marks the unique solution (1, 2), where the two lines intersect.\n\nThis visualization underscores how the inputs A and \\mathbf{b} define the system’s structure and determine the solution’s existence and uniqueness."
   },
   {
     "objectID": "mathematics/numerical-analysis/linear-systems/linear-systems.html#importance-of-understanding-inputs",
@@ -3217,7 +3217,7 @@
     "href": "mathematics/numerical-analysis/root-finding-methods/index.html",
     "title": "ROOT FINDING METHODS",
     "section": "",
-    "text": "WEEK 01\n\nBisection Method\nFixed-Point Iteration\nNewtons’s Method\nSecant Method\n\n\n\nWEEK 02\n\nLagrange Interpolation\nNewton’s Divided Differences\n\n\n\nWEEK 03\n\nInterpolation Error Formula\nRunge Phenomenon\nChebyshev Interpolation\n\n\n\nWEEK 04\n\nTrapezoidal Rule\n\n\n\nWEEK 05\n\n\nWEEK 06\n\nLinear Systems: A\\mathbf{x} = \\mathbf{b}\nSpectral Radius\n\n\n\nWEEK 07\n\nLU Factorization\nIterative Methods for Solving Linear Systems\nChapter 2 Section 3 Notes\nNorms\nLinear System Error Analysis\n\n\n\nWEEK 08\n\nLeast Squares Solution for Inconsistent Systems\nGram-Schmidt Orthogonalization\nModified Gram-Schmidt Orthogonalization\nThe Fourier Transform\nRoots of Unity\nThe Discrete Fourier Transform (DFT)\nThe Fast Fourier Transform (FFT)"
+    "text": "Bisection Method\nFixed-Point Iteration\nNewtons’s Method\nSecant Method"
   },
   {
     "objectID": "mathematics/numerical-analysis/root-finding-methods/secant-method.html",

@@ -367,5 +367,17 @@
   },
   "mathematics/numerical-analysis/trigonometric-interpolation/index.qmd": {
     "index.html": "42082cf0"
+  },
+  "mathematics/calculus/index.qmd": {
+    "index.html": "5a10c191"
+  },
+  "mathematics/discrete-math/index.qmd": {
+    "index.html": "dcd9ede7"
+  },
+  "mathematics/index.qmd": {
+    "index.html": "bf3cf993"
+  },
+  "mathematics/linear-algebra/index.qmd": {
+    "index.html": "848b3187"
   }
 }

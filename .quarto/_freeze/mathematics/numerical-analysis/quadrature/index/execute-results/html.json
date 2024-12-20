@@ -1,8 +1,8 @@
 {
-  "hash": "9890dd207eb57a459941c4792e26eeb8",
+  "hash": "d1d9a47814cd6e8bc9cfad76d2815ecb",
   "result": {
     "engine": "jupyter",
-    "markdown": "---\ntitle: 'QUADRATURE'\nformat:\n  html:\n    self-contained: true\n    page-layout: full\n    toc: true\n    toc-depth: 2\n    toc-location: right\n    number-sections: false\n    html-math-method: katex\n    embed-resources: true\n    code-fold: true\n    code-summary: 'Show the code'\n    code-overflow: wrap\n    code-copy: hover\n    code-tools:\n      source: false\n      toggle: true\n      caption: See code\nengine: jupyter\npreview:\n  port: 3000\n  browser: true\n  watch-inputs: true\n  navigate: true\n---\n\n\n\n- [Trapezoidal Rule](./trapezoidal-rule.html)\n\n",
+    "markdown": "---\ntitle: 'QUADRATURE'\nformat:\n  html:\n    self-contained: true\n    page-layout: full\n    toc: true\n    toc-depth: 2\n    toc-location: right\n    number-sections: false\n    html-math-method: katex\n    embed-resources: true\n    code-fold: true\n    code-summary: 'Show the code'\n    code-overflow: wrap\n    code-copy: hover\n    code-tools:\n      source: false\n      toggle: true\n      caption: See code\nengine: jupyter\npreview:\n  port: 3000\n  browser: true\n  watch-inputs: true\n  navigate: true\n---\n\n\n- [Trapezoidal Rule](./trapezoidal-rule.html)\n\n",
     "supporting": [
       "index_files"
     ],

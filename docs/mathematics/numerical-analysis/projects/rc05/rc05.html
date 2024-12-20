@@ -4936,7 +4936,7 @@ y(t) = 1.5 + 0.3t + 0.9t^2 - 2.7t^3
 <section id="solution-code" class="level3">
 <h3 class="anchored" data-anchor-id="solution-code"><strong>Solution Code</strong></h3>
 <p>The Python code below implements the above steps to calculate the arc length from <span class="math inline">t = 0</span> to a specified <span class="math inline">t = s</span> using numerical integration:</p>
-<div id="e0ed0ecd" class="cell" data-execution_count="2">
+<div id="81db45de" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> quad</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -5009,7 +5009,7 @@ f(t) = \frac{\text{Arc length from } t = 0 \text{ to } t^*(s)}{\text{Total arc l
 <section id="solution-code-1" class="level3">
 <h3 class="anchored" data-anchor-id="solution-code-1"><strong>Solution Code</strong></h3>
 <p>The Python code below implements the above approach using the Bisection Method to locate <span class="math inline">t^*(s)</span> for any input <span class="math inline">s</span>:</p>
-<div id="4f341206" class="cell" data-execution_count="3">
+<div id="6ce71b5a" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Total arc length from t=0 to t=1</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>total_arc_length <span class="op">=</span> compute_arc_length(<span class="dv">1</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -5054,7 +5054,7 @@ f(t) = \frac{\text{Arc length from } t = 0 \text{ to } t^*(s)}{\text{Total arc l
 <section id="problem-statement-2" class="level3">
 <h3 class="anchored" data-anchor-id="problem-statement-2"><strong>Problem Statement</strong></h3>
 <p>Equipartition the path of Figure 5.6 into <span class="math inline">n</span> subpaths of equal length, for <span class="math inline">n = 4</span> and <span class="math inline">n = 20</span>. Plot analogues of Figure 5.6, showing the equipartitions.</p>
-<div id="9ddb74bc" class="cell" data-execution_count="4">
+<div id="6a787349" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -5155,7 +5155,7 @@ f(t) = \frac{\text{Arc length from } t = 0 \text{ to } t^*(s)}{\text{Total arc l
 </div>
 <section id="equipartitioned-curve-with-n-4" class="level4">
 <h4 class="anchored" data-anchor-id="equipartitioned-curve-with-n-4">Equipartitioned Curve with <span class="math inline">n = 4</span></h4>
-<div id="b3c03478" class="cell" data-execution_count="6">
+<div id="bc5f72b2" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -5167,7 +5167,7 @@ f(t) = \frac{\text{Arc length from } t = 0 \text{ to } t^*(s)}{\text{Total arc l
 </section>
 <section id="equipartitioned-curve-with-n-20" class="level4">
 <h4 class="anchored" data-anchor-id="equipartitioned-curve-with-n-20">Equipartitioned Curve with <span class="math inline">n = 20</span></h4>
-<div id="e9e0bb34" class="cell" data-execution_count="7">
+<div id="4b2464d6" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -5260,8 +5260,8 @@ f&#39;(t) = \sqrt{\left( \frac{dx}{dt} \right)^2 + \left( \frac{dy}{dt} \right)^
 <span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>total_length <span class="op">=</span> compute_arc_length(<span class="dv">1</span>)</span>
 <span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>compare_performance(total_length <span class="op">/</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Bisection Method Result: 0.800593771 Time: 0.006005049 seconds
-Newton&#39;s Method Result: 0.800593767 Time: 0.001001358 seconds</code></pre>
+<pre><code>Bisection Method Result: 0.800593771 Time: 0.012233019 seconds
+Newton&#39;s Method Result: 0.800593767 Time: 0.001000643 seconds</code></pre>
 </div>
 </div>
 </section>
