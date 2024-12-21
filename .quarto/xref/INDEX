@@ -379,5 +379,98 @@
   },
   "mathematics/linear-algebra/index.qmd": {
     "index.html": "848b3187"
+  },
+  "mathematics/calculus/differential-calculus/index.qmd": {
+    "index.html": "0d873324"
+  },
+  "mathematics/calculus/integral-calculus/index.qmd": {
+    "index.html": "af8da332"
+  },
+  "mathematics/calculus/multivariable-calculus/double-and-triple-integrals/applications-of-double-integrals.qmd": {
+    "applications-of-double-integrals.html": "eb57a867"
+  },
+  "mathematics/calculus/multivariable-calculus/double-and-triple-integrals/applications-of-triple-integrals.qmd": {
+    "applications-of-triple-integrals.html": "063169eb"
+  },
+  "mathematics/calculus/multivariable-calculus/double-and-triple-integrals/index.qmd": {
+    "index.html": "b7a045f5"
+  },
+  "mathematics/calculus/multivariable-calculus/double-and-triple-integrals/setting-up-double-integrals.qmd": {
+    "setting-up-double-integrals.html": "632fe813"
+  },
+  "mathematics/calculus/multivariable-calculus/double-and-triple-integrals/triple-integrals-in-rectangular-cylindrical-and-spherical-coordinates.qmd": {
+    "triple-integrals-in-rectangular-cylindrical-and-spherical-coordinates.html": "9c94a358"
+  },
+  "mathematics/calculus/multivariable-calculus/introduction-to-multivariable-functions/functions-of-two-or-more-variables.qmd": {
+    "functions-of-two-or-more-variables.html": "a5832090"
+  },
+  "mathematics/calculus/multivariable-calculus/introduction-to-multivariable-functions/graphs-and-level-curves.qmd": {
+    "graphs-and-level-curves.html": "ed54bb6a"
+  },
+  "mathematics/calculus/multivariable-calculus/introduction-to-multivariable-functions/index.qmd": {
+    "index.html": "108f6b71"
+  },
+  "mathematics/calculus/multivariable-calculus/introduction-to-multivariable-functions/limits-and-continuity-in-higher-dimensions.qmd": {
+    "limits-and-continuity-in-higher-dimensions.html": "5c3387b1"
+  },
+  "mathematics/calculus/multivariable-calculus/optimization-in-multiple-valriables/critical-points-and-classification.qmd": {
+    "critical-points-and-classification.html": "a5d8c7c9"
+  },
+  "mathematics/calculus/multivariable-calculus/optimization-in-multiple-valriables/index.qmd": {
+    "index.html": "54360451"
+  },
+  "mathematics/calculus/multivariable-calculus/optimization-in-multiple-valriables/lagrange-multipliers.qmd": {
+    "lagrange-multipliers.html": "f8b8528e"
+  },
+  "mathematics/calculus/multivariable-calculus/partial-derivatives/chain-rule-for-multivariable-functions.qmd": {
+    "chain-rule-for-multivariable-functions.html": "9750f02b"
+  },
+  "mathematics/calculus/multivariable-calculus/partial-derivatives/directional-derivatives-and-gradients.qmd": {
+    "directional-derivatives-and-gradients.html": "af51d625"
+  },
+  "mathematics/calculus/multivariable-calculus/partial-derivatives/index.qmd": {
+    "index.html": "223276ad"
+  },
+  "mathematics/calculus/multivariable-calculus/partial-derivatives/partial-derivatives-and-notation.qmd": {
+    "partial-derivatives-and-notation.html": "cded225b"
+  },
+  "mathematics/calculus/multivariable-calculus/partial-derivatives/tangent-planes-and-linear-approximations.qmd": {
+    "tangent-planes-and-linear-approximations.html": "2f8efd8d"
+  },
+  "mathematics/calculus/multivariable-calculus/vector-calculus/curl-and-divergence-of-a-vector-field.qmd": {
+    "curl-and-divergence-of-a-vector-field.html": "6f7f5ffd"
+  },
+  "mathematics/calculus/multivariable-calculus/vector-calculus/index.qmd": {
+    "index.html": "d39c3a15"
+  },
+  "mathematics/calculus/multivariable-calculus/vector-calculus/line-integrals/index.qmd": {
+    "index.html": "8d8ebff7"
+  },
+  "mathematics/calculus/multivariable-calculus/vector-calculus/line-integrals/scalar-line-integrals.qmd": {
+    "scalar-line-integrals.html": "2d28f101"
+  },
+  "mathematics/calculus/multivariable-calculus/vector-calculus/line-integrals/vector-line-integrals.qmd": {
+    "vector-line-integrals.html": "10efab33"
+  },
+  "mathematics/calculus/multivariable-calculus/vector-calculus/surface-integrals.qmd": {
+    "surface-integrals.html": "1ee64ce4"
+  },
+  "mathematics/calculus/multivariable-calculus/vector-calculus/vector-calculus-theorems/divergence-theorem.qmd": {
+    "divergence-theorem.html": "7eb7e77f"
+  },
+  "mathematics/calculus/multivariable-calculus/vector-calculus/vector-calculus-theorems/greens-theorem.qmd": {
+    "greens-theorem.html": "2a6cd9be"
+  },
+  "mathematics/calculus/multivariable-calculus/vector-calculus/vector-calculus-theorems/index.qmd": {
+    "index.html": "0a7a2288"
+  },
+  "mathematics/calculus/multivariable-calculus/vector-calculus/vector-calculus-theorems/stokes-theorem.qmd": {
+    "stokes-theorem.html": "1d902a25"
+  },
+  "mathematics/calculus/multivariable-calculus/vector-calculus/vector-fields.qmd": {
+    "vector-fields.html": "d3cb50fd"
+  },
+  "mathematics/calculus/series-and-sequences/index.qmd": {
+    "index.html": "43dd2bd4"
   }
 }
