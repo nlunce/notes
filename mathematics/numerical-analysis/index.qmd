@@ -26,52 +26,10 @@ preview:
   navigate: true
 ---
 
-# **WEEK 01**
 
-- [Bisection Method](./bisection-method.html)
-- [Fixed-Point Iteration](./fixed-point-iteration.html)
-- [Newtons's Method](./newtons-method.html)
-- [Secant Method](./secant-method.html)
-
-# **WEEK 02**
-
-- [Lagrange Interpolation](./lagrange-interpolation.html)
-- [Newton’s Divided Differences](./newtons-divided-differences.html)
-
-# **WEEK 03**
-
-- [Interpolation Error Formula](./interpolation-error-formula.html)
-- [Runge Phenomenon](./runge-phenomenon.html)
-- [Chebyshev Interpolation](./chebyshev-interpolation.html)
-
-# **WEEK 04**
-
-- [Trapezoidal Rule](./trapezoidal-rule.html)
-
-# **WEEK 05**
-
-# **WEEK 06**
-
-- [Linear Systems: $A\mathbf{x} = \mathbf{b}$](./linear-systems.html)
-- [Spectral Radius](./spectral-radius.htmlz)
-
-# **WEEK 07**
-
-- [LU Factorization](./lu-factorization.html)
-- [Iterative Methods for Solving Linear Systems](./ax-b-iterative-methods/index.html)
-- [Chapter 2 Section 3 Notes](./2-3.html)
-- [Norms](./norms/index.html)
-- [Linear System Error Analysis](./errors-analysis-linear-systems/index.html)
-
-# **WEEK 08**
-
-- [Least Squares Solution for Inconsistent Systems](./least-squares.html)
-- [Gram-Schmidt Orthogonalization](./gram-schmidt-orthogonalization.html)
-- [Modified Gram-Schmidt Orthogonalization](./modified-gram-schmidt-orthogonalization.html)
-
-
-
-- [The Fourier Transform](./fourier-transform.html)
-- [Roots of Unity](./root-of-unity.html)
-- [The Discrete Fourier Transform (DFT)](./discrete-fourier-transform.html)
-- [The Fast Fourier Transform (FFT)](./fast-fourier-transform.html)
+- [Root Finding](./root-finding-methods/index.html)
+- [Linear Systems](./linear-systems/index.html)
+- [Polynomial Interpolation](./fixed-point-iteration.html)
+- [Quadrature](./quadrature/index.html)
+- [The Fast Fourier Transform](./quadrature/index.html)
+- [Trigonometric Interpolation](./trigonometric-interpolation/index.html)
