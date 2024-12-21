@@ -25,3 +25,8 @@ preview:
   watch-inputs: true
   navigate: true
 ---
+
+
+- [Green’s Theorem](./greens-theorem.html)
+- [Stokes’ Theorem](./stokes-theorem.html)
+- [Divergence Theorem (Gauss’ Theorem)](./divergence-theorem.html)

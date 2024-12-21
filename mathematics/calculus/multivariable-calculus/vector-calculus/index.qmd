@@ -25,3 +25,7 @@ preview:
   watch-inputs: true
   navigate: true
 ---
+
+- [Vector Fields](./vector-fields.html)
+- [Surface Integrals](./surface-integrals.html)
+- [Curl and Divergence of a Vector Field](./curl-and-divergence-of-a-vector-field.html)

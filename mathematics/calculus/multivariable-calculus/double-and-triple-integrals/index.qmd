@@ -25,3 +25,9 @@ preview:
   watch-inputs: true
   navigate: true
 ---
+
+
+- [Setting Up Double Integrals](./setting-up-double-integrals.html)
+- [Triple Integrals in Rectangular, Cylindrical, and Spherical Coordinates](./triple-integrals-in-rectangular-cylindrical-and-spherical-coordinates.html)
+- [Applications of Double Integrals](./applications-of-double-integrals.html)
+- [Applications of Triple Integrals](./applications-of-triple-integrals.html)

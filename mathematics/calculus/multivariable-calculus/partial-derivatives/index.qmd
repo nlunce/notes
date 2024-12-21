@@ -25,3 +25,8 @@ preview:
   watch-inputs: true
   navigate: true
 ---
+
+- [Partial Derivatives and Notation](./partial-derivatives-and-notation.html)
+- [Chain Rule for Multivariable Functions](./chain-rule-for-multivariable-functions.html)
+- [Directional Derivatives and Gradients](./directional-derivatives-and-gradients.html)
+- [Tangent Planes and Linear Approximations](./tangent-planes-and-linear-approximations.html)

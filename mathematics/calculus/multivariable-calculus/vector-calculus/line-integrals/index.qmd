@@ -25,3 +25,6 @@ preview:
   watch-inputs: true
   navigate: true
 ---
+
+- [Scalar Line Integrals](./scalar-line-integrals.html)
+- [Vector Line Integrals](./vector-line-integrals.html)

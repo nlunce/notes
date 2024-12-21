@@ -25,3 +25,7 @@ preview:
   watch-inputs: true
   navigate: true
 ---
+
+- [Functions of Two or More Variables](./functions-of-two-or-more-variables.html)
+- [Graphs and Level Curves](./graphs-and-level-curves.html)
+- [Limits and Continuity in Higher Dimensions](./limits-and-continuity-in-higher-dimensions.html)

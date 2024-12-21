@@ -25,3 +25,7 @@ preview:
   watch-inputs: true
   navigate: true
 ---
+
+
+- [Critical Points and Classification](./critical-points-and-classification.html)
+- [Lagrange Multipliers](./lagrange-multipliers.html)
