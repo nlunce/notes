@@ -1,0 +1,7 @@
+# Index
+
+This folder contains the following files:
+
+- [ansible](ansible.html)
+- [automation](automation.html)
+- [puppet-and-chef](puppet-and-chef.html)

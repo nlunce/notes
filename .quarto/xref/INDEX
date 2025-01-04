@@ -472,5 +472,308 @@
   },
   "mathematics/calculus/series-and-sequences/index.qmd": {
     "index.html": "43dd2bd4"
+  },
+  "computer-science/devOps/intro-to-cicd.qmd": {
+    "intro-to-cicd.html": "947af6c2"
+  },
+  "computer-science/devOps/advanced-topics/chaos-engineering.qmd": {
+    "chaos-engineering.html": "c86a2bdb"
+  },
+  "computer-science/devOps/advanced-topics/gitops.qmd": {
+    "gitops.html": "e32197b0"
+  },
+  "computer-science/devOps/advanced-topics/hybrid-and-multi-cloud.qmd": {
+    "hybrid-and-multi-cloud.html": "ad7848c5"
+  },
+  "computer-science/devOps/advanced-topics/sre.qmd": {
+    "sre.html": "a700f196"
+  },
+  "computer-science/devOps/ci-cd/continuous-deployment.qmd": {
+    "continuous-deployment.html": "a95ac5f5"
+  },
+  "computer-science/devOps/ci-cd/continuous-integration.qmd": {
+    "continuous-integration.html": "a7505ff9"
+  },
+  "computer-science/devOps/ci-cd/tools.qmd": {
+    "tools.html": "ca8c3842"
+  },
+  "computer-science/devOps/cloud-platforms/aws.qmd": {
+    "aws.html": "36ec5d3b"
+  },
+  "computer-science/devOps/cloud-platforms/azure.qmd": {
+    "azure.html": "fb5d4763"
+  },
+  "computer-science/devOps/cloud-platforms/google-cloud.qmd": {
+    "google-cloud.html": "42a8f1cd"
+  },
+  "computer-science/devOps/cloud-platforms/multi-cloud-strategies.qmd": {
+    "multi-cloud-strategies.html": "3f0fea47"
+  },
+  "computer-science/devOps/configuration-management/ansible.qmd": {
+    "ansible.html": "5a0d394a"
+  },
+  "computer-science/devOps/configuration-management/automation.qmd": {
+    "automation.html": "10ef787f"
+  },
+  "computer-science/devOps/configuration-management/puppet-and-chef.qmd": {
+    "puppet-and-chef.html": "ce6e086d"
+  },
+  "computer-science/devOps/containerization/docker-basics.qmd": {
+    "docker-basics.html": "aa9e01fe"
+  },
+  "computer-science/devOps/containerization/kubernetes-basics.qmd": {
+    "kubernetes-basics.html": "15705dab"
+  },
+  "computer-science/devOps/containerization/orchestration.qmd": {
+    "orchestration.html": "4cbf2bf2"
+  },
+  "computer-science/devOps/index.qmd": {
+    "index.html": "d2118beb"
+  },
+  "computer-science/devOps/infrastructure-as-code/best-practices.qmd": {
+    "best-practices.html": "5f1ea57e"
+  },
+  "computer-science/devOps/infrastructure-as-code/cloudformation.qmd": {
+    "cloudformation.html": "10378c9d"
+  },
+  "computer-science/devOps/infrastructure-as-code/terraform-basics.qmd": {
+    "terraform-basics.html": "9ebf1d81"
+  },
+  "computer-science/devOps/introduction-to-devops/culture-and-benefits.qmd": {
+    "culture-and-benefits.html": "5c38d045"
+  },
+  "computer-science/devOps/introduction-to-devops/history.qmd": {
+    "history.html": "58f19c74"
+  },
+  "computer-science/devOps/introduction-to-devops/what-is-devops.qmd": {
+    "what-is-devops.html": "2f4b29d8"
+  },
+  "computer-science/devOps/microservices-and-architecture/challenges.qmd": {
+    "challenges.html": "5447f8ef"
+  },
+  "computer-science/devOps/microservices-and-architecture/microservices-basics.qmd": {
+    "microservices-basics.html": "95072294"
+  },
+  "computer-science/devOps/microservices-and-architecture/service-mesh.qmd": {
+    "service-mesh.html": "42826d77"
+  },
+  "computer-science/devOps/monitoring-and-logging/log-management.qmd": {
+    "log-management.html": "1d23b7e1"
+  },
+  "computer-science/devOps/monitoring-and-logging/metrics-and-alerts.qmd": {
+    "metrics-and-alerts.html": "3b07c542"
+  },
+  "computer-science/devOps/monitoring-and-logging/prometheus-and-grafana.qmd": {
+    "prometheus-and-grafana.html": "dc6422eb"
+  },
+  "computer-science/devOps/real-world-applications/case-studies.qmd": {
+    "case-studies.html": "7002af48"
+  },
+  "computer-science/devOps/real-world-applications/startups-vs-enterprises.qmd": {
+    "startups-vs-enterprises.html": "62daff0b"
+  },
+  "computer-science/devOps/resources/books.qmd": {
+    "books.html": "26929215"
+  },
+  "computer-science/devOps/resources/communities.qmd": {
+    "communities.html": "50f895e8"
+  },
+  "computer-science/devOps/resources/courses.qmd": {
+    "courses.html": "0f05a7e6"
+  },
+  "computer-science/devOps/resources/tools-and-cheat-sheets.qmd": {
+    "tools-and-cheat-sheets.html": "a8074295"
+  },
+  "computer-science/devOps/security-in-devops/devsecops-basics.qmd": {
+    "devsecops-basics.html": "72dad507"
+  },
+  "computer-science/devOps/security-in-devops/security-in-cicd.qmd": {
+    "security-in-cicd.html": "2324e520"
+  },
+  "computer-science/devOps/security-in-devops/tools-and-practices.qmd": {
+    "tools-and-practices.html": "82a93560"
+  },
+  "computer-science/devOps/version-control/branching-strategies.qmd": {
+    "branching-strategies.html": "5a02676b"
+  },
+  "computer-science/devOps/version-control/git-basics.qmd": {
+    "git-basics.html": "320dee4b"
+  },
+  "computer-science/devOps/version-control/workflows.qmd": {
+    "workflows.html": "fb1897c2"
+  },
+  "computer-science/index.qmd": {
+    "index.html": "ec7b6891"
+  },
+  "computer-science/data-science/index.qmd": {
+    "index.html": "e0af25c0"
+  },
+  "computer-science/devops/advanced-topics/chaos-engineering.qmd": {
+    "chaos-engineering.html": "e3e4e6cc"
+  },
+  "computer-science/devops/advanced-topics/gitops.qmd": {
+    "gitops.html": "fa47fa35"
+  },
+  "computer-science/devops/advanced-topics/hybrid-and-multi-cloud.qmd": {
+    "hybrid-and-multi-cloud.html": "ba9f7cdb"
+  },
+  "computer-science/devops/advanced-topics/index.qmd": {
+    "index.html": "d77149d7"
+  },
+  "computer-science/devops/advanced-topics/sre.qmd": {
+    "sre.html": "14a69a29"
+  },
+  "computer-science/devops/ci-cd/continuous-deployment.qmd": {
+    "continuous-deployment.html": "8ce7a532"
+  },
+  "computer-science/devops/ci-cd/continuous-integration.qmd": {
+    "continuous-integration.html": "17f9949a"
+  },
+  "computer-science/devops/ci-cd/index.qmd": {
+    "index.html": "331b250c"
+  },
+  "computer-science/devops/ci-cd/tools.qmd": {
+    "tools.html": "5dc9920d"
+  },
+  "computer-science/devops/cloud-platforms/aws.qmd": {
+    "aws.html": "87357742"
+  },
+  "computer-science/devops/cloud-platforms/azure.qmd": {
+    "azure.html": "8a805ffe"
+  },
+  "computer-science/devops/cloud-platforms/google-cloud.qmd": {
+    "google-cloud.html": "cba757a3"
+  },
+  "computer-science/devops/cloud-platforms/index.qmd": {
+    "index.html": "68c1576f"
+  },
+  "computer-science/devops/cloud-platforms/multi-cloud-strategies.qmd": {
+    "multi-cloud-strategies.html": "9f71cb0d"
+  },
+  "computer-science/devops/configuration-management/ansible.qmd": {
+    "ansible.html": "48776f76"
+  },
+  "computer-science/devops/configuration-management/automation.qmd": {
+    "automation.html": "12dca52b"
+  },
+  "computer-science/devops/configuration-management/index.qmd": {
+    "index.html": "a4a5b6ae"
+  },
+  "computer-science/devops/configuration-management/puppet-and-chef.qmd": {
+    "puppet-and-chef.html": "1dfa430d"
+  },
+  "computer-science/devops/containerization/docker-basics.qmd": {
+    "docker-basics.html": "af91e03d"
+  },
+  "computer-science/devops/containerization/index.qmd": {
+    "index.html": "36611ff0"
+  },
+  "computer-science/devops/containerization/kubernetes-basics.qmd": {
+    "kubernetes-basics.html": "c6153ec6"
+  },
+  "computer-science/devops/containerization/orchestration.qmd": {
+    "orchestration.html": "b5f5c716"
+  },
+  "computer-science/devops/index.qmd": {
+    "index.html": "e55066ee"
+  },
+  "computer-science/devops/infrastructure-as-code/best-practices.qmd": {
+    "best-practices.html": "ced9b720"
+  },
+  "computer-science/devops/infrastructure-as-code/cloudformation.qmd": {
+    "cloudformation.html": "3ebbf18c"
+  },
+  "computer-science/devops/infrastructure-as-code/index.qmd": {
+    "index.html": "011dbff2"
+  },
+  "computer-science/devops/infrastructure-as-code/terraform-basics.qmd": {
+    "terraform-basics.html": "c823911b"
+  },
+  "computer-science/devops/introduction-to-devops/culture-and-benefits.qmd": {
+    "culture-and-benefits.html": "5c8e6354"
+  },
+  "computer-science/devops/introduction-to-devops/history.qmd": {
+    "history.html": "9e685f37"
+  },
+  "computer-science/devops/introduction-to-devops/index.qmd": {
+    "index.html": "ba0266ab"
+  },
+  "computer-science/devops/introduction-to-devops/what-is-devops.qmd": {
+    "what-is-devops.html": "c4474d01"
+  },
+  "computer-science/devops/microservices-and-architecture/challenges.qmd": {
+    "challenges.html": "3749afd7"
+  },
+  "computer-science/devops/microservices-and-architecture/index.qmd": {
+    "index.html": "9b2b5b6e"
+  },
+  "computer-science/devops/microservices-and-architecture/microservices-basics.qmd": {
+    "microservices-basics.html": "5e62ab8f"
+  },
+  "computer-science/devops/microservices-and-architecture/service-mesh.qmd": {
+    "service-mesh.html": "66274083"
+  },
+  "computer-science/devops/monitoring-and-logging/index.qmd": {
+    "index.html": "b9a90683"
+  },
+  "computer-science/devops/monitoring-and-logging/log-management.qmd": {
+    "log-management.html": "eb0a85ca"
+  },
+  "computer-science/devops/monitoring-and-logging/metrics-and-alerts.qmd": {
+    "metrics-and-alerts.html": "1a6a47e0"
+  },
+  "computer-science/devops/monitoring-and-logging/prometheus-and-grafana.qmd": {
+    "prometheus-and-grafana.html": "238626af"
+  },
+  "computer-science/devops/real-world-applications/case-studies.qmd": {
+    "case-studies.html": "7bb1602c"
+  },
+  "computer-science/devops/real-world-applications/index.qmd": {
+    "index.html": "b2a0a577"
+  },
+  "computer-science/devops/real-world-applications/startups-vs-enterprises.qmd": {
+    "startups-vs-enterprises.html": "8cef18d0"
+  },
+  "computer-science/devops/resources/books.qmd": {
+    "books.html": "f8a90f22"
+  },
+  "computer-science/devops/resources/communities.qmd": {
+    "communities.html": "58ab633c"
+  },
+  "computer-science/devops/resources/courses.qmd": {
+    "courses.html": "a7d7e70e"
+  },
+  "computer-science/devops/resources/index.qmd": {
+    "index.html": "aa4229a9"
+  },
+  "computer-science/devops/resources/tools-and-cheat-sheets.qmd": {
+    "tools-and-cheat-sheets.html": "1258638e"
+  },
+  "computer-science/devops/security-in-devops/devsecops-basics.qmd": {
+    "devsecops-basics.html": "49dd1a0b"
+  },
+  "computer-science/devops/security-in-devops/index.qmd": {
+    "index.html": "6628dc87"
+  },
+  "computer-science/devops/security-in-devops/security-in-cicd.qmd": {
+    "security-in-cicd.html": "4c3bd893"
+  },
+  "computer-science/devops/security-in-devops/tools-and-practices.qmd": {
+    "tools-and-practices.html": "d624e8b3"
+  },
+  "computer-science/devops/version-control/branching-strategies.qmd": {
+    "branching-strategies.html": "fde68c3a"
+  },
+  "computer-science/devops/version-control/git-basics.qmd": {
+    "git-basics.html": "1ad36269"
+  },
+  "computer-science/devops/version-control/index.qmd": {
+    "index.html": "086f1a53"
+  },
+  "computer-science/devops/version-control/workflows.qmd": {
+    "workflows.html": "5429c8f0"
+  },
+  "computer-science/machine-learning/index.qmd": {
+    "index.html": "02a6bded"
   }
 }

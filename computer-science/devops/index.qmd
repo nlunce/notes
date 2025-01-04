@@ -1,0 +1,43 @@
+---
+title: 'DEV OPS'
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+## Sections
+
+- [Introduction to DevOps](./introduction-to-devops/index.html)
+- [Version Control](./version-control/index.html)
+- [CI/CD](./ci-cd/index.html)
+- [Infrastructure as Code](./infrastructure-as-code/index.html)
+- [Containerization](./containerization/index.html)
+- [Monitoring and Logging](./monitoring-and-logging/index.html)
+- [Configuration Management](./configuration-management/index.html)
+- [Cloud Platforms](./cloud-platforms/index.html)
+- [Microservices and Architecture](./microservices-and-architecture/index.html)
+- [Security in DevOps](./security-in-devops/index.html)
+- [Advanced Topics](./advanced-topics/index.html)
+- [Real-World Applications](./real-world-applications/index.html)
+- [Resources](./resources/index.html)
