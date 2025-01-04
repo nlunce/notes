@@ -8,7 +8,7 @@ format:
     toc: true
     toc-depth: 2
     toc-location: right
-    number-sections: false
+    number-sections: true
     html-math-method: katex
     embed-resources: true
     code-fold: true
@@ -31,9 +31,9 @@ preview:
 
 Branching strategies define how code changes are managed in a version control system, ensuring collaboration, streamlined workflows, and reliable releases. Choosing the right strategy depends on team size, project complexity, and release cadence.
 
-## **1. Common Branch Strategies**
+## **Common Branch Strategies**
 
-### **1.1 GitFlow**
+### **GitFlow**
 - **Overview**: A structured strategy suited for projects with defined release cycles.
 - **Branches**:
   - **Main**: Contains stable, production-ready code.
@@ -56,9 +56,9 @@ Branching strategies define how code changes are managed in a version control sy
   - Overhead in managing multiple branches.
   - Slower for CI/CD workflows.
 
----
 
-### **1.2 Trunk-Based Development**
+
+### **Trunk-Based Development**
 - **Overview**: A lightweight strategy emphasizing frequent integration.
 - **Branches**:
   - **Main/Trunk**: The single source of truth.
@@ -76,9 +76,9 @@ Branching strategies define how code changes are managed in a version control sy
   - Requires robust CI/CD pipelines.
   - May not scale well for complex projects.
 
----
 
-### **1.3 GitHub Flow**
+
+### **GitHub Flow**
 - **Overview**: A simple strategy for projects with continuous delivery.
 - **Branches**:
   - **Main**: Always production-ready.
@@ -95,9 +95,9 @@ Branching strategies define how code changes are managed in a version control sy
 - **Cons**:
   - No staging branch for release preparation.
 
----
 
-### **1.4 Release Flow**
+
+### **Release Flow**
 - **Overview**: Combines structured releases with simplicity.
 - **Branches**:
   - **Main**: Production-ready code.
@@ -116,9 +116,9 @@ Branching strategies define how code changes are managed in a version control sy
 - **Cons**:
   - Requires careful management of `release` branches.
 
----
 
-## **2. Choosing the Right Strategy**
+
+## **Choosing the Right Strategy**
 
 ### **Factors to Consider**:
 - **Team Size**:
@@ -131,9 +131,9 @@ Branching strategies define how code changes are managed in a version control sy
   - Simple projects: GitHub Flow.
   - Complex projects: GitFlow or Release Flow.
 
----
 
-## **3. Best Practices**
+
+## **Best Practices**
 
 1. **Naming Conventions**:
    - Use descriptive branch names:
@@ -151,7 +151,7 @@ Branching strategies define how code changes are managed in a version control sy
 4. **Code Reviews**:
    - Require reviews before merging to `main`.
 
----
+
 
 ## **Summary**
 
