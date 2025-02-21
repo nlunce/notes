@@ -775,5 +775,77 @@
   },
   "computer-science/machine-learning/index.qmd": {
     "index.html": "02a6bded"
+  },
+  "computer-science/devops/containerization/nomad/architecture/clients.qmd": {
+    "clients.html": "64593070"
+  },
+  "computer-science/devops/containerization/nomad/architecture/index.qmd": {
+    "index.html": "56304fe4"
+  },
+  "computer-science/devops/containerization/nomad/architecture/networking.qmd": {
+    "networking.html": "0deb040c"
+  },
+  "computer-science/devops/containerization/nomad/architecture/servers.qmd": {
+    "servers.html": "c43a89bd"
+  },
+  "computer-science/devops/containerization/nomad/configuration/client-config.qmd": {
+    "client-config.html": "8896f32e"
+  },
+  "computer-science/devops/containerization/nomad/configuration/index.qmd": {
+    "index.html": "71360d8f"
+  },
+  "computer-science/devops/containerization/nomad/configuration/security.qmd": {
+    "security.html": "5de5d186"
+  },
+  "computer-science/devops/containerization/nomad/configuration/server-config.qmd": {
+    "server-config.html": "94c16aa1"
+  },
+  "computer-science/devops/containerization/nomad/index.qmd": {
+    "index.html": "d4981251"
+  },
+  "computer-science/devops/containerization/nomad/installation/index.qmd": {
+    "index.html": "66ae1262"
+  },
+  "computer-science/devops/containerization/nomad/installation/local-setup.qmd": {
+    "local-setup.html": "052b5456"
+  },
+  "computer-science/devops/containerization/nomad/installation/production-setup.qmd": {
+    "production-setup.html": "1a298129"
+  },
+  "computer-science/devops/containerization/nomad/integrations/consul.qmd": {
+    "consul.html": "92a3bb20"
+  },
+  "computer-science/devops/containerization/nomad/integrations/index.qmd": {
+    "index.html": "39dd2129"
+  },
+  "computer-science/devops/containerization/nomad/integrations/terraform.qmd": {
+    "terraform.html": "ea2d94ac"
+  },
+  "computer-science/devops/containerization/nomad/integrations/vault.qmd": {
+    "vault.html": "422a466c"
+  },
+  "computer-science/devops/containerization/nomad/jobs/index.qmd": {
+    "index.html": "4d9b9279"
+  },
+  "computer-science/devops/containerization/nomad/jobs/job-specs.qmd": {
+    "job-specs.html": "cc4c9b48"
+  },
+  "computer-science/devops/containerization/nomad/jobs/scheduling.qmd": {
+    "scheduling.html": "43ba1b60"
+  },
+  "computer-science/devops/containerization/nomad/jobs/task-drivers.qmd": {
+    "task-drivers.html": "6dd9e002"
+  },
+  "computer-science/devops/containerization/nomad/operations/index.qmd": {
+    "index.html": "c7a7d7c2"
+  },
+  "computer-science/devops/containerization/nomad/operations/logging.qmd": {
+    "logging.html": "e4e8cfc0"
+  },
+  "computer-science/devops/containerization/nomad/operations/monitoring.qmd": {
+    "monitoring.html": "db6892f2"
+  },
+  "computer-science/devops/containerization/nomad/operations/troubleshooting.qmd": {
+    "troubleshooting.html": "54a70c20"
   }
 }

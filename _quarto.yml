@@ -17,8 +17,9 @@ website:
     left:
       - href: ./mathematics/index.html
         text: MATHEMATICS
-      - href: ./computer-science
+      - href: ./computer-science/index.html
         text: COMPUTER SCIENCE
+      
 
 format:
   html:

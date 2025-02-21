@@ -1,0 +1,215 @@
+---
+title: "Architecture Overview"
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
+---
+
+Nomad's architecture is designed to be simple yet scalable, consisting of a few key components that work together to provide robust workload orchestration.
+
+## Core Components
+
+### Regions
+- A region is the largest unit of isolation in Nomad
+- Each region has its own servers and clients
+- Regions can span multiple data centers
+- Jobs can be deployed across regions
+- Regions operate independently but can communicate for cross-region scheduling
+
+### Datacenters
+- Logical groupings within regions
+- Typically represent physical datacenters
+- Used for job placement and constraints
+- Help with network topology awareness
+- Enable fault domain isolation
+
+### Servers
+Servers form the brain of a Nomad cluster:
+
+- **Leadership**
+  - Use Raft consensus protocol
+  - Elect a leader automatically
+  - Handle all cluster management
+  - Process API requests
+  - Manage state
+
+- **State Management**
+  - Maintain cluster state
+  - Track node health
+  - Store job definitions
+  - Handle scheduling decisions
+
+- **Scheduling**
+  - Evaluate job placements
+  - Consider constraints and resources
+  - Make placement decisions
+  - Handle task updates and migrations
+
+### Clients
+Clients are the workhorses of Nomad:
+
+- **Resource Management**
+  - Track available resources
+  - Report health status
+  - Monitor running tasks
+  - Enforce resource limits
+
+- **Task Execution**
+  - Run allocated tasks
+  - Handle task lifecycle
+  - Manage local state
+  - Report task status
+
+## Communication Flow
+
+### Server-to-Server Communication
+- Uses TCP for reliable data transfer
+- Implements Raft protocol for consensus
+- Handles leader election
+- Synchronizes state updates
+- Uses RPC for inter-server requests
+
+### Client-to-Server Communication
+- Heartbeat system for health monitoring
+- RPC for task allocation
+- Event streaming for updates
+- Bidirectional communication channel
+- Secure by default (TLS)
+
+### Gossip Protocol
+- Uses UDP for lightweight communication
+- Manages cluster membership
+- Detects node failures
+- Propagates server addresses
+- Enables automatic clustering
+
+## Scheduling Flow
+
+1. **Job Submission**
+   - Client submits job specification
+   - Server validates job definition
+   - Job enters scheduling queue
+
+2. **Evaluation**
+   - Scheduler evaluates placement options
+   - Considers resource requirements
+   - Applies placement constraints
+   - Determines optimal allocation
+
+3. **Allocation**
+   - Server assigns tasks to clients
+   - Clients receive allocation details
+   - Resources are reserved
+   - Tasks are started
+
+4. **Monitoring**
+   - Clients report task status
+   - Servers track allocation health
+   - System adjusts to changes
+   - Handles failures automatically
+
+## Security Architecture
+
+### Authentication
+- ACL system for access control
+- Token-based authentication
+- Role-based permissions
+- API endpoint security
+
+### Transport Security
+- TLS encryption by default
+- Certificate validation
+- Secure RPC communication
+- Encrypted gossip protocol
+
+## Scalability Features
+
+### Horizontal Scaling
+- Add servers for high availability
+- Scale clients for capacity
+- Regional federation
+- Cross-datacenter support
+
+### Performance Optimizations
+- Efficient state storage
+- Optimized scheduling algorithms
+- Batched updates
+- Incremental job modifications
+
+## Fault Tolerance
+
+### Server Failover
+- Automatic leader election
+- State replication
+- Hot standby nodes
+- Seamless recovery
+
+### Client Recovery
+- Task rescheduling
+- State recovery
+- Resource reclamation
+- Automatic reconnection
+
+## Integration Points
+
+### Service Discovery
+- Native Consul integration
+- DNS interface
+- Service registration
+- Health checking
+
+### Secrets Management
+- Vault integration
+- Dynamic secrets
+- Token management
+- Secure storage
+
+## Monitoring and Logging
+
+### Metrics
+- Prometheus integration
+- Telemetry exports
+- Performance metrics
+- Resource utilization
+
+### Logging
+- Structured logging
+- Log forwarding
+- Audit logging
+- Debug capabilities
+
+## Network Architecture
+
+### Port Usage
+- TCP/8300: Server RPC
+- TCP/8301: Server Serf LAN
+- TCP/4646: HTTP API
+- TCP/4647: Client RPC
+- UDP/4648: Serf WAN
+
+### Network Requirements
+- Internal network connectivity
+- Cross-datacenter communication
+- Client-server connectivity
+- API accessibility
