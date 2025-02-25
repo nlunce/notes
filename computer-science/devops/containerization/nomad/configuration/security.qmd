@@ -1,4 +1,267 @@
 ---
-title: ""
-description: ""
+title: "Nomad TLS Configuration Guide"
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    number-sections: false
+    html-math-method: katex
+    embed-resources: true
+    code-fold: true
+    code-summary: 'Show the code'
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+      source: false
+      toggle: true
+      caption: See code
+engine: jupyter
+preview:
+  port: 3000
+  browser: true
+  watch-inputs: true
+  navigate: true
 ---
+
+This guide provides step-by-step instructions for setting up TLS encryption for Nomad clusters, securing both server-to-server and client-to-server communications.
+
+## Core Concepts
+
+### TLS Components
+- **Certificate Authority (CA)**: Signs and validates all certificates
+- **Server Certificates**: Secure server-to-server and server-to-client communication
+- **Client Certificates**: Authenticate clients to servers
+- **Configuration Files**: Control TLS behavior in Nomad
+
+### Security Benefits
+- **Encryption**: Protects data in transit
+- **Authentication**: Verifies identity of servers and clients
+- **Integrity**: Ensures data hasn't been tampered with
+- **Access Control**: Limits who can connect to the cluster
+
+## Setup Process
+
+### Preparing the Environment
+
+```bash
+# Create certificate directories
+sudo mkdir -p /etc/certs
+sudo mkdir -p /etc/certs/nomad-certs
+cd /etc/certs/nomad-certs
+```
+
+### Creating Certificate Authority
+
+#### CA Configuration
+Create the CA configuration file:
+
+```bash
+sudo nano ca.conf
+```
+
+Add this content:
+```
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_ca
+prompt = no
+[req_distinguished_name]
+CN = Nomad CA
+[v3_ca]
+basicConstraints = critical,CA:true
+keyUsage = critical,keyCertSign,cRLSign
+subjectKeyIdentifier = hash
+```
+
+#### Generate CA Certificate and Key
+```bash
+sudo openssl genrsa -out ca.key 2048
+sudo openssl req -new -x509 -days 3650 -key ca.key -out ca.crt -config ca.conf
+```
+
+### Creating Server Certificates
+
+For each server in your cluster (replace N with server number and x.x.x.x with actual IP):
+
+#### Server Configuration
+```bash
+sudo nano serverN.conf
+```
+
+Add this content:
+```
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req 
+prompt = no
+[req_distinguished_name]
+CN = serverN.nomad
+[v3_req]
+basicConstraints = CA:FALSE
+keyUsage = digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth, clientAuth
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = serverN.nomad
+DNS.2 = localhost
+IP.1 = 127.0.0.1
+IP.2 = x.x.x.x
+```
+
+#### Generate Server Certificate and Key
+```bash
+sudo openssl genrsa -out serverN.key 2048
+sudo openssl req -new -key serverN.key -out serverN.csr -config serverN.conf
+sudo openssl x509 -req -in serverN.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out serverN.crt -days 365 -extensions v3_req -extfile serverN.conf
+```
+
+### Creating Client Certificates
+
+For each client in your cluster (replace N with client number and x.x.x.x with actual IP):
+
+#### Client Configuration
+```bash
+sudo nano clientN.conf
+```
+
+Add this content:
+```
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req 
+prompt = no
+[req_distinguished_name]
+CN = clientN.nomad
+[v3_req]
+basicConstraints = CA:FALSE
+keyUsage = digitalSignature, keyEncipherment
+extendedKeyUsage = clientAuth
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = clientN.nomad
+DNS.2 = localhost
+IP.1 = 127.0.0.1
+IP.2 = x.x.x.x
+```
+
+#### 4.2 Generate Client Certificate and Key
+```bash
+sudo openssl genrsa -out clientN.key 2048
+sudo openssl req -new -key clientN.key -out clientN.csr -config clientN.conf
+sudo openssl x509 -req -in clientN.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out clientN.crt -days 365 -extensions v3_req -extfile clientN.conf
+```
+
+### Deploying Certificates
+
+#### Server Certificate Deployment
+On each server:
+```bash
+# Copy the appropriate certificates to standard locations
+sudo cp ca.crt /etc/certs/ca.crt
+sudo cp serverN.crt /etc/certs/nomad.crt
+sudo cp serverN.key /etc/certs/nomad.key
+
+# Set correct permissions
+sudo chown nomad:nomad /etc/certs/ca.crt /etc/certs/nomad.crt /etc/certs/nomad.key
+sudo chmod 644 /etc/certs/ca.crt /etc/certs/nomad.crt
+sudo chmod 600 /etc/certs/nomad.key
+```
+
+#### Client Certificate Deployment
+On each client:
+```bash
+# Copy the appropriate certificates to standard locations
+sudo cp ca.crt /etc/certs/ca.crt
+sudo cp clientN.crt /etc/certs/nomad.crt
+sudo cp clientN.key /etc/certs/nomad.key
+
+# Set correct permissions
+sudo chown nomad:nomad /etc/certs/ca.crt /etc/certs/nomad.crt /etc/certs/nomad.key
+sudo chmod 644 /etc/certs/ca.crt /etc/certs/nomad.crt
+sudo chmod 600 /etc/certs/nomad.key
+```
+
+### Copying Certificates Between Nodes
+
+To copy from one node to another:
+```bash
+# Temporarily set readable permissions if needed
+sudo chmod 644 file.key
+
+# Copy files to remote server
+scp ca.crt serverN.crt serverN.key username@remote-ip:/tmp/
+
+# Reset secure permissions
+sudo chmod 600 file.key
+```
+
+On the remote server:
+```bash
+sudo mkdir -p /etc/certs
+sudo mv /tmp/ca.crt /etc/certs/ca.crt
+sudo mv /tmp/serverN.crt /etc/certs/nomad.crt
+sudo mv /tmp/serverN.key /etc/certs/nomad.key
+sudo chown nomad:nomad /etc/certs/ca.crt /etc/certs/nomad.crt /etc/certs/nomad.key
+sudo chmod 644 /etc/certs/ca.crt /etc/certs/nomad.crt
+sudo chmod 600 /etc/certs/nomad.key
+```
+
+## Nomad Configuration
+
+### Server TLS Configuration
+Add to `/etc/nomad.d/server.hcl`:
+
+```hcl
+tls {
+  http = true
+  rpc  = true
+  ca_file   = "/etc/certs/ca.crt"
+  cert_file = "/etc/certs/nomad.crt"
+  key_file  = "/etc/certs/nomad.key"
+  verify_server_hostname = false  # Start with false, enable later
+  verify_https_client    = false  # Start with false, enable later
+}
+```
+
+### Client TLS Configuration
+Add to `/etc/nomad.d/client.hcl`:
+
+```hcl
+tls {
+  http = true
+  rpc  = true
+  ca_file   = "/etc/certs/ca.crt"
+  cert_file = "/etc/certs/nomad.crt"
+  key_file  = "/etc/certs/nomad.key"
+  verify_server_hostname = false
+}
+```
+
+### Restart Nomad
+On all servers and clients:
+```bash
+sudo systemctl restart nomad
+```
+
+## Verification and Troubleshooting
+
+### Check Nomad Status
+```bash
+sudo systemctl status nomad
+```
+
+### View Logs for TLS Issues
+```bash
+sudo journalctl -u nomad -n 50
+```
+
+### Test TLS Connection
+```bash
+# Using CLI with TLS
+export NOMAD_ADDR=https://127.0.0.1:4646
+export NOMAD_CACERT=/etc/certs/ca.crt
+export NOMAD_CLIENT_CERT=/etc/certs/nomad.crt
+export NOMAD_CLIENT_KEY=/etc/certs/nomad.key

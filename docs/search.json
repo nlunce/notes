@@ -1864,14 +1864,14 @@
   {
     "objectID": "computer-science/devops/index.html",
     "href": "computer-science/devops/index.html",
-    "title": "DEV OPS",
+    "title": "DEVOPS",
     "section": "",
     "text": "Introduction to DevOps\nVersion Control\nCI/CD\nInfrastructure as Code\nContainerization\nMonitoring and Logging\nConfiguration Management\nCloud Platforms\nMicroservices and Architecture\nSecurity in DevOps\nAdvanced Topics\nReal-World Applications\nResources"
   },
   {
     "objectID": "computer-science/devops/index.html#sections",
     "href": "computer-science/devops/index.html#sections",
-    "title": "DEV OPS",
+    "title": "DEVOPS",
     "section": "",
     "text": "Introduction to DevOps\nVersion Control\nCI/CD\nInfrastructure as Code\nContainerization\nMonitoring and Logging\nConfiguration Management\nCloud Platforms\nMicroservices and Architecture\nSecurity in DevOps\nAdvanced Topics\nReal-World Applications\nResources"
   },
@@ -3470,5 +3470,110 @@
     "title": "Secant Method",
     "section": "The Secant Method Formula",
     "text": "The Secant Method Formula\nGiven two initial approximations x_{k-1} and x_k, the next approximation x_{k+1} is computed using the secant line through these points. The formula is:\n\nx_{k+1} = x_k - \\frac{f(x_k)(x_k - x_{k-1})}{f(x_k) - f(x_{k-1})}\n\nThis equation is derived by approximating the derivative f'(x_k) using the difference quotient:\n\nf'(x_k) \\approx \\frac{f(x_k) - f(x_{k-1})}{x_k - x_{k-1}}\n\nThe main advantage of the Secant Method is that it avoids the need to compute the derivative f'(x), making it useful for functions where the derivative is difficult to compute or does not exist.\n\nAlgorithm\n\nInitial Guesses: Start with two initial approximations x_0 and x_1.\nIteration Formula: Compute successive approximations using the formula:\n\n\nx_{k+1} = x_k - \\frac{f(x_k)(x_k - x_{k-1})}{f(x_k) - f(x_{k-1})}\n\n\nRepeat: Continue iterating until the difference between successive approximations is less than a specified tolerance \\epsilon, or until |f(x_k)| &lt; \\epsilon.\n\n\n\nConvergence\nThe Secant Method typically converges faster than the Bisection Method but slower than Newton’s Method. It has a convergence rate of approximately 1.618, known as superlinear convergence. This is faster than the linear convergence of the Bisection Method, but slower than the quadratic convergence of Newton’s Method.\n\n\nExample\nLet’s solve the equation f(x) = x^2 - 4 = 0 using the Secant Method, which has roots at x = \\pm 2.\n\nInitial Guesses: Let x_0 = 3 and x_1 = 2.5.\nFirst Iteration:\n\nx_2 = x_1 - \\frac{f(x_1)(x_1 - x_0)}{f(x_1) - f(x_0)} = 2.5 - \\frac{(2.5^2 - 4)(2.5 - 3)}{(2.5^2 - 4) - (3^2 - 4)} = 2.05\n\nSecond Iteration:\n\nx_3 = x_2 - \\frac{f(x_2)(x_2 - x_1)}{f(x_2) - f(x_1)} = 2.05 - \\frac{(2.05^2 - 4)(2.05 - 2.5)}{(2.05^2 - 4) - (2.5^2 - 4)} \\approx 2.0006\n\nFurther Iterations: Continue until the difference between successive approximations is less than a specified tolerance (e.g., \\epsilon = 10^{-5}).\n\nIn this case, after just two iterations, we are already very close to the root x = 2.\n\n\nGeneral Properties of the Secant Method\n\nNo Derivatives Needed: Unlike Newton’s Method, the Secant Method does not require the computation of the derivative f'(x), making it useful for functions that are not differentiable or where computing the derivative is expensive.\nSuperlinear Convergence: The Secant Method converges faster than the Bisection Method but slower than Newton’s Method. Its convergence rate is superlinear with a rate of approximately 1.618.\nRequires Two Initial Guesses: The method requires two initial approximations, x_0 and x_1, unlike Newton’s Method, which only needs one initial guess.\n\n\n\nApplications of the Secant Method\n\nRoot Finding: The Secant Method is widely used to find roots of non-linear equations, especially in cases where the derivative is not available or is costly to compute.\nOptimization: It can be used in optimization problems where the objective is to minimize or maximize a function without requiring the calculation of the derivative.\n\n\n\nAdvantages of the Secant Method\n\nNo Derivatives: The method does not require the calculation of f'(x), making it easier to apply in situations where the derivative is not known.\nFaster than Bisection: The Secant Method generally converges more quickly than the Bisection Method, especially when the initial guesses are close to the root.\n\n\n\nLimitations of the Secant Method\n\nSlower than Newton’s Method: While it converges faster than the Bisection Method, the Secant Method typically converges more slowly than Newton’s Method, which has quadratic convergence.\nConvergence is Not Guaranteed: The Secant Method does not always converge, especially if the initial guesses are not close to the actual root. If f(x_k) = f(x_{k-1}), the method will fail due to division by zero.\nRequires Good Initial Guesses: Poor choices for the initial approximations x_0 and x_1 can result in slow convergence or failure to converge.\n\n\n\nConclusion\nThe Secant Method provides a good balance between speed and ease of use, especially when derivatives are difficult or costly to compute. It is faster than the Bisection Method but not as fast as Newton’s Method when derivatives are available. Careful selection of initial guesses is important for ensuring successful convergence."
+  },
+  {
+    "objectID": "computer-science/devops/containerization/nomad/configuration/security.html",
+    "href": "computer-science/devops/containerization/nomad/configuration/security.html",
+    "title": "Nomad TLS Configuration Guide",
+    "section": "",
+    "text": "This guide provides step-by-step instructions for setting up TLS encryption for Nomad clusters, securing both server-to-server and client-to-server communications."
+  },
+  {
+    "objectID": "computer-science/devops/containerization/nomad/configuration/security.html#core-concepts",
+    "href": "computer-science/devops/containerization/nomad/configuration/security.html#core-concepts",
+    "title": "Nomad TLS Configuration Guide",
+    "section": "Core Concepts",
+    "text": "Core Concepts\n\nTLS Components\n\nCertificate Authority (CA): Signs and validates all certificates\nServer Certificates: Secure server-to-server and server-to-client communication\nClient Certificates: Authenticate clients to servers\nConfiguration Files: Control TLS behavior in Nomad\n\n\n\nSecurity Benefits\n\nEncryption: Protects data in transit\nAuthentication: Verifies identity of servers and clients\nIntegrity: Ensures data hasn’t been tampered with\nAccess Control: Limits who can connect to the cluster"
+  },
+  {
+    "objectID": "computer-science/devops/containerization/nomad/configuration/security.html#setup-process",
+    "href": "computer-science/devops/containerization/nomad/configuration/security.html#setup-process",
+    "title": "Nomad TLS Configuration Guide",
+    "section": "Setup Process",
+    "text": "Setup Process\n\nPreparing the Environment\n# Create certificate directories\nsudo mkdir -p /etc/certs\nsudo mkdir -p /etc/certs/nomad-certs\ncd /etc/certs/nomad-certs\n\n\nCreating Certificate Authority\n\nCA Configuration\nCreate the CA configuration file:\nsudo nano ca.conf\nAdd this content:\n[req]\ndistinguished_name = req_distinguished_name\nreq_extensions = v3_ca\nprompt = no\n[req_distinguished_name]\nCN = Nomad CA\n[v3_ca]\nbasicConstraints = critical,CA:true\nkeyUsage = critical,keyCertSign,cRLSign\nsubjectKeyIdentifier = hash\n\n\nGenerate CA Certificate and Key\nsudo openssl genrsa -out ca.key 2048\nsudo openssl req -new -x509 -days 3650 -key ca.key -out ca.crt -config ca.conf\n\n\n\nCreating Server Certificates\nFor each server in your cluster (replace N with server number and x.x.x.x with actual IP):\n\nServer Configuration\nsudo nano serverN.conf\nAdd this content:\n[req]\ndistinguished_name = req_distinguished_name\nreq_extensions = v3_req \nprompt = no\n[req_distinguished_name]\nCN = serverN.nomad\n[v3_req]\nbasicConstraints = CA:FALSE\nkeyUsage = digitalSignature, keyEncipherment\nextendedKeyUsage = serverAuth, clientAuth\nsubjectAltName = @alt_names\n[alt_names]\nDNS.1 = serverN.nomad\nDNS.2 = localhost\nIP.1 = 127.0.0.1\nIP.2 = x.x.x.x\n\n\nGenerate Server Certificate and Key\nsudo openssl genrsa -out serverN.key 2048\nsudo openssl req -new -key serverN.key -out serverN.csr -config serverN.conf\nsudo openssl x509 -req -in serverN.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out serverN.crt -days 365 -extensions v3_req -extfile serverN.conf\n\n\n\nCreating Client Certificates\nFor each client in your cluster (replace N with client number and x.x.x.x with actual IP):\n\nClient Configuration\nsudo nano clientN.conf\nAdd this content:\n[req]\ndistinguished_name = req_distinguished_name\nreq_extensions = v3_req \nprompt = no\n[req_distinguished_name]\nCN = clientN.nomad\n[v3_req]\nbasicConstraints = CA:FALSE\nkeyUsage = digitalSignature, keyEncipherment\nextendedKeyUsage = clientAuth\nsubjectAltName = @alt_names\n[alt_names]\nDNS.1 = clientN.nomad\nDNS.2 = localhost\nIP.1 = 127.0.0.1\nIP.2 = x.x.x.x\n\n\n4.2 Generate Client Certificate and Key\nsudo openssl genrsa -out clientN.key 2048\nsudo openssl req -new -key clientN.key -out clientN.csr -config clientN.conf\nsudo openssl x509 -req -in clientN.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out clientN.crt -days 365 -extensions v3_req -extfile clientN.conf\n\n\n\nDeploying Certificates\n\nServer Certificate Deployment\nOn each server:\n# Copy the appropriate certificates to standard locations\nsudo cp ca.crt /etc/certs/ca.crt\nsudo cp serverN.crt /etc/certs/nomad.crt\nsudo cp serverN.key /etc/certs/nomad.key\n\n# Set correct permissions\nsudo chown nomad:nomad /etc/certs/ca.crt /etc/certs/nomad.crt /etc/certs/nomad.key\nsudo chmod 644 /etc/certs/ca.crt /etc/certs/nomad.crt\nsudo chmod 600 /etc/certs/nomad.key\n\n\nClient Certificate Deployment\nOn each client:\n# Copy the appropriate certificates to standard locations\nsudo cp ca.crt /etc/certs/ca.crt\nsudo cp clientN.crt /etc/certs/nomad.crt\nsudo cp clientN.key /etc/certs/nomad.key\n\n# Set correct permissions\nsudo chown nomad:nomad /etc/certs/ca.crt /etc/certs/nomad.crt /etc/certs/nomad.key\nsudo chmod 644 /etc/certs/ca.crt /etc/certs/nomad.crt\nsudo chmod 600 /etc/certs/nomad.key\n\n\n\nCopying Certificates Between Nodes\nTo copy from one node to another:\n# Temporarily set readable permissions if needed\nsudo chmod 644 file.key\n\n# Copy files to remote server\nscp ca.crt serverN.crt serverN.key username@remote-ip:/tmp/\n\n# Reset secure permissions\nsudo chmod 600 file.key\nOn the remote server:\nsudo mkdir -p /etc/certs\nsudo mv /tmp/ca.crt /etc/certs/ca.crt\nsudo mv /tmp/serverN.crt /etc/certs/nomad.crt\nsudo mv /tmp/serverN.key /etc/certs/nomad.key\nsudo chown nomad:nomad /etc/certs/ca.crt /etc/certs/nomad.crt /etc/certs/nomad.key\nsudo chmod 644 /etc/certs/ca.crt /etc/certs/nomad.crt\nsudo chmod 600 /etc/certs/nomad.key"
+  },
+  {
+    "objectID": "computer-science/devops/containerization/nomad/configuration/security.html#nomad-configuration",
+    "href": "computer-science/devops/containerization/nomad/configuration/security.html#nomad-configuration",
+    "title": "Nomad TLS Configuration Guide",
+    "section": "Nomad Configuration",
+    "text": "Nomad Configuration\n\nServer TLS Configuration\nAdd to /etc/nomad.d/server.hcl:\ntls {\n  http = true\n  rpc  = true\n  ca_file   = \"/etc/certs/ca.crt\"\n  cert_file = \"/etc/certs/nomad.crt\"\n  key_file  = \"/etc/certs/nomad.key\"\n  verify_server_hostname = false  # Start with false, enable later\n  verify_https_client    = false  # Start with false, enable later\n}\n\n\nClient TLS Configuration\nAdd to /etc/nomad.d/client.hcl:\ntls {\n  http = true\n  rpc  = true\n  ca_file   = \"/etc/certs/ca.crt\"\n  cert_file = \"/etc/certs/nomad.crt\"\n  key_file  = \"/etc/certs/nomad.key\"\n  verify_server_hostname = false\n}\n\n\nRestart Nomad\nOn all servers and clients:\nsudo systemctl restart nomad"
+  },
+  {
+    "objectID": "computer-science/devops/containerization/nomad/configuration/security.html#verification-and-troubleshooting",
+    "href": "computer-science/devops/containerization/nomad/configuration/security.html#verification-and-troubleshooting",
+    "title": "Nomad TLS Configuration Guide",
+    "section": "Verification and Troubleshooting",
+    "text": "Verification and Troubleshooting\n\nCheck Nomad Status\nsudo systemctl status nomad\n\n\nView Logs for TLS Issues\nsudo journalctl -u nomad -n 50\n\n\nTest TLS Connection\n```bash # Using CLI with TLS export NOMAD_ADDR=https://127.0.0.1:4646 export NOMAD_CACERT=/etc/certs/ca.crt export NOMAD_CLIENT_CERT=/etc/certs/nomad.crt export NOMAD_CLIENT_KEY=/etc/certs/nomad.key"
+  },
+  {
+    "objectID": "computer-science/devops/containerization/nomad/architecture/index.html",
+    "href": "computer-science/devops/containerization/nomad/architecture/index.html",
+    "title": "Architecture Overview",
+    "section": "",
+    "text": "Nomad’s architecture is designed to be simple yet scalable, consisting of a few key components that work together to provide robust workload orchestration."
+  },
+  {
+    "objectID": "computer-science/devops/containerization/nomad/architecture/index.html#core-components",
+    "href": "computer-science/devops/containerization/nomad/architecture/index.html#core-components",
+    "title": "Architecture Overview",
+    "section": "Core Components",
+    "text": "Core Components\n\nRegions\n\nA region is the largest unit of isolation in Nomad\nEach region has its own servers and clients\nRegions can span multiple data centers\nJobs can be deployed across regions\nRegions operate independently but can communicate for cross-region scheduling\n\n\n\nDatacenters\n\nLogical groupings within regions\nTypically represent physical datacenters\nUsed for job placement and constraints\nHelp with network topology awareness\nEnable fault domain isolation\n\n\n\nServers\nServers form the brain of a Nomad cluster:\n\nLeadership\n\nUse Raft consensus protocol\nElect a leader automatically\nHandle all cluster management\nProcess API requests\nManage state\n\nState Management\n\nMaintain cluster state\nTrack node health\nStore job definitions\nHandle scheduling decisions\n\nScheduling\n\nEvaluate job placements\nConsider constraints and resources\nMake placement decisions\nHandle task updates and migrations\n\n\n\n\nClients\nClients are the workhorses of Nomad:\n\nResource Management\n\nTrack available resources\nReport health status\nMonitor running tasks\nEnforce resource limits\n\nTask Execution\n\nRun allocated tasks\nHandle task lifecycle\nManage local state\nReport task status"
+  },
+  {
+    "objectID": "computer-science/devops/containerization/nomad/architecture/index.html#communication-flow",
+    "href": "computer-science/devops/containerization/nomad/architecture/index.html#communication-flow",
+    "title": "Architecture Overview",
+    "section": "Communication Flow",
+    "text": "Communication Flow\n\nServer-to-Server Communication\n\nUses TCP for reliable data transfer\nImplements Raft protocol for consensus\nHandles leader election\nSynchronizes state updates\nUses RPC for inter-server requests\n\n\n\nClient-to-Server Communication\n\nHeartbeat system for health monitoring\nRPC for task allocation\nEvent streaming for updates\nBidirectional communication channel\nSecure by default (TLS)\n\n\n\nGossip Protocol\n\nUses UDP for lightweight communication\nManages cluster membership\nDetects node failures\nPropagates server addresses\nEnables automatic clustering"
+  },
+  {
+    "objectID": "computer-science/devops/containerization/nomad/architecture/index.html#scheduling-flow",
+    "href": "computer-science/devops/containerization/nomad/architecture/index.html#scheduling-flow",
+    "title": "Architecture Overview",
+    "section": "Scheduling Flow",
+    "text": "Scheduling Flow\n\nJob Submission\n\nClient submits job specification\nServer validates job definition\nJob enters scheduling queue\n\nEvaluation\n\nScheduler evaluates placement options\nConsiders resource requirements\nApplies placement constraints\nDetermines optimal allocation\n\nAllocation\n\nServer assigns tasks to clients\nClients receive allocation details\nResources are reserved\nTasks are started\n\nMonitoring\n\nClients report task status\nServers track allocation health\nSystem adjusts to changes\nHandles failures automatically"
+  },
+  {
+    "objectID": "computer-science/devops/containerization/nomad/architecture/index.html#security-architecture",
+    "href": "computer-science/devops/containerization/nomad/architecture/index.html#security-architecture",
+    "title": "Architecture Overview",
+    "section": "Security Architecture",
+    "text": "Security Architecture\n\nAuthentication\n\nACL system for access control\nToken-based authentication\nRole-based permissions\nAPI endpoint security\n\n\n\nTransport Security\n\nTLS encryption by default\nCertificate validation\nSecure RPC communication\nEncrypted gossip protocol"
+  },
+  {
+    "objectID": "computer-science/devops/containerization/nomad/architecture/index.html#scalability-features",
+    "href": "computer-science/devops/containerization/nomad/architecture/index.html#scalability-features",
+    "title": "Architecture Overview",
+    "section": "Scalability Features",
+    "text": "Scalability Features\n\nHorizontal Scaling\n\nAdd servers for high availability\nScale clients for capacity\nRegional federation\nCross-datacenter support\n\n\n\nPerformance Optimizations\n\nEfficient state storage\nOptimized scheduling algorithms\nBatched updates\nIncremental job modifications"
+  },
+  {
+    "objectID": "computer-science/devops/containerization/nomad/architecture/index.html#fault-tolerance",
+    "href": "computer-science/devops/containerization/nomad/architecture/index.html#fault-tolerance",
+    "title": "Architecture Overview",
+    "section": "Fault Tolerance",
+    "text": "Fault Tolerance\n\nServer Failover\n\nAutomatic leader election\nState replication\nHot standby nodes\nSeamless recovery\n\n\n\nClient Recovery\n\nTask rescheduling\nState recovery\nResource reclamation\nAutomatic reconnection"
+  },
+  {
+    "objectID": "computer-science/devops/containerization/nomad/architecture/index.html#integration-points",
+    "href": "computer-science/devops/containerization/nomad/architecture/index.html#integration-points",
+    "title": "Architecture Overview",
+    "section": "Integration Points",
+    "text": "Integration Points\n\nService Discovery\n\nNative Consul integration\nDNS interface\nService registration\nHealth checking\n\n\n\nSecrets Management\n\nVault integration\nDynamic secrets\nToken management\nSecure storage"
+  },
+  {
+    "objectID": "computer-science/devops/containerization/nomad/architecture/index.html#monitoring-and-logging",
+    "href": "computer-science/devops/containerization/nomad/architecture/index.html#monitoring-and-logging",
+    "title": "Architecture Overview",
+    "section": "Monitoring and Logging",
+    "text": "Monitoring and Logging\n\nMetrics\n\nPrometheus integration\nTelemetry exports\nPerformance metrics\nResource utilization\n\n\n\nLogging\n\nStructured logging\nLog forwarding\nAudit logging\nDebug capabilities"
+  },
+  {
+    "objectID": "computer-science/devops/containerization/nomad/architecture/index.html#network-architecture",
+    "href": "computer-science/devops/containerization/nomad/architecture/index.html#network-architecture",
+    "title": "Architecture Overview",
+    "section": "Network Architecture",
+    "text": "Network Architecture\n\nPort Usage\n\nTCP/8300: Server RPC\nTCP/8301: Server Serf LAN\nTCP/4646: HTTP API\nTCP/4647: Client RPC\nUDP/4648: Serf WAN\n\n\n\nNetwork Requirements\n\nInternal network connectivity\nCross-datacenter communication\nClient-server connectivity\nAPI accessibility"
   }
 ]
